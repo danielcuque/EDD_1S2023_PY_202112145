@@ -1,9 +1,10 @@
 package main
 
 import (
-   mainMenu "github.com/danielcuque/fase1/view"
+   Menus "github.com/danielcuque/fase1/view"
+//    ReadFile "github.com/danielcuque/fase1/model"
 )
 
 func main() {
-    mainMenu.MainMenu()
+    Menus.AdminMenu()
 }

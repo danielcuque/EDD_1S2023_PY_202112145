@@ -7,7 +7,7 @@ import (
 
 var qsMain = []*survey.Question{
 	{
-		Name: "mainMenu",
+		Name: "AdminMenu",
 		Prompt: &survey.Select{
 			Message: "Elige una opción",
 			Options: []string{
@@ -22,11 +22,11 @@ var qsMain = []*survey.Question{
 	},
 }
 
-func MainMenu() {
+func AdminMenu() {
 
 	// Get answer for main dashboard menu
 	answer := struct {
-		MainMenu string
+		AdminMenu string
 	}{}
 
 	err := survey.Ask(qsMain, &answer)
@@ -36,18 +36,49 @@ func MainMenu() {
 	}
 
 	// Switch case for main dashboard menu
-	switch answer.MainMenu {
+	switch answer.AdminMenu {
 	case "1. Ver estudiantes pendientes":
-		Menu1()
+		PendingStudents()
 	case "2. Ver estudiantes del sistema":
-		Menu2()
-}
+		AllStudents()
+		
+	case "3. Registrar nuevo estudiante":
+		AddNewStudent()
+		
+	case "4. Carga masiva de estudiantes":
+		AddManyStudents()
+		
+	case "5. Cerrar sesión":
+		LogOut()
+		
+	default:
+		fmt.Println("Opción no válida")
+		AdminMenu()
+	}
 }
 
-func Menu1() {
-	fmt.Println("Menu 1")
+
+// Menu 1
+func PendingStudents() {
+
 }
 
-func Menu2() {
-	fmt.Println("Menu 2")
+// Menu 2
+func AllStudents() {
+
+}
+
+// Menu 3
+func AddNewStudent() {
+
+}
+
+// Menu 4
+func AddManyStudents() {
+
+}
+
+
+func LogOut() {
+
 }
