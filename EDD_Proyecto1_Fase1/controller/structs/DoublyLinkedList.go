@@ -2,14 +2,12 @@ package structs
 
 // Node struct
 type Node struct {
-	Next *Node
-	Prev *Node
+	Next, Prev *Node
 	Data interface{}
 }
 
 type DoublyLinkedList struct {
-	Head *Node
-	Tail *Node
+	Head, Tail *Node
 	Size int
 }
 
@@ -51,24 +49,40 @@ func (dll *DoublyLinkedList) InsertAtStart(data interface{}) *Node {
     return node
 }
 
-func SortAsc(list *DoublyLinkedList) {
-    if list.IsEmpty() || list.Head == list.Tail {
-        return // list is already sorted
+// Sort minor to major
+func (l *DoublyLinkedList) SortById() {
+    if list.Size < 2 {
+        return
     }
-
-    current := list.Head.Next
-
-    for current != nil {
-        key := current.Data
-        j := current.Prev
-
-        for j != nil && j.Data.(int) > key.(int) {
-            // Swap j and j.Next
-            j.Data, j.Next.Data = j.Next.Data, j.Data
-            j = j.Prev
+    newHead := list.Head
+    newTail := list.Tail
+    for current := list.Head.Next; current != nil; current = current.Next {
+        if current.Student.ID < newHead.Student.ID {
+            current.Prev = nil
+            newHead.Prev = current
+            current.Next = newHead
+            newHead = current
+        } else if current.Student.ID > newTail.Student.ID {
+            current.Next = nil
+            newTail.Next = current
+            current.Prev = newTail
+            newTail = current
+        } else {
+            next := current.Next
+            for check := newHead.Next; check != current; check = check.Next {
+                if check.Student.ID > current.Student.ID {
+                    current.Prev = check.Prev
+                    current.Next = check
+                    check.Prev.Next = current
+                    check.Prev = current
+                    break
+                }
+            }
+            current = next
         }
-        current = current.Next
     }
+    list.Head = newHead
+    list.Tail = newTail
 }
 
 func (dll *DoublyLinkedList) InsertAtEnd(data interface{}) *Node {
@@ -127,7 +141,7 @@ func (dll *DoublyLinkedList) RemoveAtStart() *Node {
 
 
 func (dll *DoublyLinkedList) RemoveAtEnd() *Node {
-    if dll.size == 0 {
+    if dll.IsEmpty() {
         return nil
     }
     node := dll.tail
@@ -173,4 +187,32 @@ func (dll *DoublyLinkedList) RemoveAtPosition(position int) *Node {
     node.Next, node.Prev = nil, nil
     dll.size--
     return node
+}
+
+func (dll *DoublyLinkedList) Print() {
+    if dll.IsEmpty() {
+        fmt.Println("Empty list")
+        return
+    }
+    curr := dll.head
+    for curr != nil {
+        fmt.Println(curr.Data)
+        curr = curr.Next
+    }
+}
+
+func (dll *DoublyLinkedList) PrintReverse() {
+    if dll.IsEmpty() {
+        fmt.Println("Empty list")
+        return
+    }
+    curr := dll.tail
+    for curr != nil {
+        fmt.Println(curr.Data)
+        curr = curr.Prev
+    }
+}
+
+func (dll *DoublyLinkedList) IsEmpty() bool {
+    return dll.size == 0
 }

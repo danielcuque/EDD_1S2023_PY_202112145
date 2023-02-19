@@ -5,57 +5,87 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 )
 
-var qsMain = []*survey.Question{
-	{
-		Name: "AdminMenu",
-		Prompt: &survey.Select{
-			Message: "Elige una opción",
-			Options: []string{
-				"1. Ver estudiantes pendientes",
-				"2. Ver estudiantes del sistema",
-				"3. Registrar nuevo estudiante",
-				"4. Carga masiva de estudiantes",
-				"5. Cerrar sesión",
-				},
-			},
-		Validate: survey.Required,
-	},
-}
 
-func AdminMenu() {
 
-	// Get answer for main dashboard menu
+// InitialMenu muestra el menú inicial y realiza una acción basada en la opción seleccionada por el usuario
+func InitialMenu() {
+
 	answer := struct {
-		AdminMenu string
+		InitialMenu string
 	}{}
 
-	err := survey.Ask(qsMain, &answer)
+	err := survey.Ask(qsInitialMenu, &answer)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
 	}
 
-	// Switch case for main dashboard menu
+	switch answer.InitialMenu {
+	case "1. Iniciar sesión":
+		LoginMenu()
+	case "2. Salir del sistema":
+		fmt.Println("Saliendo del sistema")
+		return
+}
+
+}
+
+// AdminMenu muestra el menú de administrador y realiza una acción basada en la opción seleccionada por el usuario
+func AdminMenu() {
+
+	answer := struct {
+		AdminMenu string
+	}{}
+
+	err := survey.Ask(qsAdminMenu, &answer)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
 	switch answer.AdminMenu {
 	case "1. Ver estudiantes pendientes":
 		PendingStudents()
 	case "2. Ver estudiantes del sistema":
 		AllStudents()
-		
 	case "3. Registrar nuevo estudiante":
 		AddNewStudent()
-		
 	case "4. Carga masiva de estudiantes":
 		AddManyStudents()
-		
 	case "5. Cerrar sesión":
 		LogOut()
-		
-	default:
-		fmt.Println("Opción no válida")
-		AdminMenu()
 	}
+
 }
+
+
+
+func LoginMenu() {
+
+	// Get answer for login form
+	answer := struct {
+		Login string
+		Password string
+	}{}
+
+	err := survey.Ask(qsLoginForm, &answer)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	// Check if user exists
+	// If user exists, then check if password is correct
+	// If password is correct, then show admin menu
+	// If password is incorrect, then show error message
+	// If user doesn't exist, then show error message
+	// If user is not admin, then show error message
+	// If user is admin, then show admin menu
+	AdminMenu()
+
+}
+
+
 
 
 // Menu 1
