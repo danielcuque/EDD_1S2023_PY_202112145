@@ -1,4 +1,4 @@
-package structs
+package controller
 
 import (
 	"fmt"
@@ -20,21 +20,21 @@ func (q *Queue) Enqueue(data interface{}) *Node {
 }
 
 func (q *Queue) Dequeue() *Node {
-    if q.items.Size() == 0 {
+    if q.items.SizeList() == 0 {
         return nil
     }
-    return q.items.RemoveAtPosition(q.items.Size() - 1)
+    return q.items.RemoveAtPosition(q.items.SizeList() - 1)
 }
 
 func (q *Queue) DequeueByIndex(index int) *Node {
-    if q.items.Size() == 0 {
+    if q.items.SizeList() == 0 {
         return nil
     }
     return q.items.RemoveAtPosition(index)
 }
 
 func (q *Queue) Traverse() {
-    node := q.items.Head()
+    node := q.items.HeadList()
     for node != nil {
         fmt.Printf("%v\n", node.Data)
         node = node.Next
@@ -42,9 +42,9 @@ func (q *Queue) Traverse() {
 }
 
 func (q *Queue) IsEmpty() bool {
-    return q.items.Size() == 0
+    return q.items.SizeList() == 0
 }
 
 func (q *Queue) GetSize() int {
-    return q.items.Size()
+    return q.items.SizeList()
 }
