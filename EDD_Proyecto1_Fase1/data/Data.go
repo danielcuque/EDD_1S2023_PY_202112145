@@ -4,7 +4,6 @@ import (
 	C "github.com/danielcuque/fase1/controller"
 )
 
-
 // DoublyLinkedList struct
 var store = C.NewDoublyLinkedList()
 
@@ -16,8 +15,4 @@ func InsertAdmin() {
 	store.Print()
 }
 
-
-
 // Insert student user
-
-

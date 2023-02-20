@@ -2,10 +2,10 @@ package view
 
 import (
 	"fmt"
+
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/mgutz/ansi"
 )
-
-
 
 // InitialMenu muestra el menú inicial y realiza una acción basada en la opción seleccionada por el usuario
 func InitialMenu() {
@@ -13,6 +13,12 @@ func InitialMenu() {
 	answer := struct {
 		InitialMenu string
 	}{}
+
+	// cache escape codes and build strings manually
+	foregroundColor := ansi.ColorCode("blue+bh")
+
+	fmt.Println(foregroundColor, "Bienvenido a GoDrive")
+	fmt.Println()
 
 	err := survey.Ask(qsInitialMenu, &answer)
 	if err != nil {
@@ -26,7 +32,7 @@ func InitialMenu() {
 	case "2. Salir del sistema":
 		fmt.Println("Saliendo del sistema")
 		return
-}
+	}
 
 }
 
@@ -58,13 +64,11 @@ func AdminMenu() {
 
 }
 
-
-
 func LoginMenu() {
 
 	// Get answer for login form
 	answer := struct {
-		Login string
+		Login    string
 		Password string
 	}{}
 
@@ -85,9 +89,6 @@ func LoginMenu() {
 
 }
 
-
-
-
 // Menu 1
 func PendingStudents() {
 
@@ -107,7 +108,6 @@ func AddNewStudent() {
 func AddManyStudents() {
 
 }
-
 
 func LogOut() {
 
