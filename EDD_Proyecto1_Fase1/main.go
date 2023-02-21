@@ -6,6 +6,9 @@ import (
 )
 
 func main() {
+	// Insert admin user
 	data.InsertAdmin()
+
+	// Show initial menu
 	view.InitialMenu()
 }

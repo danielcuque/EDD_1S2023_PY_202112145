@@ -6,8 +6,6 @@ import (
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/danielcuque/fase1/controller"
 	"github.com/danielcuque/fase1/data"
-
-	"github.com/mgutz/ansi"
 )
 
 // InitialMenu muestra el menú inicial y realiza una acción basada en la opción seleccionada por el usuario
@@ -17,11 +15,7 @@ func InitialMenu() {
 		InitialMenu string
 	}{}
 
-	// cache escape codes and build strings manually
-	foregroundColor := ansi.ColorCode("blue+bh")
-
-	fmt.Println(foregroundColor, "Bienvenido a GoDrive")
-	fmt.Println()
+	ModifyText("blue+bh", "Bienvenido a GoDrive")
 
 	err := survey.Ask(qsInitialMenu, &answer)
 	if err != nil {
@@ -33,10 +27,7 @@ func InitialMenu() {
 	case "1. Iniciar sesión":
 		LoginMenu()
 	case "2. Salir del sistema":
-
-		foregroundColor := ansi.ColorCode("red+bh")
-		fmt.Println()
-		fmt.Println(foregroundColor, "Saliendo del sistema")
+		ModifyText("red+bh", "Saliendo del sistema...")
 		return
 	}
 
@@ -70,13 +61,22 @@ func AdminMenu() {
 
 }
 
-func LoginMenu() {
+// StudentMenu muestra el menú de estudiante y realiza una acción basada en la opción seleccionada por el usuario
+func StudentMenu() {
+
+}
+
+func LoginMenu(recursive ...string) {
 
 	// Get answer for login form
 	answer := struct {
 		ID       string
 		Password string
 	}{}
+
+	if len(recursive) > 0 {
+		ModifyText("red+bh", recursive[0])
+	}
 
 	err := survey.Ask(qsLoginForm, &answer)
 	if err != nil {
@@ -85,12 +85,17 @@ func LoginMenu() {
 	}
 
 	// Check if user exists
-	store := data.Store
-	if controller.CheckCredentials(store, answer.ID, answer.Password) {
-		AdminMenu()
-	} else {
-		fmt.Println("Usuario o contraseña incorrectos")
+	data, msg := controller.CheckCredentials(data.Store, answer.ID, answer.Password)
 
+	if data != nil {
+		if data.Id == "admin" {
+			AdminMenu()
+		} else {
+			StudentMenu()
+		}
+
+	} else {
+		LoginMenu(msg)
 	}
 
 }

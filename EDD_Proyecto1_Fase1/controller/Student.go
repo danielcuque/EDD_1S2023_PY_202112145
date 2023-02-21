@@ -1,15 +1,15 @@
 package controller
 
 type Student struct {
-	id       string
-	name     string
-	password string
+	Id       string
+	Name     string
+	Password string
 }
 
 func NewStudent(id string, name string, password string) *Student {
 	return &Student{
-		id:       id,
-		name:     name,
-		password: password,
+		Id:       id,
+		Name:     name,
+		Password: password,
 	}
 }

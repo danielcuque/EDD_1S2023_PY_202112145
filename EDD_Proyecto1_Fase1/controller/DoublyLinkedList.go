@@ -42,14 +42,20 @@ func NewDoublyLinkedList() *DoublyLinkedList {
 	}
 }
 
-func CheckCredentials(dll *DoublyLinkedList, id string, pass string) bool {
+func CheckCredentials(dll *DoublyLinkedList, id string, pass string) (student *Student, msg string) {
 
 	for current := dll.Head; current != nil; current = current.Next {
-		if current.Data.(*Student).id == id && current.Data.(*Student).password == pass {
-			return true
+		if current.Data.(*Student).Id == id {
+			if current.Data.(*Student).Password == pass {
+				return current.Data.(*Student), "ok"
+			} else {
+				return nil, "Contraseña incorrecta"
+			}
+		} else {
+			return nil, "Usuario no encontrado"
 		}
 	}
-	return false
+	return nil, "Usuario o contraseña incorrectos"
 }
 
 func (dll *DoublyLinkedList) InsertAtStart(data interface{}) *Node {
@@ -214,8 +220,8 @@ func (dll *DoublyLinkedList) Print() {
 	for curr != nil {
 		var data *Student = curr.Data.(*Student)
 		fmt.Println(
-			"ID: ", data.id,
-			"Name: ", data.name,
+			"ID: ", data.Id,
+			"Name: ", data.Name,
 		)
 
 		curr = curr.Next
