@@ -1,18 +1,15 @@
 package data
 
 import (
-	C "github.com/danielcuque/fase1/controller"
+	"github.com/danielcuque/fase1/controller"
 )
 
 // DoublyLinkedList struct
-var store = C.NewDoublyLinkedList()
+var Store = controller.NewDoublyLinkedList()
 
 // Insert admin user
 func InsertAdmin() {
-	store.InsertAtStart(
-		C.NewStudent(1, "admin", "admin"),
+	Store.InsertAtStart(
+		controller.NewStudent("2021", "admin", "admin"),
 	)
-	store.Print()
 }
-
-// Insert student user

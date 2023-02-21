@@ -1,11 +1,11 @@
 package main
 
 import (
-	Menus "github.com/danielcuque/fase1/view"
-	// D "github.com/danielcuque/fase1/data"
+	"github.com/danielcuque/fase1/data"
+	"github.com/danielcuque/fase1/view"
 )
 
 func main() {
-	Menus.InitialMenu()
-	// D.InsertAdmin()
+	data.InsertAdmin()
+	view.InitialMenu()
 }

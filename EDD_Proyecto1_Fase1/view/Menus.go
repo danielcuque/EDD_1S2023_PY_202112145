@@ -4,6 +4,9 @@ import (
 	"fmt"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/danielcuque/fase1/controller"
+	"github.com/danielcuque/fase1/data"
+
 	"github.com/mgutz/ansi"
 )
 
@@ -30,7 +33,10 @@ func InitialMenu() {
 	case "1. Iniciar sesión":
 		LoginMenu()
 	case "2. Salir del sistema":
-		fmt.Println("Saliendo del sistema")
+
+		foregroundColor := ansi.ColorCode("red+bh")
+		fmt.Println()
+		fmt.Println(foregroundColor, "Saliendo del sistema")
 		return
 	}
 
@@ -68,7 +74,7 @@ func LoginMenu() {
 
 	// Get answer for login form
 	answer := struct {
-		Login    string
+		ID       string
 		Password string
 	}{}
 
@@ -79,13 +85,13 @@ func LoginMenu() {
 	}
 
 	// Check if user exists
-	// If user exists, then check if password is correct
-	// If password is correct, then show admin menu
-	// If password is incorrect, then show error message
-	// If user doesn't exist, then show error message
-	// If user is not admin, then show error message
-	// If user is admin, then show admin menu
-	AdminMenu()
+	store := data.Store
+	if controller.CheckCredentials(store, answer.ID, answer.Password) {
+		AdminMenu()
+	} else {
+		fmt.Println("Usuario o contraseña incorrectos")
+
+	}
 
 }
 
@@ -110,5 +116,5 @@ func AddManyStudents() {
 }
 
 func LogOut() {
-
+	InitialMenu()
 }

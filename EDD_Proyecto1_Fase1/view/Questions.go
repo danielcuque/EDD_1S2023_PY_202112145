@@ -12,12 +12,11 @@ var qsInitialMenu = []*survey.Question{
 			Options: []string{
 				"1. Iniciar sesión",
 				"2. Salir del sistema",
-				},
 			},
+		},
 		Validate: survey.Required,
 	},
 }
-
 
 var qsAdminMenu = []*survey.Question{
 	{
@@ -30,15 +29,15 @@ var qsAdminMenu = []*survey.Question{
 				"3. Registrar nuevo estudiante",
 				"4. Carga masiva de estudiantes",
 				"5. Cerrar sesión",
-				},
 			},
+		},
 		Validate: survey.Required,
 	},
 }
 
-var qsLoginForm = []*survey.Question {
+var qsLoginForm = []*survey.Question{
 	{
-		Name: "Login",
+		Name: "ID",
 		Prompt: &survey.Input{
 			Message: "Ingresa tu usuario",
 		},
