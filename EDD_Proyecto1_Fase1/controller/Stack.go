@@ -5,6 +5,10 @@ type Stack struct {
 	Size int
 }
 
+func NewStack() *Stack {
+	return &Stack{}
+}
+
 func (s *Stack) IsEmpty() bool {
 	return s.Size == 0
 }

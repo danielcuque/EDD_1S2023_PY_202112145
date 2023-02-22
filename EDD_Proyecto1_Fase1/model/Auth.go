@@ -4,10 +4,17 @@ import (
 	"fmt"
 
 	"github.com/danielcuque/fase1/controller"
+	"github.com/danielcuque/fase1/data"
 )
 
 func InsertNewStudent() {
 	// Inser
+}
+
+func AddStudentToQueue(name string, id string, password string) {
+	// Insertar a la cola
+	newStudent := controller.NewStudent(id, name, password)
+	data.QueuePendingStudents.Enqueue(newStudent)
 }
 
 func PrintStudents(dll *controller.DoublyLinkedList) {

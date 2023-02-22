@@ -1,6 +1,7 @@
 package view
 
 import (
+	"fmt"
 	"regexp"
 
 	"github.com/AlecAivazis/survey/v2"
@@ -77,9 +78,9 @@ var qsNewStudentForm = []*survey.Question{
 		Validate: func(val interface{}) error {
 
 			s := val.(string)
-			if len(s) != 8 && regexp.MustCompile(`[0-9]{8}`).MatchString(s) {
-				ModifyText("red+bh", "El carnet debe tener 8 dígitos")
-				return nil
+			if len(s) != 9 && !regexp.MustCompile(`[0-9]{9}`).MatchString(s) {
+				fmt.Println()
+				return fmt.Errorf("el carnet debe tener 9 dígitos")
 			}
 			return nil
 		},

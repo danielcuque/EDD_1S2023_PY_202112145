@@ -142,6 +142,12 @@ func AddNewStudent() {
 		AdminMenu()
 	}
 
+	// Create new student
+	model.AddStudentToQueue(
+		answer.Nombre+" "+answer.Apellido,
+		answer.Carnet,
+		answer.Password,
+	)
 }
 
 // Menu 4

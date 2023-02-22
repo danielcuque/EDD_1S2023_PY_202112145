@@ -5,6 +5,10 @@ type Queue struct {
 	Size       int
 }
 
+func NewQueue() *Queue {
+	return &Queue{}
+}
+
 func (q *Queue) Enqueue(data interface{}) {
 	node := &Node{Data: data}
 	if q.Size == 0 {
