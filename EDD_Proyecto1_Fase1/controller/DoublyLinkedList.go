@@ -55,15 +55,36 @@ func (dll *DoublyLinkedList) InsertAtStart(data interface{}) *Node {
 
 func (dll *DoublyLinkedList) InsertAtEnd(data interface{}) *Node {
 	node := NewNode(data)
-	if dll.Size == 0 {
+	if dll.IsEmpty() {
 		dll.Head = node
 		dll.Tail = node
+		dll.Size++
+		return node
+	}
+
+	if dll.Head.Data.(*Student).Id >= data.(*Student).Id {
+		node.Next = dll.Head
+		dll.Head.Prev = node
+		dll.Head = node
+		dll.Size++
+		return node
+	}
+
+	current := dll.Head
+	for current.Next != nil && current.Next.Data.(*Student).Id < data.(*Student).Id {
+		current = current.Next
+	}
+
+	node.Next = current.Next
+	node.Prev = current
+
+	if current.Next != nil {
+		current.Next.Prev = node
 	} else {
-		node.Prev = dll.Tail
-		dll.Tail.Next = node
 		dll.Tail = node
 	}
 
+	current.Next = node
 	dll.Size++
 	return node
 }

@@ -12,10 +12,9 @@ var StudenStacktLogs = controller.NewStack()
 
 // Insert admin user
 func InsertAdmin() {
-	ListApprovedStudents.InsertAtEnd(
-		controller.NewStudent("231", "admin", "admin"),
-	)
-	ListApprovedStudents.InsertAtEnd(
-		controller.NewStudent("202112145", "Daniel Cuque", "1234"),
-	)
+	ListApprovedStudents.InsertAtEnd(controller.NewStudent("202100000", "admin", "admin"))
+	ListApprovedStudents.InsertAtEnd(controller.NewStudent("202112104", "Daniel Cuque", "1234"))
+	ListApprovedStudents.InsertAtEnd(controller.NewStudent("202112133", "Daniel Cuque", "1234"))
+	ListApprovedStudents.InsertAtEnd(controller.NewStudent("202112112", "Daniel Cuque", "1234"))
+	ListApprovedStudents.InsertAtEnd(controller.NewStudent("202112154", "Daniel Cuque", "1234"))
 }

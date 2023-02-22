@@ -88,7 +88,7 @@ func LoginMenu(recursive ...string) {
 	data, msg := model.CheckCredentials(data.ListApprovedStudents, answer.ID, answer.Password)
 
 	if data != nil {
-		if data.Name == "admin" && data.Id == "231" && data.Password == "admin" {
+		if data.Name == "admin" && data.Id == 202100000 && data.Password == "admin" {
 			AdminMenu()
 		} else {
 			StudentMenu()
