@@ -23,8 +23,4 @@ func ReadFile(filename string) string {
 	return text
 }
 
-func InsertNewStudent() {
-	// Inser
-}
-
 // Path: model/parseFile.go

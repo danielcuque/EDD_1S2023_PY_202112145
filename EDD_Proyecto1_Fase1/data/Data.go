@@ -10,7 +10,10 @@ var QueuePendingStudents = controller.NewQueue()
 
 // Insert admin user
 func InsertAdmin() {
-	ListApprovedStudents.InsertAtStart(
-		controller.NewStudent("2021", "admin", "admin"),
+	ListApprovedStudents.InsertAtEnd(
+		controller.NewStudent("231", "admin", "admin"),
+	)
+	ListApprovedStudents.InsertAtEnd(
+		controller.NewStudent("202112145", "Daniel Cuque", "1234"),
 	)
 }

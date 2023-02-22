@@ -27,7 +27,7 @@ func (dll *DoublyLinkedList) TailList() *Node {
 	return dll.Tail
 }
 
-func (n *Node) NewNode(data interface{}) *Node {
+func NewNode(data interface{}) *Node {
 	return &Node{Data: data,
 		Next: nil,
 		Prev: nil,
@@ -37,35 +37,17 @@ func (n *Node) NewNode(data interface{}) *Node {
 func NewDoublyLinkedList() *DoublyLinkedList {
 	return &DoublyLinkedList{
 		Head: nil,
-		Tail: nil,
 		Size: 0,
 	}
 }
 
-func CheckCredentials(dll *DoublyLinkedList, id string, pass string) (student *Student, msg string) {
-
-	for current := dll.Head; current != nil; current = current.Next {
-		if current.Data.(*Student).Id == id {
-			if current.Data.(*Student).Password == pass {
-				return current.Data.(*Student), "ok"
-			} else {
-				return nil, "Contraseña incorrecta"
-			}
-		} else {
-			return nil, "Usuario no encontrado"
-		}
-	}
-	return nil, "Usuario o contraseña incorrectos"
-}
-
 func (dll *DoublyLinkedList) InsertAtStart(data interface{}) *Node {
-	node := &Node{Data: data}
-	if dll.Size == 0 {
+	node := NewNode(data)
+	if dll.IsEmpty() {
 		dll.Head = node
-		dll.Tail = node
 	} else {
-		node.Next = dll.Head
 		dll.Head.Prev = node
+		node.Next = dll.Head
 		dll.Head = node
 	}
 	dll.Size++
@@ -73,14 +55,16 @@ func (dll *DoublyLinkedList) InsertAtStart(data interface{}) *Node {
 }
 
 func (dll *DoublyLinkedList) InsertAtEnd(data interface{}) *Node {
-	node := &Node{Data: data}
+	node := NewNode(data)
 	if dll.Size == 0 {
 		dll.Head = node
-		dll.Tail = node
 	} else {
-		node.Prev = dll.Tail
-		dll.Tail.Next = node
-		dll.Tail = node
+		curr := dll.Head
+		for curr.Next != nil {
+			curr = curr.Next
+		}
+		curr.Next = node
+		node.Prev = curr
 	}
 	dll.Size++
 	return node

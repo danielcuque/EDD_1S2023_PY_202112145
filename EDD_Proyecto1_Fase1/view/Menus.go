@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	"github.com/AlecAivazis/survey/v2"
-	"github.com/danielcuque/fase1/controller"
 	"github.com/danielcuque/fase1/data"
+	"github.com/danielcuque/fase1/model"
 )
 
 // InitialMenu muestra el menú inicial y realiza una acción basada en la opción seleccionada por el usuario
@@ -50,7 +50,7 @@ func AdminMenu() {
 	case "1. Ver estudiantes pendientes":
 		PendingStudents()
 	case "2. Ver estudiantes del sistema":
-		AllStudents()
+		DisplayAllStudents()
 	case "3. Registrar nuevo estudiante":
 		AddNewStudent()
 	case "4. Carga masiva de estudiantes":
@@ -85,10 +85,10 @@ func LoginMenu(recursive ...string) {
 	}
 
 	// Check if user exists
-	data, msg := controller.CheckCredentials(data.ListApprovedStudents, answer.ID, answer.Password)
+	data, msg := model.CheckCredentials(data.ListApprovedStudents, answer.ID, answer.Password)
 
 	if data != nil {
-		if data.Id == "admin" {
+		if data.Name == "admin" && data.Id == "231" && data.Password == "admin" {
 			AdminMenu()
 		} else {
 			StudentMenu()
@@ -106,7 +106,13 @@ func PendingStudents() {
 }
 
 // Menu 2
-func AllStudents() {
+func DisplayAllStudents() {
+	ModifyText("blue+bh", "Estudiantes del sistema - EDDGoDrive")
+
+	//Print all students
+	model.PrintStudents(
+		data.ListApprovedStudents,
+	)
 
 }
 
@@ -129,7 +135,7 @@ func AddNewStudent() {
 	}
 
 	// Check if student already exists
-	_, msg := controller.CheckCredentials(data.ListApprovedStudents, answer.Carnet, answer.Password)
+	_, msg := model.CheckCredentials(data.ListApprovedStudents, answer.Carnet, answer.Password)
 
 	if msg == "" {
 		ModifyText("red+bh", "El estudiante ya existe")
