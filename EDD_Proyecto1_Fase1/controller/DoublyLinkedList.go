@@ -72,42 +72,6 @@ func (dll *DoublyLinkedList) InsertAtStart(data interface{}) *Node {
 	return node
 }
 
-// Sort minor to major
-// func (list *DoublyLinkedList) SortById() {
-//     if list.Size < 2 {
-//         return
-//     }
-//     newHead := list.Head
-//     newTail := list.Tail
-//     for current := list.Head.Next; current != nil; current = current.Next {
-//         if current.Student.ID < newHead.Student.ID {
-//             current.Prev = nil
-//             newHead.Prev = current
-//             current.Next = newHead
-//             newHead = current
-//         } else if current.Student.ID > newTail.Student.ID {
-//             current.Next = nil
-//             newTail.Next = current
-//             current.Prev = newTail
-//             newTail = current
-//         } else {
-//             next := current.Next
-//             for check := newHead.Next; check != current; check = check.Next {
-//                 if check.Student.ID > current.Student.ID {
-//                     current.Prev = check.Prev
-//                     current.Next = check
-//                     check.Prev.Next = current
-//                     check.Prev = current
-//                     break
-//                 }
-//             }
-//             current = next
-//         }
-//     }
-//     list.Head = newHead
-//     list.Tail = newTail
-// }
-
 func (dll *DoublyLinkedList) InsertAtEnd(data interface{}) *Node {
 	node := &Node{Data: data}
 	if dll.Size == 0 {
@@ -242,4 +206,23 @@ func (dll *DoublyLinkedList) PrintReverse() {
 
 func (dll *DoublyLinkedList) IsEmpty() bool {
 	return dll.Size == 0
+}
+
+func (dll *DoublyLinkedList) SortById() {
+	if dll.SizeList() == 0 {
+		return
+	}
+	var temp *Node
+	var current *Node
+	var index *Node
+
+	for current = dll.Head; current.Next != nil; current = current.Next {
+		for index = current.Next; index != nil; index = index.Next {
+			if current.Data.(*Student).Id > index.Data.(*Student).Id {
+				temp = current
+				current = index
+				index = temp
+			}
+		}
+	}
 }

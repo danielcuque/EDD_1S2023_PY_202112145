@@ -5,11 +5,12 @@ import (
 )
 
 // DoublyLinkedList struct
-var Store = controller.NewDoublyLinkedList()
+var ListApprovedStudents = controller.NewDoublyLinkedList()
+var QueuePendingStudents = controller.NewQueue()
 
 // Insert admin user
 func InsertAdmin() {
-	Store.InsertAtStart(
+	ListApprovedStudents.InsertAtStart(
 		controller.NewStudent("2021", "admin", "admin"),
 	)
 }

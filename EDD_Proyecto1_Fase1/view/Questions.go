@@ -1,6 +1,8 @@
 package view
 
 import (
+	"regexp"
+
 	"github.com/AlecAivazis/survey/v2"
 )
 
@@ -47,6 +49,45 @@ var qsLoginForm = []*survey.Question{
 		Name: "Password",
 		Prompt: &survey.Password{
 			Message: "Ingresa tu contraseña",
+		},
+		Validate: survey.Required,
+	},
+}
+
+var qsNewStudentForm = []*survey.Question{
+	{
+		Name: "Nombre",
+		Prompt: &survey.Input{
+			Message: "Ingresa el nombre del estudiante",
+		},
+		Validate: survey.Required,
+	},
+	{
+		Name: "Apellido",
+		Prompt: &survey.Input{
+			Message: "Ingresa el apellido del estudiante",
+		},
+		Validate: survey.Required,
+	},
+	{
+		Name: "Carnet",
+		Prompt: &survey.Input{
+			Message: "Ingresa el carnet del estudiante",
+		},
+		Validate: func(val interface{}) error {
+
+			s := val.(string)
+			if len(s) != 8 && regexp.MustCompile(`[0-9]{8}`).MatchString(s) {
+				ModifyText("red+bh", "El carnet debe tener 8 dígitos")
+				return nil
+			}
+			return nil
+		},
+	},
+	{
+		Name: "Password",
+		Prompt: &survey.Password{
+			Message: "Ingresa la contraseña del estudiante",
 		},
 		Validate: survey.Required,
 	},

@@ -1,6 +1,5 @@
 package controller
 
-
 type Stack struct {
 	items *DoublyLinkedList
 }
@@ -12,20 +11,20 @@ func NewStack() *Stack {
 }
 
 func (s *Stack) Push(data interface{}) *Node {
-    node := &Node{Data: data,
+	node := &Node{Data: data,
 		Next: nil,
 		Prev: nil,
 	}
 
-    if s.IsEmpty() {
-        s.items.InsertAtEnd(data)
-    } else {
-        node.Next = s.items.Head
-        s.items.Head.Prev = node
-        s.items.Head = node
-        s.items.Size++
-    }
-    return node
+	if s.IsEmpty() {
+		s.items.InsertAtEnd(data)
+	} else {
+		node.Next = s.items.Head
+		s.items.Head.Prev = node
+		s.items.Head = node
+		s.items.Size++
+	}
+	return node
 }
 
 func (s *Stack) Pop() *Node {
@@ -43,5 +42,5 @@ func (s *Stack) Peek() *Node {
 }
 
 func (s *Stack) IsEmpty() bool {
-	return s.IsEmpty()
+	return s.items.IsEmpty()
 }

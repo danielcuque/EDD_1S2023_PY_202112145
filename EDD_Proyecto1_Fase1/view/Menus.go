@@ -85,7 +85,7 @@ func LoginMenu(recursive ...string) {
 	}
 
 	// Check if user exists
-	data, msg := controller.CheckCredentials(data.Store, answer.ID, answer.Password)
+	data, msg := controller.CheckCredentials(data.ListApprovedStudents, answer.ID, answer.Password)
 
 	if data != nil {
 		if data.Id == "admin" {
@@ -112,6 +112,29 @@ func AllStudents() {
 
 // Menu 3
 func AddNewStudent() {
+
+	ModifyText("blue+bh", "Registro de nuevo estudiante - EDDGoDrive")
+
+	answer := struct {
+		Nombre   string
+		Apellido string
+		Carnet   string
+		Password string
+	}{}
+
+	err := survey.Ask(qsNewStudentForm, &answer)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	// Check if student already exists
+	_, msg := controller.CheckCredentials(data.ListApprovedStudents, answer.Carnet, answer.Password)
+
+	if msg == "" {
+		ModifyText("red+bh", "El estudiante ya existe")
+		AdminMenu()
+	}
 
 }
 
