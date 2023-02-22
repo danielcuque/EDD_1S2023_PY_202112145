@@ -6,7 +6,8 @@ import (
 
 // DoublyLinkedList struct
 var ListApprovedStudents = controller.NewDoublyLinkedList()
-var QueuePendingStudents = controller.NewQueue()
+
+// var QueuePendingStudents = controller.NewQueue()
 
 // Insert admin user
 func InsertAdmin() {
