@@ -2,7 +2,6 @@ package view
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/danielcuque/fase1/data"
@@ -106,6 +105,11 @@ func SelectPendingStudents() {
 
 	ModifyText("blue+bh", "Estudiantes pendientes - EDDGoDrive")
 
+	if data.QueuePendingStudents.IsEmpty() {
+		ModifyText("red+bh", "No hay estudiantes pendientes")
+		return
+	}
+
 	//Print all students
 	backToMenu := false
 	for !backToMenu {
@@ -113,6 +117,8 @@ func SelectPendingStudents() {
 		answer := struct {
 			AproveStudent string
 		}{}
+
+		model.DisplayPendingStudent()
 
 		err := survey.Ask(qsAproveStudent, &answer)
 		if err != nil {
@@ -202,7 +208,7 @@ func AddManyStudents() {
 	}
 
 	// Show how many students were added
-	ModifyText("green+bh", "Se agregaron "+strconv.Itoa(qStudents)+" estudiantes")
+	ModifyText("green+bh", "Se agregaron "+model.TransformIdToString(qStudents)+" estudiantes")
 
 }
 
