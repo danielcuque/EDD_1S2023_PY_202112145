@@ -127,3 +127,17 @@ var qsAproveStudent = []*survey.Question{
 		Validate: survey.Required,
 	},
 }
+
+var qsStudentMenu = []*survey.Question{
+	{
+		Name: "StudentMenu",
+		Prompt: &survey.Select{
+			Message: "Elige una opción",
+			Options: []string{
+				"1. Ver mi información",
+				"3. Cerrar sesión",
+			},
+		},
+		Validate: survey.Required,
+	},
+}

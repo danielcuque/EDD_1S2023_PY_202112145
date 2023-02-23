@@ -86,7 +86,7 @@ func MassiveInsertion(filename string) (int, error) {
 	return counter, nil
 }
 
-func ModifyTextView(properties string, text string) {
+func ModifyTextView(properties string, text string, reset ...string) {
 	foregroundColor := ansi.ColorCode(properties)
 	fmt.Println(foregroundColor, text)
 	fmt.Println()
@@ -97,7 +97,8 @@ func PrintApprovedStudents(dll *controller.DoublyLinkedList) {
 		ModifyTextView("red", "No hay estudiantes registrados")
 		return
 	}
-
+	ModifyTextView("blue+bh", "Estudiantes del sistema - EDDGoDrive")
+	ModifyTextView("white", "")
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"Nombre", "Carné"})
 	table.SetFooter([]string{"Total", TransformIdToString(dll.SizeList() - 1)})

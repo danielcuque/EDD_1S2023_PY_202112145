@@ -9,7 +9,7 @@ var ListApprovedStudents = controller.NewDoublyLinkedList()
 var QueuePendingStudents = controller.NewQueue()
 var AdminStackLogs = controller.NewStack()
 var StudenStacktLogs = controller.NewStack()
-var UserLogged *controller.Student = nil
+var Exit = false
 
 // Insert admin user
 func InsertAdmin() {

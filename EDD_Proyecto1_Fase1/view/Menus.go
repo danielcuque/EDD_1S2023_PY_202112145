@@ -16,21 +16,21 @@ func InitialMenu() {
 	}{}
 
 	ModifyText("blue+bh", "Bienvenido a GoDrive")
+	for !data.Exit {
+		err := survey.Ask(qsInitialMenu, &answer)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 
-	err := survey.Ask(qsInitialMenu, &answer)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
+		switch answer.InitialMenu {
+		case "1. Iniciar sesión":
+			LoginMenu()
+		case "2. Salir del sistema":
+			ModifyText("red+bh", "Saliendo del sistema...")
+			return
+		}
 	}
-
-	switch answer.InitialMenu {
-	case "1. Iniciar sesión":
-		LoginMenu()
-	case "2. Salir del sistema":
-		ModifyText("red+bh", "Saliendo del sistema...")
-		return
-	}
-
 }
 
 // AdminMenu muestra el menú de administrador y realiza una acción basada en la opción seleccionada por el usuario
@@ -40,29 +40,53 @@ func AdminMenu() {
 		AdminMenu string
 	}{}
 
-	err := survey.Ask(qsAdminMenu, &answer)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
+	for {
+		err := survey.Ask(qsAdminMenu, &answer)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
 
-	switch answer.AdminMenu {
-	case "1. Ver estudiantes pendientes":
-		SelectPendingStudents()
-	case "2. Ver estudiantes del sistema":
-		DisplayApprovedStudents()
-	case "3. Registrar nuevo estudiante":
-		AddNewStudent()
-	case "4. Carga masiva de estudiantes":
-		AddManyStudents()
-	case "5. Cerrar sesión":
-		LogOut()
-	}
+		switch answer.AdminMenu {
+		case "1. Ver estudiantes pendientes":
+			SelectPendingStudents()
+		case "2. Ver estudiantes del sistema":
+			DisplayApprovedStudents()
+		case "3. Registrar nuevo estudiante":
+			AddNewStudent()
+		case "4. Carga masiva de estudiantes":
+			AddManyStudents()
+		case "5. Cerrar sesión":
+			LogOut()
+			return
+		}
 
+	}
 }
 
 // StudentMenu muestra el menú de estudiante y realiza una acción basada en la opción seleccionada por el usuario
 func StudentMenu() {
+
+	answer := struct {
+		StudentMenu string
+	}{}
+
+	for {
+		err := survey.Ask(qsStudentMenu, &answer)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+
+		switch answer.StudentMenu[0] {
+		case '1':
+			ModifyText("blue+bh", "Subir archivo")
+		case '2':
+			LogOut()
+			return
+		}
+
+	}
 
 }
 
@@ -88,7 +112,6 @@ func LoginMenu(recursive ...string) {
 	studentData, msg := model.CheckCredentials(data.ListApprovedStudents, answer.ID, answer.Password)
 
 	if studentData != nil {
-		data.UserLogged = studentData
 		if studentData.Name == "admin" && studentData.Id == 202100000 && studentData.Password == "admin" {
 			AdminMenu()
 		} else {
@@ -140,7 +163,6 @@ func SelectPendingStudents() {
 
 // Menu 2
 func DisplayApprovedStudents() {
-	ModifyText("blue+bh", "Estudiantes del sistema - EDDGoDrive")
 
 	//Print all students
 	model.PrintApprovedStudents(
@@ -179,7 +201,6 @@ func AddNewStudent() {
 		ModifyText("green+bh", "El estudiante se ha agregado a la cola de espera")
 	} else {
 		ModifyText("red+bh", "El estudiante ya existe")
-		AdminMenu()
 	}
 
 }
@@ -213,6 +234,5 @@ func AddManyStudents() {
 }
 
 func LogOut() {
-	data.UserLogged = nil
-	InitialMenu()
+	ModifyText("red+bh", "Cerrando sesión...")
 }
