@@ -2,6 +2,7 @@ package view
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/danielcuque/fase1/data"
@@ -85,15 +86,15 @@ func LoginMenu(recursive ...string) {
 	}
 
 	// Check if user exists
-	data, msg := model.CheckCredentials(data.ListApprovedStudents, answer.ID, answer.Password)
+	studentData, msg := model.CheckCredentials(data.ListApprovedStudents, answer.ID, answer.Password)
 
-	if data != nil {
-		if data.Name == "admin" && data.Id == 202100000 && data.Password == "admin" {
+	if studentData != nil {
+		data.UserLogged = studentData
+		if studentData.Name == "admin" && studentData.Id == 202100000 && studentData.Password == "admin" {
 			AdminMenu()
 		} else {
 			StudentMenu()
 		}
-
 	} else {
 		LoginMenu(msg)
 	}
@@ -137,24 +138,49 @@ func AddNewStudent() {
 	// Check if student already exists
 	_, msg := model.CheckCredentials(data.ListApprovedStudents, answer.Carnet, answer.Password)
 
-	if msg == "" {
+	if msg == "Usuario no encontrado" {
+		model.AddStudentToQueue(
+			answer.Nombre+" "+answer.Apellido,
+			answer.Carnet,
+			answer.Password,
+		)
+		ModifyText("red+bh", "El estudiante ya existe")
+		AdminMenu()
+	} else {
 		ModifyText("red+bh", "El estudiante ya existe")
 		AdminMenu()
 	}
 
-	// Create new student
-	model.AddStudentToQueue(
-		answer.Nombre+" "+answer.Apellido,
-		answer.Carnet,
-		answer.Password,
-	)
 }
 
 // Menu 4
 func AddManyStudents() {
 
+	ModifyText("blue+bh", "Carga masiva de estudiantes - EDDGoDrive")
+
+	answer := struct {
+		MassiveInsertion string
+	}{}
+
+	err := survey.Ask(qsMassiveInsertion, &answer)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	path := answer.MassiveInsertion
+
+	qStudents, massiveInsertionError := model.MassiveInsertion(path)
+
+	if massiveInsertionError != nil {
+		ModifyText("red+bh", massiveInsertionError.Error())
+	}
+
+	// Show how many students were added
+	ModifyText("red+bh", "Se agregaron "+strconv.Itoa(qStudents)+" estudiantes")
+
 }
 
 func LogOut() {
+	data.UserLogged = nil
 	InitialMenu()
 }

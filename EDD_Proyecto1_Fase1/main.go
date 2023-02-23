@@ -11,4 +11,12 @@ func main() {
 
 	// Show initial menu
 	view.InitialMenu()
+
+	for data.UserLogged != nil {
+		if data.UserLogged.Id == 202100000 {
+			view.AdminMenu()
+		} else {
+			view.StudentMenu()
+		}
+	}
 }

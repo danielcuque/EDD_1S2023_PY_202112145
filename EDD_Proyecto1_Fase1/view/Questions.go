@@ -93,3 +93,21 @@ var qsNewStudentForm = []*survey.Question{
 		Validate: survey.Required,
 	},
 }
+
+var qsMassiveInsertion = []*survey.Question{
+	{
+		Name: "MassiveInsertion",
+		Prompt: &survey.Input{
+			Message: "Ingresa el nombre del archivo",
+		},
+		Validate: func(val interface{}) error {
+
+			s := val.(string)
+			if !regexp.MustCompile(`[a-zA-Z0-9]+\.csv`).MatchString(s) {
+				fmt.Println()
+				return fmt.Errorf("el archivo debe ser un archivo CSV")
+			}
+			return nil
+		},
+	},
+}
