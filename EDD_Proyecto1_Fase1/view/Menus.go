@@ -237,7 +237,7 @@ func AddManyStudents() {
 	}
 
 	// Show how many students were added
-	ModifyText("green+bh", "Se agregaron "+model.TransformIdToString(qStudents)+" estudiantes")
+	ModifyText("green+bh", "Se agregaron "+model.TransformToString(qStudents)+" estudiantes")
 
 }
 

@@ -22,20 +22,20 @@ func AddStudentToQueue(name string, id string, password string) {
 
 func CheckCredentials(id string, pass string) (student *controller.Student, msg string) {
 
-	for current := data.ListApprovedStudents.Head; current != nil; current = current.Next {
-		// Check if id exists
-		if current.Data.(*controller.Student).Id == TransformId(id) {
-			// Check if password is correct
-			if current.Data.(*controller.Student).Password == pass {
-				return current.Data.(*controller.Student), "ok"
+	current := data.ListApprovedStudents.Head
+	for current != nil {
+		student := current.Data.(*controller.Student)
+		if student.Id == TransformToInt(id) {
+			if student.Password == pass {
+				return student, "ok"
 			} else {
 				return nil, "Contraseña incorrecta"
 			}
-		} else {
-			return nil, "Usuario no encontrado"
 		}
+		current = current.Next
 	}
-	return nil, "Usuario o contraseña incorrectos"
+
+	return nil, "Usuario no encontrado"
 }
 
 func CheckPendingStudents(queue *controller.Queue, isApproved bool) {
@@ -60,7 +60,7 @@ func CheckStudentLogs(student *controller.Student) {
 }
 
 func DisplayPendingStudent() {
-	ModifyTextView("white+bh", "Pendientes: "+TransformIdToString(data.QueuePendingStudents.SizeQueue()))
+	ModifyTextView("white+bh", "Pendientes: "+TransformToString(data.QueuePendingStudents.SizeQueue()))
 	ModifyTextView("white", "Estudiante actual: "+data.QueuePendingStudents.Front().(*controller.Student).Name)
 
 }
@@ -112,7 +112,7 @@ func PrintApprovedStudents(dll *controller.DoublyLinkedList) {
 	ModifyTextView("white", "")
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"Nombre", "Carné"})
-	table.SetFooter([]string{"Total", TransformIdToString(dll.SizeList() - 1)})
+	table.SetFooter([]string{"Total", TransformToString(dll.SizeList() - 1)})
 	table.AppendBulk(StudentListToTableData(data.ListApprovedStudents)) // Add Bulk Data
 	table.Render()
 	fmt.Println()
@@ -123,7 +123,7 @@ func PrintStudentLogs(stundet *controller.Student) {
 	ModifyTextView("white", "")
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"Fecha", "Descripción"})
-	table.SetFooter([]string{"Total", TransformIdToString(stundet.StackLogs.SizeStack())})
+	table.SetFooter([]string{"Total", TransformToString(stundet.StackLogs.SizeStack())})
 	table.AppendBulk(StackToTableData(stundet.StackLogs)) // Add Bulk Data
 	table.Render()
 	fmt.Println()
@@ -139,7 +139,7 @@ func StudentListToTableData(list *controller.DoublyLinkedList) [][]string {
 			current = current.Next
 			continue
 		}
-		row := []string{student.Name, TransformIdToString(student.Id)}
+		row := []string{student.Name, TransformToString(student.Id)}
 		data = append(data, row)
 		current = current.Next
 	}
@@ -165,7 +165,7 @@ func TransformDate(date time.Time) string {
 	return date.Format("2006-01-02 15:04:05")
 }
 
-func TransformId(id string) int {
+func TransformToInt(id string) int {
 	idInt, err := strconv.Atoi(id)
 	if err != nil {
 		panic(err)
@@ -173,7 +173,7 @@ func TransformId(id string) int {
 	return idInt
 }
 
-func TransformIdToString(id int) string {
+func TransformToString(id int) string {
 	idString := strconv.Itoa(id)
 	return idString
 }
