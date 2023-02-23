@@ -44,7 +44,15 @@ var qsLoginForm = []*survey.Question{
 		Prompt: &survey.Input{
 			Message: "Ingresa tu usuario",
 		},
-		Validate: survey.Required,
+		Validate: func(ans interface{}) error {
+			s := ans.(string)
+			if len(s) != 9 && !regexp.MustCompile(`[0-9]{9}`).MatchString(s) {
+				fmt.Println()
+				return fmt.Errorf("el usuario debe tener 9 dígitos")
+			}
+			return nil
+
+		},
 	},
 	{
 		Name: "Password",
@@ -134,8 +142,7 @@ var qsStudentMenu = []*survey.Question{
 		Prompt: &survey.Select{
 			Message: "Elige una opción",
 			Options: []string{
-				"1. Ver mi información",
-				"3. Cerrar sesión",
+				"1. Cerrar sesión",
 			},
 		},
 		Validate: survey.Required,

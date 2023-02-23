@@ -4,11 +4,14 @@ import (
 	"github.com/danielcuque/fase1/controller"
 )
 
-// DoublyLinkedList struct
+// Global variables
 var ListApprovedStudents = controller.NewDoublyLinkedList()
 var QueuePendingStudents = controller.NewQueue()
+
+// Describe the actions of the admin when aproving or rejecting a student
 var AdminStackLogs = controller.NewStack()
-var StudenStacktLogs = controller.NewStack()
+
+var ListStudentLogs = controller.NewDoublyLinkedList()
 var Exit = false
 
 // Insert admin user

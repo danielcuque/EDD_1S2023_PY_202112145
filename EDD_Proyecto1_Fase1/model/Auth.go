@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/danielcuque/fase1/controller"
 	"github.com/danielcuque/fase1/data"
@@ -19,9 +20,9 @@ func AddStudentToQueue(name string, id string, password string) {
 	data.QueuePendingStudents.Enqueue(newStudent)
 }
 
-func CheckCredentials(dll *controller.DoublyLinkedList, id string, pass string) (student *controller.Student, msg string) {
+func CheckCredentials(id string, pass string) (student *controller.Student, msg string) {
 
-	for current := dll.Head; current != nil; current = current.Next {
+	for current := data.ListApprovedStudents.Head; current != nil; current = current.Next {
 		// Check if id exists
 		if current.Data.(*controller.Student).Id == TransformId(id) {
 			// Check if password is correct
@@ -41,17 +42,27 @@ func CheckPendingStudents(queue *controller.Queue, isApproved bool) {
 
 	if isApproved {
 		ModifyTextView("green", "Estudiante aprobado")
-		data.ListApprovedStudents.InsertAtEnd(queue.Dequeue())
+		student := queue.Dequeue()
+		data.ListApprovedStudents.InsertAtEnd(student)
+		data.AdminStackLogs.Push(controller.NewLog("Se aprobó al estudiante " + student.(*controller.Student).Name))
 	} else {
+		student := queue.Dequeue()
+		data.AdminStackLogs.Push(controller.NewLog("Se rechazó al estudiante " + student.(*controller.Student).Name))
 		ModifyTextView("red", "Estudiante rechazado")
-		queue.Dequeue()
+
 	}
 
+}
+
+func CheckStudentLogs(student *controller.Student) {
+	node := controller.NewLog("Se inicio sesión")
+	student.StackLogs.Push(node)
 }
 
 func DisplayPendingStudent() {
 	ModifyTextView("white+bh", "Pendientes: "+TransformIdToString(data.QueuePendingStudents.SizeQueue()))
 	ModifyTextView("white", "Estudiante actual: "+data.QueuePendingStudents.Front().(*controller.Student).Name)
+
 }
 
 func MassiveInsertion(filename string) (int, error) {
@@ -107,6 +118,17 @@ func PrintApprovedStudents(dll *controller.DoublyLinkedList) {
 	fmt.Println()
 }
 
+func PrintStudentLogs(stundet *controller.Student) {
+	ModifyTextView("blue+bh", "Logs del estudiante "+stundet.Name)
+	ModifyTextView("white", "")
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Fecha", "Descripción"})
+	table.SetFooter([]string{"Total", TransformIdToString(stundet.StackLogs.SizeStack())})
+	table.AppendBulk(StackToTableData(stundet.StackLogs)) // Add Bulk Data
+	table.Render()
+	fmt.Println()
+}
+
 func StudentListToTableData(list *controller.DoublyLinkedList) [][]string {
 	data := make([][]string, 0)
 
@@ -123,6 +145,24 @@ func StudentListToTableData(list *controller.DoublyLinkedList) [][]string {
 	}
 
 	return data
+}
+
+func StackToTableData(stack *controller.Stack) [][]string {
+	data := make([][]string, 0)
+
+	current := stack.Top
+	for current != nil {
+		log := current.Data.(*controller.Log)
+		row := []string{TransformDate(log.Date), log.Desc}
+		data = append(data, row)
+		current = current.Next
+	}
+
+	return data
+}
+
+func TransformDate(date time.Time) string {
+	return date.Format("2006-01-02 15:04:05")
 }
 
 func TransformId(id string) int {

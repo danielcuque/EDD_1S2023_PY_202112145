@@ -3,9 +3,10 @@ package controller
 import "strconv"
 
 type Student struct {
-	Id       int
-	Name     string
-	Password string
+	Id        int
+	Name      string
+	Password  string
+	StackLogs *Stack
 }
 
 func NewStudent(id string, name string, password string) *Student {
@@ -15,8 +16,9 @@ func NewStudent(id string, name string, password string) *Student {
 	}
 
 	return &Student{
-		Id:       idInt,
-		Name:     name,
-		Password: password,
+		Id:        idInt,
+		Name:      name,
+		Password:  password,
+		StackLogs: NewStack(),
 	}
 }

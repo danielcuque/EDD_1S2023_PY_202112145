@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/AlecAivazis/survey/v2"
+	"github.com/danielcuque/fase1/controller"
 	"github.com/danielcuque/fase1/data"
 	"github.com/danielcuque/fase1/model"
 )
@@ -65,7 +66,12 @@ func AdminMenu() {
 }
 
 // StudentMenu muestra el menú de estudiante y realiza una acción basada en la opción seleccionada por el usuario
-func StudentMenu() {
+func StudentMenu(student *controller.Student) {
+	ModifyText("blue+bh", "Se ha iniciado sesión correctamente")
+	ModifyText("blue+bh", "A continuación se muestran sus bitácoras")
+
+	model.CheckStudentLogs(student)
+	model.PrintStudentLogs(student)
 
 	answer := struct {
 		StudentMenu string
@@ -80,12 +86,9 @@ func StudentMenu() {
 
 		switch answer.StudentMenu[0] {
 		case '1':
-			ModifyText("blue+bh", "Subir archivo")
-		case '2':
 			LogOut()
 			return
 		}
-
 	}
 
 }
@@ -109,13 +112,13 @@ func LoginMenu(recursive ...string) {
 	}
 
 	// Check if user exists
-	studentData, msg := model.CheckCredentials(data.ListApprovedStudents, answer.ID, answer.Password)
+	studentData, msg := model.CheckCredentials(answer.ID, answer.Password)
 
 	if studentData != nil {
 		if studentData.Name == "admin" && studentData.Id == 202100000 && studentData.Password == "admin" {
 			AdminMenu()
 		} else {
-			StudentMenu()
+			StudentMenu(studentData)
 		}
 	} else {
 		LoginMenu(msg)
@@ -140,6 +143,11 @@ func SelectPendingStudents() {
 		answer := struct {
 			AproveStudent string
 		}{}
+
+		if data.QueuePendingStudents.IsEmpty() {
+			ModifyText("red+bh", "No hay estudiantes pendientes")
+			return
+		}
 
 		model.DisplayPendingStudent()
 
@@ -190,7 +198,7 @@ func AddNewStudent() {
 	}
 
 	// Check if student already exists
-	_, msg := model.CheckCredentials(data.ListApprovedStudents, answer.Carnet, answer.Password)
+	_, msg := model.CheckCredentials(answer.Carnet, answer.Password)
 
 	if msg == "Usuario no encontrado" {
 		model.AddStudentToQueue(
