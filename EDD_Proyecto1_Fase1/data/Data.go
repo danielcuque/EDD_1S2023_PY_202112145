@@ -16,5 +16,5 @@ var Exit = false
 
 // Insert admin user
 func InsertAdmin() {
-	ListApprovedStudents.InsertAtEnd(controller.NewStudent("202100000", "admin", "admin"))
+	ListApprovedStudents.Insert(controller.NewStudent("202100000", "admin", "admin"))
 }

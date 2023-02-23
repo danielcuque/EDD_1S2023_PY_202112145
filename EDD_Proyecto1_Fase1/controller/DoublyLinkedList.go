@@ -37,23 +37,7 @@ func NewDoublyLinkedList() *DoublyLinkedList {
 	}
 }
 
-func (dll *DoublyLinkedList) InsertAtStart(data interface{}) *Node {
-	node := NewNode(data)
-	if dll.IsEmpty() {
-		dll.Head = node
-
-	} else {
-		node.Next = dll.Head
-		dll.Head.Prev = node
-		dll.Head = node
-	}
-
-	dll.Size++
-	return node
-
-}
-
-func (dll *DoublyLinkedList) InsertAtEnd(data interface{}) *Node {
+func (dll *DoublyLinkedList) Insert(data interface{}) *Node {
 	node := NewNode(data)
 	if dll.IsEmpty() {
 		dll.Head = node
@@ -87,39 +71,6 @@ func (dll *DoublyLinkedList) InsertAtEnd(data interface{}) *Node {
 	current.Next = node
 	dll.Size++
 	return node
-}
-
-func (dll *DoublyLinkedList) RemoveAtStart() interface{} {
-	if dll.IsEmpty() {
-		return nil
-	}
-
-	data := dll.Head.Data
-	dll.Head = dll.Head.Next
-
-	if dll.Head != nil {
-		dll.Head.Prev = nil
-	}
-
-	dll.Size--
-	return data
-}
-
-func (dll *DoublyLinkedList) RemoveAtEnd() interface{} {
-	if dll.IsEmpty() {
-		return nil
-	}
-
-	data := dll.Tail.Data
-	if dll.Head == dll.Tail {
-		dll.Head = nil
-		dll.Tail = nil
-	} else {
-		dll.Tail = dll.Tail.Prev
-		dll.Tail.Next = nil
-	}
-	dll.Size--
-	return data
 }
 
 func (dll *DoublyLinkedList) Print() {

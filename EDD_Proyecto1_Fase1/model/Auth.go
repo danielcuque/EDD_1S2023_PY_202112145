@@ -43,8 +43,9 @@ func CheckPendingStudents(queue *controller.Queue, isApproved bool) {
 	if isApproved {
 		ModifyTextView("green", "Estudiante aprobado")
 		student := queue.Dequeue()
-		data.ListApprovedStudents.InsertAtEnd(student)
+		data.ListApprovedStudents.Insert(student)
 		data.AdminStackLogs.Push(controller.NewLog("Se aprobó al estudiante " + student.(*controller.Student).Name))
+		GraphListApprovedStudent()
 	} else {
 		student := queue.Dequeue()
 		data.AdminStackLogs.Push(controller.NewLog("Se rechazó al estudiante " + student.(*controller.Student).Name))

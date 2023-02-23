@@ -1,0 +1,35 @@
+digraph {
+    node [color="#FFEDBB", shape=box style=filled]
+    label="Estudiantes aprobados"
+    nodesep=1
+
+
+    // Primer subgrafo (fila)
+    subgraph row1 {
+        rankdir=LR
+        Estudiante1[label="Estudiante 1"]
+        C11[label="Columna 1"]
+        C22[label="Columna 2"]
+        Estudiante1 -> C11 -> C22
+    }
+
+    // Segundo subgrafo (fila)
+    subgraph row2 {
+        rankdir=LR
+        Estudiante2[label="Estudiante 2"]
+        C1[label="Columna 1"]
+        C2[label="Columna 2"]
+        Estudiante2 -> C1 -> C2
+    }
+    
+     subgraph row3 {
+        rankdir=LR
+        Estudiante3[label="Estudiante 3"]
+        C13[label="Columna 1"]
+        C23[label="Columna 2"]
+        Estudiante3 -> C13 -> C23
+    }
+
+    // Conexión vertical entre las filas
+    {rankdir=TB; Estudiante1 -> Estudiante2 -> Estudiante3[constraint=false] [dir=both]}
+}

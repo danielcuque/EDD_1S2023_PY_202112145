@@ -2,6 +2,7 @@ package view
 
 import (
 	"fmt"
+	"path/filepath"
 	"regexp"
 
 	"github.com/AlecAivazis/survey/v2"
@@ -107,7 +108,12 @@ var qsMassiveInsertion = []*survey.Question{
 		Name: "MassiveInsertion",
 		Prompt: &survey.Input{
 			Message: "Ingresa el nombre del archivo",
+			Suggest: func(toComplete string) []string {
+				files, _ := filepath.Glob(toComplete + "*.csv")
+				return files
+			},
 		},
+
 		Validate: func(val interface{}) error {
 
 			s := val.(string)
