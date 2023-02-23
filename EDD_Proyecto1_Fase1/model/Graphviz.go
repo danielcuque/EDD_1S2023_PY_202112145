@@ -124,10 +124,6 @@ func GraphListApprovedStudent() {
 	Execute(imageName, filename)
 }
 
-func GraphLogStudent() {
-
-}
-
 func GraphQueuePendingStudent() {
 	if data.QueuePendingStudents.SizeQueue() == 0 {
 		return
@@ -144,13 +140,26 @@ func GraphQueuePendingStudent() {
 		label="Estudiantes pendientes"
 		}
 	`
-	// current := data.ListApprovedStudents.Head
-	// for current != nil {
-	// 	student := current.Data.(*controller.Student)
 
-	// }
+	// Recorremos la cola de estudiantes
+	current := data.QueuePendingStudents.Head
+	counter := 0
+	for current != nil {
+		student := current.Data.(*controller.Student)
+		graph += `Estudiante` + TransformToString(counter) + `[label="` + student.Name + "\\n " + TransformToString(student.Id) + `"]` + "\n"
+		current = current.Next
+		counter++
+	}
 
-	// Generamos los nodos de cada estudiante
+	// Generamos las conexiones
+	for i := 0; i < counter; i++ {
+		if i == counter-1 {
+			break
+		}
+		graph += `Estudiante` + TransformToString(i) + `->Estudiante` + TransformToString(i+1) + "\n"
+	}
+
+	graph += `}`
 
 	GenerateFile(filename)
 	GenerateFileContent(graph, filename)
@@ -158,5 +167,39 @@ func GraphQueuePendingStudent() {
 }
 
 func GraphStackAdminLog() {
+	if data.AdminStackLogs.SizeStack() == 0 {
+		return
+	}
+
+	filename := "dot/logs_administrador.dot"
+	imageName := "dot/logs_administrador.jpg"
+
+	var graph string
+	graph += `
+		digraph {
+		node [color="#FFEDBB", shape=box style=filled]
+		label="Logs administrador"
+		}
+	`
+	// Recorremos la pila de logs
+	current := data.AdminStackLogs.Top
+	counter := 0
+	for current != nil {
+		log := current.Data.(*controller.Log)
+		graph += `Log` + TransformToString(counter) + `[label="` + log.Desc + "\\n " + TransformDate(log.Date) + `"]` + "\n"
+		current = current.Next
+		counter++
+	}
+
+	// Generamos las conexiones entre los nodos
+	for i := 0; i < counter-1; i++ {
+		graph += `Log` + TransformToString(i) + `->Log` + TransformToString(i+1) + "\n"
+	}
+
+	graph += `}`
+
+	GenerateFile(filename)
+	GenerateFileContent(graph, filename)
+	Execute(imageName, filename)
 
 }

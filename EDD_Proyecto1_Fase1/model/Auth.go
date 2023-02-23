@@ -18,6 +18,8 @@ func AddStudentToQueue(name string, id string, password string) {
 	// Insertar a la cola
 	newStudent := controller.NewStudent(id, name, password)
 	data.QueuePendingStudents.Enqueue(newStudent)
+	GraphQueuePendingStudent()
+	GraphStackAdminLog()
 }
 
 func CheckCredentials(id string, pass string) (student *controller.Student, msg string) {
