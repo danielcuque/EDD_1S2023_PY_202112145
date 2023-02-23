@@ -111,3 +111,19 @@ var qsMassiveInsertion = []*survey.Question{
 		},
 	},
 }
+
+var qsAproveStudent = []*survey.Question{
+	{
+		Name: "AproveStudent",
+		Prompt: &survey.Select{
+
+			Message: "Elige una opción",
+			Options: []string{
+				"1. Aprobar estudiante",
+				"2. Rechazar estudiante",
+				"3. Volver al menú principal",
+			},
+		},
+		Validate: survey.Required,
+	},
+}

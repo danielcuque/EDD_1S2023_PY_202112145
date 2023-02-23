@@ -1,16 +1,20 @@
 package controller
 
 type Queue struct {
-	Head, Tail *Node
+	Head, Tail *SimpleNode
 	Size       int
 }
 
 func NewQueue() *Queue {
-	return &Queue{}
+	return &Queue{
+		Head: nil,
+		Tail: nil,
+		Size: 0,
+	}
 }
 
 func (q *Queue) Enqueue(data interface{}) {
-	node := &Node{Data: data}
+	node := NewSimpleNode(data)
 	if q.Size == 0 {
 		q.Head = node
 		q.Tail = node
@@ -18,6 +22,7 @@ func (q *Queue) Enqueue(data interface{}) {
 		q.Tail.Next = node
 		q.Tail = node
 	}
+	q.Size++
 }
 
 func (q *Queue) Dequeue() interface{} {
@@ -38,7 +43,7 @@ func (q *Queue) SizeQueue() int {
 	return q.Size
 }
 
-func (q *Queue) Peek() interface{} {
+func (q *Queue) Front() interface{} {
 	if q.Size == 0 {
 		return nil
 	}

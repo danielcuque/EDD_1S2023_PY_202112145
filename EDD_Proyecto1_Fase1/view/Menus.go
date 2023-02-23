@@ -49,9 +49,9 @@ func AdminMenu() {
 
 	switch answer.AdminMenu {
 	case "1. Ver estudiantes pendientes":
-		PendingStudents()
+		SelectPendingStudents()
 	case "2. Ver estudiantes del sistema":
-		DisplayAllStudents()
+		DisplayApprovedStudents()
 	case "3. Registrar nuevo estudiante":
 		AddNewStudent()
 	case "4. Carga masiva de estudiantes":
@@ -102,16 +102,42 @@ func LoginMenu(recursive ...string) {
 }
 
 // Menu 1
-func PendingStudents() {
+func SelectPendingStudents() {
 
+	ModifyText("blue+bh", "Estudiantes pendientes - EDDGoDrive")
+
+	//Print all students
+	backToMenu := false
+	for !backToMenu {
+
+		answer := struct {
+			AproveStudent string
+		}{}
+
+		err := survey.Ask(qsAproveStudent, &answer)
+		if err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+
+		switch answer.AproveStudent[0] {
+		case '1':
+			model.CheckPendingStudents(data.QueuePendingStudents, true)
+		case '2':
+			model.CheckPendingStudents(data.QueuePendingStudents, false)
+		case '3':
+			backToMenu = true
+		}
+
+	}
 }
 
 // Menu 2
-func DisplayAllStudents() {
+func DisplayApprovedStudents() {
 	ModifyText("blue+bh", "Estudiantes del sistema - EDDGoDrive")
 
 	//Print all students
-	model.PrintStudents(
+	model.PrintApprovedStudents(
 		data.ListApprovedStudents,
 	)
 
@@ -144,8 +170,7 @@ func AddNewStudent() {
 			answer.Carnet,
 			answer.Password,
 		)
-		ModifyText("red+bh", "El estudiante ya existe")
-		AdminMenu()
+		ModifyText("green+bh", "El estudiante se ha agregado a la cola de espera")
 	} else {
 		ModifyText("red+bh", "El estudiante ya existe")
 		AdminMenu()
@@ -173,10 +198,11 @@ func AddManyStudents() {
 
 	if massiveInsertionError != nil {
 		ModifyText("red+bh", massiveInsertionError.Error())
+		return
 	}
 
 	// Show how many students were added
-	ModifyText("red+bh", "Se agregaron "+strconv.Itoa(qStudents)+" estudiantes")
+	ModifyText("green+bh", "Se agregaron "+strconv.Itoa(qStudents)+" estudiantes")
 
 }
 

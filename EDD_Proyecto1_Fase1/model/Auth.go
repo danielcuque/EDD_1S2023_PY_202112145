@@ -9,6 +9,7 @@ import (
 
 	"github.com/danielcuque/fase1/controller"
 	"github.com/danielcuque/fase1/data"
+	"github.com/mgutz/ansi"
 )
 
 func MassiveInsertion(filename string) (int, error) {
@@ -49,7 +50,12 @@ func AddStudentToQueue(name string, id string, password string) {
 	data.QueuePendingStudents.Enqueue(newStudent)
 }
 
-func PrintStudents(dll *controller.DoublyLinkedList) {
+func PrintApprovedStudents(dll *controller.DoublyLinkedList) {
+	if dll.SizeList() == 1 {
+		fmt.Println("No hay estudiantes registrados")
+		return
+	}
+
 	current := dll.Head
 	for current != nil {
 		student := current.Data.(*controller.Student)
@@ -57,12 +63,34 @@ func PrintStudents(dll *controller.DoublyLinkedList) {
 			current = current.Next
 			continue
 		}
-		fmt.Printf(
-			"Nombre: %s, Carnet: %d\n", student.Name, student.Id,
-		)
-
+		ModifyTextView("orange", "Nombre: "+student.Name+" - Carnet: "+strconv.Itoa(student.Id))
 		current = current.Next
 	}
+}
+
+func ModifyTextView(properties string, text string) {
+	foregroundColor := ansi.ColorCode(properties)
+	fmt.Println(foregroundColor, text)
+	fmt.Println()
+}
+
+func CheckPendingStudents(queue *controller.Queue, isApproved bool) {
+	if queue.SizeQueue() == 0 {
+		ModifyTextView("red", "No hay estudiantes pendientes")
+		return
+	}
+
+	ModifyTextView("white+bh", "Pendientes"+strconv.Itoa(queue.SizeQueue()))
+	ModifyTextView("white", "Estudiante actual: "+queue.Front().(*controller.Student).Name)
+
+	if isApproved {
+		ModifyTextView("green", "Estudiante aprobado")
+		data.ListApprovedStudents.InsertAtEnd(queue.Dequeue())
+	} else {
+		ModifyTextView("red", "Estudiante rechazado")
+		queue.Dequeue()
+	}
+
 }
 
 func TransformId(id string) int {
