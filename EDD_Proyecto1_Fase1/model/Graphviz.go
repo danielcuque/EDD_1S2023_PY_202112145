@@ -22,7 +22,7 @@ func GenerateFile(filename string) {
 	}
 }
 
-func GenerateFileDot(content string, filename string) {
+func GenerateFileContent(content string, filename string) {
 	var file, err = os.OpenFile(filename, os.O_RDWR, 0644)
 	if err != nil {
 		return
@@ -59,26 +59,31 @@ func GraphListApprovedStudent() {
 
 	// Generamos el contenido del archivo .dot
 	var graph string
-	var connectionStudents string = `{rankdir=TB;`
+	var connectionStudents string = "\n" + `{rankdir=TB;`
 
 	// Generamos el contenido del archivo .dot
 
-	graph += `
-		digraph {
+	graph += `digraph {
 		node [color="#FFEDBB", shape=box style=filled]
 		label="Estudiantes aprobados"
 		nodesep=1
 	`
-	current := data.ListApprovedStudents.Head.Next
+	current := data.ListApprovedStudents.Head
 	counterStudents := 0
 	for current != nil {
 		student := current.Data.(*controller.Student)
+
+		if student.Id == 202100000 {
+			current = current.Next
+			continue
+		}
+
 		name := student.Name
 		carnet := TransformToString(student.Id)
 
-		graph += `subgraph cluster_` + carnet + ` {
+		graph += "\n" + `subgraph ` + carnet + ` {
 				rankdir=LR
-				Estudiante` + TransformToString(counterStudents) + `label="` + name + "\n" + carnet + `"`
+				Estudiante` + TransformToString(counterStudents) + `[label="` + name + "\\n" + carnet + `"]` + "\n"
 
 		// Generamos los nodos de la pila de logs
 		currentLog := student.StackLogs.Top
@@ -86,12 +91,10 @@ func GraphListApprovedStudent() {
 
 		for currentLog != nil {
 			log := currentLog.Data.(*controller.Log)
-			graph += `Log` + carnet + TransformToString(counterLogs) + `[label="` + log.Desc + `"]`
+			graph += `Log` + carnet + TransformToString(counterLogs) + `[label="` + log.Desc + "\\n " + TransformDate(log.Date) + `"]` + "\n"
 			currentLog = currentLog.Next
 			counterLogs++
 		}
-
-		// Connect the nodes of the stack
 
 		if counterLogs > 0 {
 			graph += `Estudiante` + TransformToString(counterStudents)
@@ -117,7 +120,7 @@ func GraphListApprovedStudent() {
 	graph += `}`
 
 	GenerateFile(filename)
-	GenerateFileDot(graph, filename)
+	GenerateFileContent(graph, filename)
 	Execute(imageName, filename)
 }
 
@@ -150,7 +153,7 @@ func GraphQueuePendingStudent() {
 	// Generamos los nodos de cada estudiante
 
 	GenerateFile(filename)
-	GenerateFileDot(graph, filename)
+	GenerateFileContent(graph, filename)
 	Execute(imageName, filename)
 }
 
