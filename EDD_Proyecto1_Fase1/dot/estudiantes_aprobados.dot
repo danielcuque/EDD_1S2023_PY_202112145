@@ -3,108 +3,96 @@ digraph {
 		label="Estudiantes aprobados"
 		nodesep=1
 	
-subgraph 200233360 {
+subgraph 201019694 {
 				rankdir=LR
-				Estudiante0[label="Ainslie\n200233360"]
+				Estudiante0[label="Henderson Hernandez\n201019694"]
 }
-subgraph 200253916 {
+subgraph 201222535 {
 				rankdir=LR
-				Estudiante1[label="Ileane\n200253916"]
-}
-subgraph 200292806 {
-				rankdir=LR
-				Estudiante2[label="Leigh\n200292806"]
-}
-subgraph 201293165 {
-				rankdir=LR
-				Estudiante3[label="Michele\n201293165"]
+				Estudiante1[label="Miguel Sac\n201222535"]
 }
 subgraph 201403877 {
 				rankdir=LR
-				Estudiante4[label="Ebany Larios\n201403877"]
+				Estudiante2[label="Ebany Larios\n201403877"]
 }
-subgraph 201709018 {
+subgraph 201503617 {
 				rankdir=LR
-				Estudiante5[label="Cristian Suy\n201709018"]
+				Estudiante3[label="Olivert Vargas\n201503617"]
+}
+subgraph 201700490 {
+				rankdir=LR
+				Estudiante4[label="Marvin Castellanos\n201700490"]
+}
+subgraph 201700653 {
+				rankdir=LR
+				Estudiante5[label="Kevyn Girón\n201700653"]
+}
+subgraph 201700918 {
+				rankdir=LR
+				Estudiante6[label="Cristian Suy\n201700918"]
 }
 subgraph 201780044 {
 				rankdir=LR
-				Estudiante6[label="Leonardo Martinez\n201780044"]
+				Estudiante7[label="Leonardo Martinez\n201780044"]
 }
-subgraph 202208364 {
+subgraph 201801683 {
 				rankdir=LR
-				Estudiante7[label="Jeremias\n202208364"]
+				Estudiante8[label="Juan Augusto\n201801683"]
 }
-subgraph 202237376 {
+subgraph 201807411 {
 				rankdir=LR
-				Estudiante8[label="Dino\n202237376"]
+				Estudiante9[label="Pablo Fernández\n201807411"]
 }
-subgraph 202254579 {
+subgraph 201900570 {
 				rankdir=LR
-				Estudiante9[label="Kelcy\n202254579"]
+				Estudiante10[label="Jonatan Gonzalez\n201900570"]
 }
-subgraph 202265420 {
+subgraph 201902259 {
 				rankdir=LR
-				Estudiante10[label="Cleavland\n202265420"]
+				Estudiante11[label="Lourdes Reyes\n201902259"]
 }
-subgraph 202291445 {
+subgraph 201902416 {
 				rankdir=LR
-				Estudiante11[label="Gerhardt\n202291445"]
+				Estudiante12[label="Julio Fernández\n201902416"]
 }
-subgraph 203200842 {
+subgraph 201903549 {
 				rankdir=LR
-				Estudiante12[label="Teddi\n203200842"]
+				Estudiante13[label="Alejandro Caballeros\n201903549"]
 }
-subgraph 203204793 {
+subgraph 202001800 {
 				rankdir=LR
-				Estudiante13[label="Catina\n203204793"]
+				Estudiante14[label="José Ibarra\n202001800"]
 }
-subgraph 203217368 {
+subgraph 202004807 {
 				rankdir=LR
-				Estudiante14[label="Whitby\n203217368"]
+				Estudiante15[label="Hugo Giron\n202004807"]
 }
-subgraph 203224378 {
+subgraph 202010810 {
 				rankdir=LR
-				Estudiante15[label="Ophelie\n203224378"]
+				Estudiante16[label="Velveth Pérez\n202010810"]
 }
-subgraph 203227713 {
+subgraph 202100239 {
 				rankdir=LR
-				Estudiante16[label="Dollie\n203227713"]
+				Estudiante17[label="Aída Mansilla\n202100239"]
 }
-subgraph 203244201 {
+subgraph 202100299 {
 				rankdir=LR
-				Estudiante17[label="Rodolfo\n203244201"]
+				Estudiante18[label="Mauricio Castro\n202100299"]
 }
-subgraph 203259344 {
+subgraph 202104782 {
 				rankdir=LR
-				Estudiante18[label="Stephie\n203259344"]
+				Estudiante19[label="Anthony Zea\n202104782"]
 }
-subgraph 203271963 {
+subgraph 202105561 {
 				rankdir=LR
-				Estudiante19[label="Mickie\n203271963"]
+				Estudiante20[label="Jeser Rodas\n202105561"]
 }
-subgraph 203273723 {
+subgraph 202109554 {
 				rankdir=LR
-				Estudiante20[label="Nora\n203273723"]
+				Estudiante21[label="Mario Lopez\n202109554"]
 }
-subgraph 203283048 {
+subgraph 202111478 {
 				rankdir=LR
-				Estudiante21[label="Sinclare\n203283048"]
+				Estudiante22[label="José Panaza\n202111478"]
 }
-subgraph 203283881 {
-				rankdir=LR
-				Estudiante22[label="Lothaire\n203283881"]
-}
-subgraph 203292950 {
-				rankdir=LR
-				Estudiante23[label="Talbot\n203292950"]
-}
-subgraph 203299112 {
-				rankdir=LR
-				Estudiante24[label="Lindsey\n203299112"]
-}
-subgraph 203299518 {
-				rankdir=LR
-				Estudiante25[label="Boycey\n203299518"]
-}
-{rankdir=TB;Estudiante0->Estudiante1->Estudiante2->Estudiante3->Estudiante4->Estudiante5->Estudiante6->Estudiante7->Estudiante8->Estudiante9->Estudiante10->Estudiante11->Estudiante12->Estudiante13->Estudiante14->Estudiante15->Estudiante16->Estudiante17->Estudiante18->Estudiante19->Estudiante20->Estudiante21->Estudiante22->Estudiante23->Estudiante24->Estudiante25[constraint=false] [dir=both]}}
+{rankdir=TB;Estudiante0->Estudiante1->Estudiante2->Estudiante3->Estudiante4->Estudiante5->Estudiante6->Estudiante7->Estudiante8->Estudiante9->Estudiante10->Estudiante11->Estudiante12->Estudiante13->Estudiante14->Estudiante15->Estudiante16->Estudiante17->Estudiante18->Estudiante19->Estudiante20->Estudiante21->Estudiante22[constraint=false] [dir=both]}}

@@ -138,7 +138,8 @@ func GraphQueuePendingStudent() {
 		digraph {
 		node [color="#FFEDBB", shape=box style=filled]
 		label="Estudiantes pendientes"
-		}
+		nodesep=1
+		rankdir=LR
 	`
 
 	// Recorremos la cola de estudiantes
@@ -151,12 +152,9 @@ func GraphQueuePendingStudent() {
 		counter++
 	}
 
-	// Generamos las conexiones
-	for i := 0; i < counter; i++ {
-		if i == counter-1 {
-			break
-		}
-		graph += `Estudiante` + TransformToString(i) + `->Estudiante` + TransformToString(i+1) + "\n"
+	// Generamos las conexiones para que el primero quede de ultimo
+	for i := counter - 1; i > 0; i-- {
+		graph += `Estudiante` + TransformToString(i) + `->Estudiante` + TransformToString(i-1) + "\n"
 	}
 
 	graph += `}`
@@ -179,7 +177,6 @@ func GraphStackAdminLog() {
 		digraph {
 		node [color="#FFEDBB", shape=box style=filled]
 		label="Logs administrador"
-		}
 	`
 	// Recorremos la pila de logs
 	current := data.AdminStackLogs.Top
@@ -191,7 +188,7 @@ func GraphStackAdminLog() {
 		counter++
 	}
 
-	// Generamos las conexiones entre los nodos
+	// Generamos las conexiones para que el primero quede de ultimo
 	for i := 0; i < counter-1; i++ {
 		graph += `Log` + TransformToString(i) + `->Log` + TransformToString(i+1) + "\n"
 	}

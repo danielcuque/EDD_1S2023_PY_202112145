@@ -19,7 +19,6 @@ func AddStudentToQueue(name string, id string, password string) {
 	newStudent := controller.NewStudent(id, name, password)
 	data.QueuePendingStudents.Enqueue(newStudent)
 	GraphQueuePendingStudent()
-	GraphStackAdminLog()
 }
 
 func CheckCredentials(id string, pass string) (student *controller.Student, msg string) {
@@ -52,8 +51,10 @@ func CheckPendingStudents(queue *controller.Queue, isApproved bool) {
 		student := queue.Dequeue()
 		data.AdminStackLogs.Push(controller.NewLog("Se rechazó al estudiante " + student.(*controller.Student).Name))
 		ModifyTextView("red", "Estudiante rechazado")
-
 	}
+
+	GraphStackAdminLog()
+	GraphQueuePendingStudent()
 
 }
 
