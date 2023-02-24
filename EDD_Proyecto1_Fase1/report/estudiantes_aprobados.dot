@@ -1,0 +1,28 @@
+digraph {
+		node [color="#FFEDBB", shape=box style=filled]
+		label="Estudiantes aprobados"
+		nodesep=1
+	
+subgraph 201403877 {
+				rankdir=LR
+				Estudiante0[label="Ebany Larios\n201403877"]
+Log2014038770[label="Se inicio sesión\n 2023-02-23 18:39:01"]
+Log2014038771[label="Se inicio sesión\n 2023-02-23 18:38:46"]
+Estudiante0->Log2014038770->Log2014038771}
+subgraph 201700918 {
+				rankdir=LR
+				Estudiante1[label="Cristian Suy\n201700918"]
+Log2017009180[label="Se inicio sesión\n 2023-02-23 18:39:46"]
+Log2017009181[label="Se inicio sesión\n 2023-02-23 18:39:39"]
+Log2017009182[label="Se inicio sesión\n 2023-02-23 18:39:33"]
+Log2017009183[label="Se inicio sesión\n 2023-02-23 18:39:24"]
+Estudiante1->Log2017009180->Log2017009181->Log2017009182->Log2017009183}
+subgraph 201780044 {
+				rankdir=LR
+				Estudiante2[label="Leonardo Martinez\n201780044"]
+}
+subgraph 201902259 {
+				rankdir=LR
+				Estudiante3[label="Lourdes Reyes\n201902259"]
+}
+{rankdir=TB;Estudiante0->Estudiante1->Estudiante2->Estudiante3[constraint=false] [dir=both]}}

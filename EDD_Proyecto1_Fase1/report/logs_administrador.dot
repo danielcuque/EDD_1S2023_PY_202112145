@@ -1,0 +1,12 @@
+
+		digraph {
+		node [color="#FFEDBB", shape=box style=filled]
+		label="Logs administrador"
+	Log0[label="Se aprobó al estudiante Lourdes Reyes\n 2023-02-23 18:40:10"]
+Log1[label="Se aprobó al estudiante Ebany Larios\n 2023-02-23 18:38:06"]
+Log2[label="Se aprobó al estudiante Leonardo Martinez\n 2023-02-23 18:36:29"]
+Log3[label="Se aprobó al estudiante Cristian Suy\n 2023-02-23 18:36:03"]
+Log0->Log1
+Log1->Log2
+Log2->Log3
+}

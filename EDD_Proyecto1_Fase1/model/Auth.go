@@ -47,6 +47,7 @@ func CheckPendingStudents(queue *controller.Queue, isApproved bool) {
 		data.ListApprovedStudents.Insert(student)
 		data.AdminStackLogs.Push(controller.NewLog("Se aprobó al estudiante " + student.(*controller.Student).Name))
 		GraphListApprovedStudent()
+		GenerateJSONReport()
 	} else {
 		student := queue.Dequeue()
 		data.AdminStackLogs.Push(controller.NewLog("Se rechazó al estudiante " + student.(*controller.Student).Name))

@@ -72,6 +72,7 @@ func StudentMenu(student *controller.Student) {
 
 	model.CheckStudentLogs(student)
 	model.PrintStudentLogs(student)
+	model.GraphListApprovedStudent()
 
 	answer := struct {
 		StudentMenu string
@@ -120,6 +121,7 @@ func LoginMenu(recursive ...string) {
 		} else {
 			StudentMenu(studentData)
 		}
+
 	} else {
 		LoginMenu(msg)
 	}

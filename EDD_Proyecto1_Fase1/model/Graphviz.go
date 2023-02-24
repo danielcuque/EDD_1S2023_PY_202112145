@@ -52,10 +52,10 @@ func GraphListApprovedStudent() {
 		return
 	}
 	// Generamos el archivo .dot
-	filename := "dot/estudiantes_aprobados.dot"
+	filename := "report/estudiantes_aprobados.dot"
 
 	// Generamos el archivo .jpg
-	imageName := "dot/estudiantes_aprobados.jpg"
+	imageName := "report/estudiantes_aprobados.jpg"
 
 	// Generamos el contenido del archivo .dot
 	var graph string
@@ -129,8 +129,8 @@ func GraphQueuePendingStudent() {
 		return
 	}
 
-	filename := "dot/estudiantes_pendientes.dot"
-	imageName := "dot/estudiantes_pendientes.jpg"
+	filename := "report/estudiantes_pendientes.dot"
+	imageName := "report/estudiantes_pendientes.jpg"
 
 	var graph string
 
@@ -169,8 +169,8 @@ func GraphStackAdminLog() {
 		return
 	}
 
-	filename := "dot/logs_administrador.dot"
-	imageName := "dot/logs_administrador.jpg"
+	filename := "report/logs_administrador.dot"
+	imageName := "report/logs_administrador.jpg"
 
 	var graph string
 	graph += `
