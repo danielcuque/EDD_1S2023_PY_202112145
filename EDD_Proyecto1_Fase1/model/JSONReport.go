@@ -35,8 +35,11 @@ func GenerateJSONReport() {
 		content += "\t\t\t\"carpeta_raiz\": \"" + "/" + "\"\n"
 
 		// Cerramos el objeto
-
-		content += "\t\t},\n"
+		if current.Next == nil {
+			content += "\t\t}\n"
+		} else {
+			content += "\t\t},\n"
+		}
 		current = current.Next
 	}
 
