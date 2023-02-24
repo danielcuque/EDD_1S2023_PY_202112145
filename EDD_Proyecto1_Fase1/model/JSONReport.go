@@ -34,13 +34,15 @@ func GenerateJSONReport() {
 		content += "\t\t\t\"password\": \"" + pass + "\",\n"
 		content += "\t\t\t\"carpeta_raiz\": \"" + "/" + "\"\n"
 
-		// Cerramos el objeto
-		if current.Next == nil {
-			content += "\t\t}\n"
-		} else {
-			content += "\t\t},\n"
-		}
 		current = current.Next
+		content += "\t\t}"
+		// Cerramos el objeto
+		if current != nil {
+			content += ",\n"
+		} else {
+			content += "\n"
+		}
+
 	}
 
 	content += "\t]\n"
