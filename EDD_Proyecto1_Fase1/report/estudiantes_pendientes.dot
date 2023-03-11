@@ -1,0 +1,112 @@
+
+		digraph {
+		node [color="#FFEDBB", shape=box style=filled]
+		label="Estudiantes pendientes"
+		nodesep=1
+		rankdir=LR
+	Estudiante0[label="Sebastián Godoy\n 202002940"]
+Estudiante1[label="Juan Augusto\n 201801683"]
+Estudiante2[label="Bryan Montepeque\n 201700375"]
+Estudiante3[label="Karen Gatica\n 201900603"]
+Estudiante4[label="Kevin García\n 202113553"]
+Estudiante5[label="Diego Huite\n 202003585"]
+Estudiante6[label="Josue Porres\n 202112026"]
+Estudiante7[label="Sergio Ralda\n 202103216"]
+Estudiante8[label="Juan Valle\n 202101648"]
+Estudiante9[label="Jose Melendez\n 201325511"]
+Estudiante10[label="Ethel Herrarte\n 200819325"]
+Estudiante11[label="Sergio Guix\n 201906468"]
+Estudiante12[label="José Donis\n 201801444"]
+Estudiante13[label="Marvin Castellanos\n 201700490"]
+Estudiante14[label="Ludwing Lopez\n 201907608"]
+Estudiante15[label="Sergio Bucaro\n 201800673"]
+Estudiante16[label="Christian Esquite\n 200819074"]
+Estudiante17[label="Luis Yaquian\n 202001471"]
+Estudiante18[label="Luis Lizama\n 202010023"]
+Estudiante19[label="Olivert Vargas\n 201503617"]
+Estudiante20[label="José Ibarra\n 202001800"]
+Estudiante21[label="Mauricio Castro\n 202100299"]
+Estudiante22[label="Velveth Pérez\n 202010810"]
+Estudiante23[label="Miguel Sac\n 201222535"]
+Estudiante24[label="José Panaza\n 202111478"]
+Estudiante25[label="Pablo Fernández\n 201807411"]
+Estudiante26[label="Henderson Hernandez\n 201019694"]
+Estudiante27[label="Aída Mansilla\n 202100239"]
+Estudiante28[label="Jeser Rodas\n 202105561"]
+Estudiante29[label="Anthony Zea\n 202104782"]
+Estudiante30[label="Julio Fernández\n 201902416"]
+Estudiante31[label="Hugo Giron\n 202004807"]
+Estudiante32[label="Mario Lopez\n 202109554"]
+Estudiante32->Estudiante31
+Estudiante31->Estudiante30
+Estudiante30->Estudiante29
+Estudiante29->Estudiante28
+Estudiante28->Estudiante27
+Estudiante27->Estudiante26
+Estudiante26->Estudiante25
+Estudiante25->Estudiante24
+Estudiante24->Estudiante23
+Estudiante23->Estudiante22
+Estudiante22->Estudiante21
+Estudiante21->Estudiante20
+Estudiante20->Estudiante19
+Estudiante19->Estudiante18
+Estudiante18->Estudiante17
+Estudiante17->Estudiante16
+Estudiante16->Estudiante15
+Estudiante15->Estudiante14
+Estudiante14->Estudiante13
+Estudiante13->Estudiante12
+Estudiante12->Estudiante11
+Estudiante11->Estudiante10
+Estudiante10->Estudiante9
+Estudiante9->Estudiante8
+Estudiante8->Estudiante7
+Estudiante7->Estudiante6
+Estudiante6->Estudiante5
+Estudiante5->Estudiante4
+Estudiante4->Estudiante3
+Estudiante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}studiante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}Estudiante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}udiante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}3
+Estudiante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}ante3
+Estudiante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}studiante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}tudiante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}e3
+Estudiante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}tudiante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}iante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}e3
+Estudiante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}Estudiante3->Estudiante2
+Estudiante2->Estudiante1
+Estudiante1->Estudiante0
+}

@@ -1,0 +1,29 @@
+digraph {
+		node [color="#FFEDBB", shape=box style=filled]
+		label="Estudiantes aprobados"
+		nodesep=1
+	
+subgraph 198600000 {
+				rankdir=LR
+				Estudiante0[label="Diego Maradona\n198600000"]
+Log1986000000[label="Se inicio sesión\n 2023-02-24 17:56:27"]
+Log1986000001[label="Se inicio sesión\n 2023-02-24 17:56:15"]
+Estudiante0->Log1986000000->Log1986000001}
+subgraph 200100000 {
+				rankdir=LR
+				Estudiante1[label="Leo Messi\n200100000"]
+}
+subgraph 200200000 {
+				rankdir=LR
+				Estudiante2[label="Cristiano Ronaldo\n200200000"]
+}
+subgraph 201403877 {
+				rankdir=LR
+				Estudiante3[label="Ebany Larios\n201403877"]
+Log2014038770[label="Se inicio sesión\n 2023-02-24 17:57:04"]
+Estudiante3->Log2014038770}
+subgraph 201700918 {
+				rankdir=LR
+				Estudiante4[label="Cristian Suy\n201700918"]
+}
+{rankdir=TB;Estudiante0->Estudiante1->Estudiante2->Estudiante3->Estudiante4[constraint=false] [dir=both]}}

@@ -1,0 +1,34 @@
+{
+	"alumnos": [
+		{
+			"nombre": "Diego Maradona",
+			"carnet": "198600000",
+			"password": "123",
+			"carpeta_raiz": "/"
+		},
+		{
+			"nombre": "Leo Messi",
+			"carnet": "200100000",
+			"password": "123",
+			"carpeta_raiz": "/"
+		},
+		{
+			"nombre": "Cristiano Ronaldo",
+			"carnet": "200200000",
+			"password": "1234",
+			"carpeta_raiz": "/"
+		},
+		{
+			"nombre": "Ebany Larios",
+			"carnet": "201403877",
+			"password": "qwerty12",
+			"carpeta_raiz": "/"
+		},
+		{
+			"nombre": "Cristian Suy",
+			"carnet": "201700918",
+			"password": "Cris123",
+			"carpeta_raiz": "/"
+		},
+	]
+}

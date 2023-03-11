@@ -1,0 +1,28 @@
+
+		digraph {
+		node [color="#FFEDBB", shape=box style=filled]
+		label="Logs administrador"
+	Log0[label="Se rechaz贸 al estudiante Roberto G髆ez\n 2023-02-24 17:55:06"]
+Log1[label="Se rechaz贸 al estudiante Eduardo Cuevas\n 2023-02-24 17:54:26"]
+Log2[label="Se rechaz贸 al estudiante Kevyn Gir髇\n 2023-02-24 17:54:25"]
+Log3[label="Se rechaz贸 al estudiante Jonatan Gonzalez\n 2023-02-24 17:54:24"]
+Log4[label="Se rechaz贸 al estudiante Alejandro Caballeros\n 2023-02-24 17:54:23"]
+Log5[label="Se rechaz贸 al estudiante Lourdes Reyes\n 2023-02-24 17:54:21"]
+Log6[label="Se aprob贸 al estudiante Ebany Larios\n 2023-02-24 17:54:19"]
+Log7[label="Se rechaz贸 al estudiante Leonardo Martinez\n 2023-02-24 17:54:18"]
+Log8[label="Se aprob贸 al estudiante Cristian Suy\n 2023-02-24 17:54:13"]
+Log9[label="Se aprob贸 al estudiante Leo Messi\n 2023-02-24 17:54:12"]
+Log10[label="Se aprob贸 al estudiante Cristiano Ronaldo\n 2023-02-24 17:54:11"]
+Log11[label="Se aprob贸 al estudiante Diego Maradona\n 2023-02-24 17:54:09"]
+Log0->Log1
+Log1->Log2
+Log2->Log3
+Log3->Log4
+Log4->Log5
+Log5->Log6
+Log6->Log7
+Log7->Log8
+Log8->Log9
+Log9->Log10
+Log10->Log11
+}
