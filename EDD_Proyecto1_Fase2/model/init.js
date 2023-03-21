@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     // Si el valor de admin no existe en localStorage, asignar un valor predeterminado
     if (admin === null) {
         const adminObj = new Student('admin', 'admin');
-        localStorage.setItem("admin", adminObj);
+        const adminJSON = JSON.stringify(adminObj);
+        localStorage.setItem("admin", adminJSON);
     }
 });

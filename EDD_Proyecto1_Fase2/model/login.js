@@ -11,5 +11,7 @@ loginForm.addEventListener('submit', (e) => {
     if (isLogged) {
         clearLoginForm();
         window.location.href = '/user-view.html';
+    } else {
+        alert('Carnet o contraseña incorrectos');
     }
 });
