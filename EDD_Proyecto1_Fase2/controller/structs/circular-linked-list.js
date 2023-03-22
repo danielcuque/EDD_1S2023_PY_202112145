@@ -1,4 +1,4 @@
-class CircularLinkedList {
+export class CircularLinkedList {
   constructor() {
     this.head = null;
     this.tail = null;

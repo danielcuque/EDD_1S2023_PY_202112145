@@ -7,12 +7,12 @@ class NodeAVL {
     }
 }
 
-class TreeAVL{
-    constructor(){
+export class TreeAVL {
+    constructor() {
         this.root = null;
     }
 
-    insert(value){
+    insert(value) {
         this.root = this.insertNode(this.root, value);
     }
 

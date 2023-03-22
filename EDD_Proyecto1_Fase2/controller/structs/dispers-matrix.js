@@ -1,4 +1,4 @@
-class DispersMatrix {
+export class DispersMatrix {
     constructor() {
         this.matrix = [];
         this.rows = 0;

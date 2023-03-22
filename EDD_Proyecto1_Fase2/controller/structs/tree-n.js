@@ -1,47 +1,47 @@
-class TreeN{
-    
-    constructor(){
+export class TreeN {
+
+    constructor() {
         this.root = null;
     }
-    
-    addNode(node){
-        if(this.root === null){
+
+    addNode(node) {
+        if (this.root === null) {
             this.root = node;
-        }else{
+        } else {
             this.root.addNode(node);
         }
     }
-    
-    removeNode(node){
-        if(this.root === null){
+
+    removeNode(node) {
+        if (this.root === null) {
             return;
-        }else{
+        } else {
             this.root.removeNode(node);
         }
     }
-    
-    searchNode(node){
-        if(this.root === null){
+
+    searchNode(node) {
+        if (this.root === null) {
             return;
-        }else{
+        } else {
             this.root.searchNode(node);
         }
     }
-    
-    printTree(){
-        if(this.root === null){
+
+    printTree() {
+        if (this.root === null) {
             return;
-        }else{
+        } else {
             this.root.printTree();
         }
     }
-    
-    clearTree(){
+
+    clearTree() {
         this.root = null;
     }
-    
-    getRoot(){
+
+    getRoot() {
         return this.root;
     }
-    
+
 }
