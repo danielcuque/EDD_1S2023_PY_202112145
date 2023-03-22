@@ -1,7 +1,8 @@
 export class Student {
-    constructor(name, id) {
+    constructor(name, id, password, rootFolder) {
         this.name = name;
         this.id = id;
-        isAdmin = false;
+        this.password = password;
+        this.rootFolder = rootFolder;
     }
 }

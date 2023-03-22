@@ -22,7 +22,7 @@ export class TreeAVL {
         return node.height;
     }
 
-    insertar(student) {
+    insert(student) {
         this.root = this.add(student, this.root);
     }
 
@@ -42,47 +42,45 @@ export class TreeAVL {
                 node.right = this.add(student, node.right);
                 if (this.height(node.right) - this.height(node.left) == 2) {
                     if (student > node.right.student) {
-                        nodo = this.rightRotate(nodo);
+                        node = this.rightRotate(node);
                     } else {
-                        nodo = this.doubleRightRotate(nodo);
+                        node = this.doubleRightRotate(node);
                     }
                 }
             } else {
-                nodo.student = student;
+                node.student = student;
             }
         }
-        nodo.height = this.max(this.height(nodo.left), this.height(nodo.right)) + 1
-        return nodo;
+        node.height = this.max(this.height(node.left), this.height(node.right)) + 1
+        return node;
     }
 
-    _
-
-    leftRotate(nodo) {
-        let aux = nodo.left;
-        nodo.left = aux.right;
-        aux.right = nodo;
-        nodo.height = this.max(this.height(nodo.right), this.height(nodo.left)) + 1;
-        aux.height = this.max(this.height(nodo.left), nodo.height) + 1;
+    leftRotate(node) {
+        let aux = node.left;
+        node.left = aux.right;
+        aux.right = node;
+        node.height = this.max(this.height(node.right), this.height(node.left)) + 1;
+        aux.height = this.max(this.height(node.left), node.height) + 1;
         return aux;
     }
 
-    doubleLeftRotate(nodo) {
-        nodo.left = this.rightRotate(nodo.left);
-        return this.leftRotate(nodo);
+    doubleLeftRotate(node) {
+        node.left = this.rightRotate(node.left);
+        return this.leftRotate(node);
     }
 
-    rightRotate(nodo) {
-        var aux = nodo.right;
-        nodo.right = aux.left;
-        aux.left = nodo;
-        nodo.height = this.max(this.height(nodo.right), this.height(nodo.left)) + 1;
-        aux.height = this.max(this.height(nodo.right), nodo.height) + 1;
+    rightRotate(node) {
+        var aux = node.right;
+        node.right = aux.left;
+        aux.left = node;
+        node.height = this.max(this.height(node.right), this.height(node.left)) + 1;
+        aux.height = this.max(this.height(node.right), node.height) + 1;
         return aux;
     }
 
-    doubleRightRotate(nodo) {
-        nodo.right = this.leftRotate(nodo.right);
-        return this.rightRotate(nodo);
+    doubleRightRotate(node) {
+        node.right = this.leftRotate(node.right);
+        return this.rightRotate(node);
     }
 
 
@@ -90,11 +88,11 @@ export class TreeAVL {
         this.pre_orden(this.root);
     }
 
-    pre_orden(nodo) {
-        if (nodo != null) {
-            console.log("Valor:", nodo.student);
-            this.pre_orden(nodo.left);
-            this.pre_orden(nodo.right);
+    pre_orden(node) {
+        if (node != null) {
+            console.log("Valor:", node.student);
+            this.pre_orden(node.left);
+            this.pre_orden(node.right);
         }
     }
 
@@ -102,11 +100,11 @@ export class TreeAVL {
         this.in_orden(this.root);
     }
 
-    in_orden(nodo) {
-        if (nodo != null) {
-            this.in_orden(nodo.left);
-            console.log("Valor:", nodo.student);
-            this.in_orden(nodo.right);
+    in_orden(node) {
+        if (node != null) {
+            this.in_orden(node.left);
+            console.log("Valor:", node.student);
+            this.in_orden(node.right);
         }
     }
 
@@ -114,11 +112,15 @@ export class TreeAVL {
         this.post_orden(this.root);
     }
 
-    post_orden(nodo) {
-        if (nodo != null) {
-            this.post_orden(nodo.left);
-            this.post_orden(nodo.right);
-            console.log("Valor:", nodo.student);
+    post_orden(node) {
+        if (node != null) {
+            this.post_orden(node.left);
+            this.post_orden(node.right);
+            console.log("Valor:", node.student);
         }
+    }
+
+    getRoot() {
+        return this.root;
     }
 }
