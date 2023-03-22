@@ -1,12 +1,12 @@
-import { validFilesLoad } from "../utils/forms";
+import { validFilesLoad } from "../utils/forms.js";
 
 // Path: model/admin-functions.js
 const userTable = document.getElementById('adminStudentsBody');
 
 // Buttons for actions
-const showStudentsButton = document.getElementById('showStudentsButton');
-const treeStudentsButton = document.getElementById('showStudentsButton');
-const massiveLoad = document.getElementById('showStudentsButton');
+const showStudentsButton = document.getElementById('showStudentsBtn');
+const treeStudentsButton = document.getElementById('treeStudentsBtn');
+const massiveLoadButton = document.getElementById('massiveLoadBtn');
 
 showStudentsButton.addEventListener('click', () => {
 
@@ -19,7 +19,7 @@ treeStudentsButton.addEventListener('click', () => {
 });
 
 const massiveLoadChooser = document.getElementById('massiveLoadChooser');
-massiveLoad.addEventListener('click', () => {
+massiveLoadButton.addEventListener('click', () => {
     massiveLoadChooser.click();
 });
 
@@ -32,6 +32,15 @@ massiveLoadChooser.addEventListener('change', () => {
         files
     )
     if (isInvalidEntry) {
-        console.log('valid');
+
+    } else {
+        alert('Invalid file type');
     }
 });
+
+
+// In this section, we'll be creating the functions that will be user to modify the avl tree
+
+const insertStudent = (student) => {
+
+}
