@@ -1,6 +1,7 @@
 import { validFilesLoad } from "../utils/forms.js";
 import { Student } from "../controller/classes/student.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
+import { createUserTableRow } from "../utils/fields.js";
 
 // Path: model/admin-functions.js
 const userTable = document.getElementById('adminStudentsBody');
@@ -11,12 +12,19 @@ const treeStudentsButton = document.getElementById('treeStudentsBtn');
 const massiveLoadButton = document.getElementById('massiveLoadBtn');
 
 showStudentsButton.addEventListener('click', () => {
+    let tree = localStorage.getItem("treeAvlContainer");
+    tree = Object.setPrototypeOf(tree, TreeAVL.prototype);
+    if (tree.root == null) {
+        userTable.innerHTML = `
+            <div class="text-center font-semibold py-10 text-lg" >
+                No hay estudiantes registrados
+            </div>
+        `;
+    }
 
 });
 
 treeStudentsButton.addEventListener('click', () => {
-
-
 
 });
 
@@ -64,6 +72,7 @@ const insertStudent = (treeAvl, student) => {
     const newStudent = new Student(student.nombre, student.carnet, student.password, student.carpeta_raiz);
     Object.setPrototypeOf(treeAvl, TreeAVL.prototype);
     treeAvl.insert(newStudent);
+    userTable.innerHTML = createUserTableRow(newStudent.carnet, newStudent.nombre);
     localStorage.setItem("treeAvlContainer", JSON.stringify(treeAvl));
 }
 
