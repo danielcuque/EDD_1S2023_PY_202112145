@@ -1,5 +1,5 @@
 import { validFilesLoad } from "../utils/forms.js";
-import { Student } from "../controller/classes/student.js";
+import { Student } from "../controller/classes/student1.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
 import { createUserTableRow } from "../utils/fields.js";
 
