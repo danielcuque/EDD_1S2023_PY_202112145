@@ -1,10 +1,9 @@
 import { validFilesLoad } from "../utils/forms.js";
 import { Student } from "../controller/classes/student.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
-import { createUserTableRow } from "../utils/fields.js";
+import { getTree } from "../utils/objects.js";
 
 // Path: model/admin-functions.js
-const userTable = document.getElementById('adminStudentsBody');
 
 // Buttons for actions
 const showStudentsButton = document.getElementById('showStudentsBtn');

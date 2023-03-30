@@ -1,3 +1,5 @@
+import { getStudent } from "../../utils/objects.js";
+
 class Node {
     constructor(student) {
         this.student = student;
@@ -85,54 +87,43 @@ export class TreeAVL {
 
 
     preOrden() {
-        this.pre_orden(this.root);
+
+        this.pre_orden(this.root, userTable);
     }
 
     pre_orden(node) {
         if (node != null) {
-            console.log("Valor:", node.student);
+            document.getElementById('adminStudentsBody').appendChild(getStudent(node).createRow());
             this.pre_orden(node.left);
             this.pre_orden(node.right);
         }
     }
 
     inOrden() {
+
         this.in_orden(this.root);
     }
 
     in_orden(node) {
         if (node != null) {
             this.in_orden(node.left);
-            console.log("Valor:", node.student);
+            document.getElementById('adminStudentsBody').appendChild(getStudent(node).createRow());
             this.in_orden(node.right);
         }
     }
 
     postOrden() {
+
         this.post_orden(this.root);
     }
 
-    post_orden(node) {
+    post_orden(node, table) {
         if (node != null) {
             this.post_orden(node.left);
             this.post_orden(node.right);
-            console.log("Valor:", node.student);
+            document.getElementById('adminStudentsBody').appendChild(getStudent(node).createRow());
         }
     }
-
-    getRoot() {
-        return this.root;
-    }
-
-    displayUsersPreOrder(bodyToAppend) {
-        if (this.root != null) {
-            this.displayUsersPreOrderAux(this.root, bodyToAppend);
-        }
-    }
-
-    displayUsersInOrder(bodyToAppend) { }
-
-    displayUsersPostOrder(bodyToAppend) { }
 
     convertToGraphivz() {
         let graph = "digraph G {";

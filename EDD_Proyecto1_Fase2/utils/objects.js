@@ -1,6 +1,11 @@
+import { Student } from "../controller/classes/student.js";
+import { TreeAVL } from "../controller/structs/tree-avl.js";
+
+
 export const getTree = () => {
-    const tree = localStorage.getItem("treeAvlContainer");
-    const treeObj = JSON.parse(tree);
-    Object.setPrototypeOf(treeObj, TreeAVL.prototype);
-    return treeObj;
+    return Object.setPrototypeOf(JSON.parse(localStorage.getItem("treeAvlContainer")), TreeAVL.prototype);
+}
+
+export const getStudent = (node) => {
+    return Object.setPrototypeOf(node.student, Student.prototype);
 }
