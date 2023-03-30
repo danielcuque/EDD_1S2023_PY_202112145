@@ -14,8 +14,9 @@ document.addEventListener("DOMContentLoaded", (e) => {
         case 'user-view.html':
             break;
         case 'admin-view.html':
-            const showStudentsBtn = document.getElementById('showStudentsBtn');
-            showStudentsBtn.click();
+            const selectTraverseTree = document.getElementById('selectTraverseTree');
+            selectTraverseTree.selectedIndex = 0;
+            selectTraverseTree.click();
             break;
     }
 });

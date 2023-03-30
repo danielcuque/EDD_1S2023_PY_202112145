@@ -86,40 +86,40 @@ export class TreeAVL {
     }
 
 
-    preOrden() {
+    preOrder() {
 
-        this.pre_orden(this.root, userTable);
+        this.pre_order(this.root);
     }
 
-    pre_orden(node) {
+    pre_order(node) {
         if (node != null) {
             document.getElementById('adminStudentsBody').appendChild(getStudent(node).createRow());
-            this.pre_orden(node.left);
-            this.pre_orden(node.right);
+            this.pre_order(node.left);
+            this.pre_order(node.right);
         }
     }
 
-    inOrden() {
+    inOrder() {
 
-        this.in_orden(this.root);
+        this.in_order(this.root);
     }
 
-    in_orden(node) {
+    in_order(node) {
         if (node != null) {
-            this.in_orden(node.left);
+            this.in_order(node.left);
             document.getElementById('adminStudentsBody').appendChild(getStudent(node).createRow());
-            this.in_orden(node.right);
+            this.in_order(node.right);
         }
     }
 
-    postOrden() {
-        this.post_orden(this.root);
+    postOrder() {
+        this.post_order(this.root);
     }
 
-    post_orden(node, table) {
+    post_order(node) {
         if (node != null) {
-            this.post_orden(node.left);
-            this.post_orden(node.right);
+            this.post_order(node.left);
+            this.post_order(node.right);
             document.getElementById('adminStudentsBody').appendChild(getStudent(node).createRow());
         }
     }

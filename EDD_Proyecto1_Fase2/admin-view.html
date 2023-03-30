@@ -65,12 +65,19 @@
                 Panel de administrador
             </h1>
             <div id="panels" class="flex flex-row w-screen h-full justify-between px-10">
-                <div id="adminButtons" class="flex flex-col justify-evenly w-1/3">
+                <div id="adminButtons" class="flex flex-col justify-center gap-10 w-1/3">
                     <input type="file" id="showStudentsChooser" class="hidden">
-                    <button id="showStudentsBtn"
-                        class="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-blue-600 text-white hover:text-slate-100 hover:bg-blue-500 active:bg-blue-800 active:text-blue-100 focus-visible:outline-blue-600">
-                        Mostrar Alumnos
-                    </button>
+                    <div>
+                        <label for="traverseTree"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Elige
+                            un recorrido</label>
+                        <select id="selectTraverseTree" name="traverseTree"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            <option value="inOrder" selected>In Order</option>
+                            <option value="preOrder">Pre Order</option>
+                            <option value="postOrder">Post Order</option>
+                        </select>
+                    </div>
                     <input type="file" id="studentsTreeChooser" class="hidden">
                     <button id="treeStudentsBtn"
                         class="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-blue-600 text-white hover:text-slate-100 hover:bg-blue-500 active:bg-blue-800 active:text-blue-100 focus-visible:outline-blue-600">

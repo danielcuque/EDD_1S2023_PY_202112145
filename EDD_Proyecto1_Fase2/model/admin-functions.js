@@ -6,11 +6,11 @@ import { getTree } from "../utils/objects.js";
 // Path: model/admin-functions.js
 
 // Buttons for actions
-const showStudentsButton = document.getElementById('showStudentsBtn');
+const selectTraverseTree = document.getElementById('selectTraverseTree');
 const treeStudentsButton = document.getElementById('treeStudentsBtn');
 const massiveLoadButton = document.getElementById('massiveLoadBtn');
 
-showStudentsButton.addEventListener('click', () => {
+selectTraverseTree.addEventListener('change', (e) => {
     const tree = getTree();
     if (tree.root == null) {
         userTable.innerHTML = `
@@ -18,8 +18,18 @@ showStudentsButton.addEventListener('click', () => {
                 No hay estudiantes registrados
             </div>
         `;
-    } else {
-        tree.inOrden();
+    }
+    document.getElementById('adminStudentsBody').innerHTML = '';
+    switch (e.target.value) {
+        case 'inOrder':
+            tree.inOrder();
+            break;
+        case 'preOrder':
+            tree.preOrder();
+            break;
+        case 'postOrder':
+            tree.postOrder();
+            break;
     }
 
 });
