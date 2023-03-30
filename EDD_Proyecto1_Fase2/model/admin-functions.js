@@ -29,6 +29,7 @@ treeStudentsButton.addEventListener('click', () => {
 });
 
 const massiveLoadChooser = document.getElementById('massiveLoadChooser');
+
 massiveLoadButton.addEventListener('click', () => {
     massiveLoadChooser.click();
 });
@@ -72,10 +73,8 @@ const insertStudent = (treeAvl, student) => {
     const newStudent = new Student(student.nombre, student.carnet, student.password, student.carpeta_raiz);
     Object.setPrototypeOf(treeAvl, TreeAVL.prototype);
     treeAvl.insert(newStudent);
-    userTable.innerHTML = createUserTableRow(newStudent.carnet, newStudent.nombre);
     localStorage.setItem("treeAvlContainer", JSON.stringify(treeAvl));
 }
-
 
 const readJsonFile = (file) => {
     const treeAvl = JSON.parse(localStorage.getItem("treeAvlContainer"));
