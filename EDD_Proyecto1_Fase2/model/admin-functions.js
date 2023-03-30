@@ -12,14 +12,15 @@ const treeStudentsButton = document.getElementById('treeStudentsBtn');
 const massiveLoadButton = document.getElementById('massiveLoadBtn');
 
 showStudentsButton.addEventListener('click', () => {
-    let tree = localStorage.getItem("treeAvlContainer");
-    tree = Object.setPrototypeOf(tree, TreeAVL.prototype);
+    const tree = getTree();
     if (tree.root == null) {
         userTable.innerHTML = `
             <div class="text-center font-semibold py-10 text-lg" >
                 No hay estudiantes registrados
             </div>
         `;
+    } else {
+        tree.inOrden();
     }
 
 });
@@ -86,4 +87,5 @@ const readJsonFile = (file) => {
             insertStudent(treeAvl, student);
         });
     }
+    Object.setPrototypeOf(treeAvl, TreeAVL.prototype);
 }

@@ -124,6 +124,16 @@ export class TreeAVL {
         return this.root;
     }
 
+    displayUsersPreOrder(bodyToAppend) {
+        if (this.root != null) {
+            this.displayUsersPreOrderAux(this.root, bodyToAppend);
+        }
+    }
+
+    displayUsersInOrder(bodyToAppend) { }
+
+    displayUsersPostOrder(bodyToAppend) { }
+
     convertToGraphivz() {
         let graph = "digraph G {";
         graph += this.convertToGraphivzAux(this.root);

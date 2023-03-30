@@ -1,5 +1,6 @@
 import { Student } from '../controller/classes/student.js'
 import { TreeAVL } from '../controller/structs/tree-avl.js';
+import { getTree } from '../utils/objects.js';
 
 // Vamos a verificar en que ruta estamos
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -13,6 +14,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
         case 'user-view.html':
             break;
         case 'admin-view.html':
+            const showStudentsBtn = document.getElementById('showStudentsBtn');
+            showStudentsBtn.click();
             break;
     }
 });
