@@ -113,7 +113,6 @@ export class TreeAVL {
     }
 
     postOrden() {
-
         this.post_orden(this.root);
     }
 
