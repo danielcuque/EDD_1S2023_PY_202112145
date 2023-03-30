@@ -10,7 +10,12 @@ loginForm.addEventListener('submit', (e) => {
     const isLogged = checkLogin(carnet, password)
     if (isLogged) {
         clearLoginForm();
-        window.location.href = '/admin-view.html';
+        if (carnet === 'admin') {
+            window.location.href = './admin-view.html';
+        }
+        else {
+            window.location.href = './user-view.html';
+        }
     } else {
         alert('Carnet o contraseña incorrectos');
     }

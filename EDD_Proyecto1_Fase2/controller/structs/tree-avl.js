@@ -13,7 +13,7 @@ export class TreeAVL {
     }
 
     max(studentA, studentB) {
-        if (studentA > studentB) return studentA;
+        if (studentA.id > studentB.id) return studentA;
         return studentB;
     }
 
@@ -30,18 +30,18 @@ export class TreeAVL {
         if (node == null) return new Node(student);
         else {
             if (student.id < node.student.id) {
-                node.left = this.add(student, node.left)
-                if (this.height(node.right) - this.height(node.left) == -2) {
-                    if (student < node.left.student) {
+                node.left = this.add(student, node.left);
+                if (this.height(node.right) - this.height(node.left) === -2) {
+                    if (student.id < node.left.student.id) {
                         node = this.leftRotate(node);
                     } else {
                         node = this.doubleLeftRotate(node);
                     }
                 }
-            } else if (student > node.student) {
+            } else if (student.id > node.student.id) {
                 node.right = this.add(student, node.right);
                 if (this.height(node.right) - this.height(node.left) == 2) {
-                    if (student > node.right.student) {
+                    if (student.id > node.right.student.id) {
                         node = this.rightRotate(node);
                     } else {
                         node = this.doubleRightRotate(node);
@@ -50,9 +50,9 @@ export class TreeAVL {
             } else {
                 node.student = student;
             }
+            node.height = this.max(this.height(node.left), this.height(node.right)) + 1;
+            return node;
         }
-        node.height = this.max(this.height(node.left), this.height(node.right)) + 1
-        return node;
     }
 
     leftRotate(node) {
@@ -70,7 +70,7 @@ export class TreeAVL {
     }
 
     rightRotate(node) {
-        var aux = node.right;
+        let aux = node.right;
         node.right = aux.left;
         aux.left = node;
         node.height = this.max(this.height(node.right), this.height(node.left)) + 1;
@@ -122,5 +122,27 @@ export class TreeAVL {
 
     getRoot() {
         return this.root;
+    }
+
+    convertToGraphivz() {
+        let graph = "digraph G {";
+        graph += this.convertToGraphivzAux(this.root);
+        graph += "}";
+        return graph;
+    }
+
+    convertToGraphivzAux(node) {
+        let graph = "";
+        if (node != null) {
+            if (node.left != null) {
+                graph += node.student.id + " -> " + node.left.student.id + ";";
+            }
+            if (node.right != null) {
+                graph += node.student.id + " -> " + node.right.student.id + ";";
+            }
+            graph += this.convertToGraphivzAux(node.left);
+            graph += this.convertToGraphivzAux(node.right);
+        }
+        return graph;
     }
 }
