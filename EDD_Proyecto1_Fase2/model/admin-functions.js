@@ -1,7 +1,7 @@
 import { validFilesLoad } from "../utils/forms.js";
+import { displayUserTable } from "../utils/objects.js";
 import { Student } from "../controller/classes/student.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
-import { getTree } from "../utils/objects.js";
 
 // Path: model/admin-functions.js
 
@@ -11,27 +11,7 @@ const treeStudentsButton = document.getElementById('treeStudentsBtn');
 const massiveLoadButton = document.getElementById('massiveLoadBtn');
 
 selectTraverseTree.addEventListener('change', (e) => {
-    const tree = getTree();
-    if (tree.root == null) {
-        userTable.innerHTML = `
-            <div class="text-center font-semibold py-10 text-lg" >
-                No hay estudiantes registrados
-            </div>
-        `;
-    }
-    document.getElementById('adminStudentsBody').innerHTML = '';
-    switch (e.target.value) {
-        case 'inOrder':
-            tree.inOrder();
-            break;
-        case 'preOrder':
-            tree.preOrder();
-            break;
-        case 'postOrder':
-            tree.postOrder();
-            break;
-    }
-
+    displayUserTable(e.target.value);
 });
 
 treeStudentsButton.addEventListener('click', () => {
@@ -56,6 +36,7 @@ massiveLoadChooser.addEventListener('change', () => {
         Array.from(files).forEach((file) => {
             readJsonFile(file);
         });
+        displayUserTable('inOrder');
     } else {
         alert('Invalid file type');
     }
@@ -67,34 +48,36 @@ massiveLoadChooser.addEventListener('change', () => {
 /*
  The json file will look like this:
 
- interface Root {
-  alumnos: Alumno[]
-}
+    interface Root {
+    alumnos: Alumno[]
+    }
 
-interface Alumno {
-  nombre: string
-  carnet: string
-  password: string
-  carpeta_raiz: string
-}
-
+    interface Alumno {
+    nombre: string
+    carnet: string
+    password: string
+    carpeta_raiz: string
+    }
 */
-const insertStudent = (treeAvl, student) => {
+
+const insertStudent = (treeAVL, student) => {
     const newStudent = new Student(student.nombre, student.carnet, student.password, student.carpeta_raiz);
-    Object.setPrototypeOf(treeAvl, TreeAVL.prototype);
-    treeAvl.insert(newStudent);
-    localStorage.setItem("treeAvlContainer", JSON.stringify(treeAvl));
+    treeAVL.insert(newStudent);
+    localStorage.setItem('treeAVLContainer', JSON.stringify(treeAVL));
+    displayUserTable('inOrder');
 }
 
 const readJsonFile = (file) => {
-    const treeAvl = JSON.parse(localStorage.getItem("treeAvlContainer"));
+    const treeAVL = new TreeAVL();
     const reader = new FileReader();
     reader.readAsText(file, "UTF-8");
     reader.onload = () => {
         const json = JSON.parse(reader.result);
         json.alumnos.forEach((student) => {
-            insertStudent(treeAvl, student);
+            insertStudent(treeAVL, student);
         });
     }
-    Object.setPrototypeOf(treeAvl, TreeAVL.prototype);
+    reader.onerror = (error) => {
+        console.log(error);
+    }
 }
