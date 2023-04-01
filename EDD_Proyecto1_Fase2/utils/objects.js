@@ -5,14 +5,16 @@ export const displayUserTable = (order) => {
     const userTable = document.getElementById('adminStudentsBody');
     const tree = getTree();
 
-    if (tree.root == null) {
+    if (tree.root === null) {
         userTable.innerHTML = `
             <div class="text-center font-semibold py-10 text-lg">
                 No hay estudiantes registrados
             </div>
         `;
+        return;
     }
-    userTable.innerHTML = '';
+
+    userTable.innerHTML = ``;
     switch (order) {
         case 'inOrder':
             tree.inOrder();

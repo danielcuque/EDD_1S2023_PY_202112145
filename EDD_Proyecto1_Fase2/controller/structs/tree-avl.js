@@ -125,7 +125,7 @@ export class TreeAVL {
     }
 
     convertToGraphivz() {
-        let graph = "digraph G {";
+        let graph = "https://quickchart.io/graphviz?graph=digraph G {";
         graph += this.convertToGraphivzAux(this.root);
         graph += "}";
         return graph;

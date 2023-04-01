@@ -1,5 +1,5 @@
 import { validFilesLoad } from "../utils/forms.js";
-import { displayUserTable } from "../utils/objects.js";
+import { displayUserTable, getTree } from "../utils/objects.js";
 import { Student } from "../controller/classes/student.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
 
@@ -9,12 +9,30 @@ import { TreeAVL } from "../controller/structs/tree-avl.js";
 const selectTraverseTree = document.getElementById('selectTraverseTree');
 const treeStudentsButton = document.getElementById('treeStudentsBtn');
 const massiveLoadButton = document.getElementById('massiveLoadBtn');
+const closeModalButton = document.getElementById('closeModalBtn');
+const modal = document.getElementById('treeModalPreview');
+const modalImg = document.getElementById('treeImagePreview');
 
 selectTraverseTree.addEventListener('change', (e) => {
     displayUserTable(e.target.value);
 });
 
 treeStudentsButton.addEventListener('click', () => {
+    // Actualizar la URL de la imagen
+    const imgSrc = getTree().convertToGraphivz();
+    modalImg.src = imgSrc;
+
+    // Mostrar el modal
+    modal.classList.remove('hidden');
+});
+
+closeModalButton.addEventListener('click', () => {
+
+    // Ocultar el modal
+    modal.classList.add('hidden');
+
+    // Limpiar la URL de la imagen y del enlace de descarga
+    modalImg.src = '';
 
 });
 
@@ -47,11 +65,11 @@ massiveLoadChooser.addEventListener('change', () => {
 
 /*
  The json file will look like this:
-
+ 
     interface Root {
     alumnos: Alumno[]
     }
-
+ 
     interface Alumno {
     nombre: string
     carnet: string
