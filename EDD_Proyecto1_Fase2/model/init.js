@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     const page = path.split("/").pop();
     switch (page) {
         case 'index.html':
+        case '/':
             // Insertamos el arbol AVL en el DOM
             initTreeAvl();
             break;

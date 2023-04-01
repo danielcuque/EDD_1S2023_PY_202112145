@@ -12,6 +12,7 @@ const massiveLoadButton = document.getElementById('massiveLoadBtn');
 const closeModalButton = document.getElementById('closeModalBtn');
 const modal = document.getElementById('treeModalPreview');
 const modalImg = document.getElementById('treeImagePreview');
+const logoutButton = document.getElementById('logoutBtn');
 
 selectTraverseTree.addEventListener('change', (e) => {
     displayUserTable(e.target.value);
@@ -99,3 +100,7 @@ const readJsonFile = (file) => {
         console.log(error);
     }
 }
+
+logoutButton.addEventListener('click', () => {
+    window.location.href = 'index.html';
+})
