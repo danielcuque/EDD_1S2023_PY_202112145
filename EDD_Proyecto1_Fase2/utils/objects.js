@@ -38,3 +38,7 @@ export const getTree = () => {
 export const getStudent = (node) => {
     return Object.setPrototypeOf(node.student, Student.prototype);
 }
+
+export const getAdmin = () => {
+    return Object.setPrototypeOf(JSON.parse(localStorage.getItem("admin")), Student.prototype);
+}

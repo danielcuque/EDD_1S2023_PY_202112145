@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
         case 'index.html':
         case '/':
             // Insertamos el arbol AVL en el DOM
-            initTreeAvl();
+            initBaseApp();
             break;
         case 'user-view.html':
             break;
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     }
 });
 
-const initTreeAvl = () => {
+const initBaseApp = () => {
     // Si el valor de verifyTree no existe en localStorage, asignar un valor del tree vacío
 
     const verifyTree = localStorage.getItem("treeAVLContainer");
@@ -35,7 +35,7 @@ const initTreeAvl = () => {
 
     // Si el valor de admin no existe en localStorage, asignar un valor predeterminado
     if (admin === null) {
-        const adminObj = new Student('admin', 'admin');
+        const adminObj = new Student('admin', 'admin', 'admin', '/');
         const adminJSON = JSON.stringify(adminObj);
         localStorage.setItem("admin", adminJSON);
     }

@@ -12,11 +12,12 @@ loginForm.addEventListener('submit', (e) => {
         clearLoginForm();
         if (carnet === 'admin') {
             window.location.href = './admin-view.html';
-        }
-        else {
+            return;
+        } else {
             window.location.href = './user-view.html';
+            return
         }
-    } else {
-        alert('Carnet o contraseña incorrectos');
     }
+    alert('Carnet o contraseña incorrectos');
+
 });
