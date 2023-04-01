@@ -15,7 +15,7 @@ loginForm.addEventListener('submit', (e) => {
             return;
         } else {
             window.location.href = './user-view.html';
-            return
+            return;
         }
     }
     alert('Carnet o contraseña incorrectos');

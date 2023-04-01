@@ -1,47 +1,35 @@
-export class TreeN {
+class Node {
+    constructor(value) {
+        this.value = value;
+        this.children = [];
+    }
+}
 
+export class NaryTree {
     constructor() {
         this.root = null;
     }
 
-    addNode(node) {
+    addNode(value, parentValue) {
+        const newNode = new Node(value);
         if (this.root === null) {
-            this.root = node;
-        } else {
-            this.root.addNode(node);
-        }
-    }
-
-    removeNode(node) {
-        if (this.root === null) {
+            this.root = newNode;
             return;
-        } else {
-            this.root.removeNode(node);
         }
+
+        this.traverse((node) => {
+            if (node.value === parentValue) {
+                node.children.push(newNode);
+            }
+        });
     }
 
-    searchNode(node) {
-        if (this.root === null) {
-            return;
-        } else {
-            this.root.searchNode(node);
+    traverse(callback) {
+        function walk(node) {
+            callback(node);
+            node.children.forEach(walk);
         }
-    }
 
-    printTree() {
-        if (this.root === null) {
-            return;
-        } else {
-            this.root.printTree();
-        }
+        walk(this.root);
     }
-
-    clearTree() {
-        this.root = null;
-    }
-
-    getRoot() {
-        return this.root;
-    }
-
 }

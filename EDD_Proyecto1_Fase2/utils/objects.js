@@ -42,3 +42,7 @@ export const getStudent = (node) => {
 export const getAdmin = () => {
     return Object.setPrototypeOf(JSON.parse(localStorage.getItem("admin")), Student.prototype);
 }
+
+export const getCurrentUser = () => {
+    return Object.setPrototypeOf(JSON.parse(localStorage.getItem("currentUser")), Student.prototype);
+}

@@ -1,6 +1,6 @@
 import { Student } from '../controller/classes/student.js'
 import { TreeAVL } from '../controller/structs/tree-avl.js';
-import { displayUserTable, getTree } from '../utils/objects.js';
+import { displayUserTable, getCurrentUser, getTree } from '../utils/objects.js';
 
 // Vamos a verificar en que ruta estamos
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
             initBaseApp();
             break;
         case 'user-view.html':
+            initUserView();
             break;
         case 'admin-view.html':
             initAdminView();
@@ -42,7 +43,7 @@ const initBaseApp = () => {
 }
 
 const initUserView = () => {
-
+    document.getElementById('carnetStudentSpan').innerHTML = `${getCurrentUser().id}`
 }
 
 const initAdminView = () => {

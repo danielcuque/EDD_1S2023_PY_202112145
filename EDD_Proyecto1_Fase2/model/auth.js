@@ -12,6 +12,9 @@ export const checkLogin = (id, password) => {
     // Si no es admin, se busca en el árbol AVL de usuarios
     const tree = getTree();
     const student = tree.searchStudent(id, password);
-    if (student != null) return true;
+    if (student != null) {
+        localStorage.setItem("currentUser", JSON.stringify(student));
+        return true;
+    }
     return false;
 }

@@ -1,3 +1,10 @@
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
 export class CircularLinkedList {
   constructor() {
     this.head = null;
