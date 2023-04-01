@@ -1,6 +1,6 @@
 import { Student } from '../controller/classes/student.js'
 import { TreeAVL } from '../controller/structs/tree-avl.js';
-import { displayUserTable } from '../utils/objects.js';
+import { displayUserTable, getTree } from '../utils/objects.js';
 
 // Vamos a verificar en que ruta estamos
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -8,14 +8,14 @@ document.addEventListener("DOMContentLoaded", (e) => {
     const page = path.split("/").pop();
     switch (page) {
         case 'index.html':
-        case '/':
+        default:
             // Insertamos el arbol AVL en el DOM
             initBaseApp();
             break;
         case 'user-view.html':
             break;
         case 'admin-view.html':
-            displayUserTable('inOrder');
+            initAdminView();
             break;
     }
 });
@@ -39,4 +39,18 @@ const initBaseApp = () => {
         const adminJSON = JSON.stringify(adminObj);
         localStorage.setItem("admin", adminJSON);
     }
+}
+
+const initUserView = () => {
+
+}
+
+const initAdminView = () => {
+    displayUserTable('inOrder');
+    const treeStudentsButton = document.getElementById('treeStudentsBtn');
+    if (getTree() === null) {
+        treeStudentsButton.disabled = true;
+        return;
+    }
+    treeStudentsButton.disabled = false;
 }

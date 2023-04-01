@@ -52,10 +52,8 @@ massiveLoadChooser.addEventListener('change', () => {
         files
     )
     if (isInvalidEntry) {
-        Array.from(files).forEach((file) => {
-            readJsonFile(file);
-        });
-        displayUserTable('inOrder');
+        readJsonFile(files[0]);
+        document.getElementById('treeStudentsBtn').disabled = false;
     } else {
         alert('Invalid file type');
     }
