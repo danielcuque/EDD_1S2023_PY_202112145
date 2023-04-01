@@ -1,7 +1,10 @@
-// Path: model/manage-file.js
-// .txt, .pdf, .jpg, .png, .jpeg
+import { showSnackbar } from "../utils/fields.js";
+import { validFilesLoad } from "../utils/forms.js";
 
+// .txt, .pdf, .jpg, .png, .jpeg
 const inputFile = document.getElementById('dropzone-file');
+const logoutButton = document.getElementById('logoutBtn');
+
 // Check if all files are accepted
 inputFile.addEventListener('change', () => {
     const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.txt|\.pdf)$/i;
@@ -14,6 +17,11 @@ inputFile.addEventListener('change', () => {
         console.log('valid');
     }
     else {
-        alert('Invalid file type');
+        showSnackbar('Archivo no permitido', 'error');
     }
+})
+
+logoutButton.addEventListener('click', () => {
+    localStorage.removeItem('currentUser');
+    window.location.href = 'index.html';
 })

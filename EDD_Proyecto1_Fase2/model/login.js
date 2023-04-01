@@ -1,5 +1,6 @@
 import { checkLogin } from './auth.js';
 import { clearLoginForm } from '../utils/forms.js';
+import { showSnackbar } from '../utils/fields.js';
 
 const loginForm = document.querySelector('#login-form');
 
@@ -18,6 +19,6 @@ loginForm.addEventListener('submit', (e) => {
             return;
         }
     }
-    alert('Carnet o contraseña incorrectos');
+    showSnackbar('Carnet o contraseña incorrectos', 'error')
 
 });
