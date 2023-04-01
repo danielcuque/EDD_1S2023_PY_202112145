@@ -140,6 +140,9 @@ export class TreeAVL {
             if (node.right != null) {
                 graph += node.student.id + " -> " + node.right.student.id + ";";
             }
+            const studentName = node.student.name;
+            const nodeHeight = node.height;
+            graph += `${node.student.id} [label="${studentName}\\n ${node.student.id} \\nAltura: ${nodeHeight}"]`;
             graph += this.convertToGraphivzAux(node.left);
             graph += this.convertToGraphivzAux(node.right);
         }
