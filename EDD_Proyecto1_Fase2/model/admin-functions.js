@@ -21,7 +21,6 @@ selectTraverseTree.addEventListener('change', (e) => {
 
 treeStudentsButton.addEventListener('click', () => {
     // Actualizar la URL de la imagen
-    console.log(getTree());
     const imgSrc = getTree().convertToGraphivz();
     modalImg.src = imgSrc;
 
@@ -81,7 +80,7 @@ massiveLoadChooser.addEventListener('change', () => {
 */
 
 const insertStudent = (treeAVL, student) => {
-    const newStudent = new Student(student.nombre, student.carnet, student.password, student.Carpeta_raiz);
+    const newStudent = new Student(student.nombre, student.carnet, student.password);
     treeAVL.insert(newStudent);
     localStorage.setItem('treeAVLContainer', JSON.stringify(treeAVL));
     displayUserTable('inOrder');

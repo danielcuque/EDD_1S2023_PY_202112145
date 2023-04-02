@@ -1,4 +1,3 @@
-import { getStudent } from "../../utils/objects.js";
 import { Student } from "../classes/student.js";
 
 class Node {
@@ -94,7 +93,7 @@ export class TreeAVL {
 
     pre_order(node) {
         if (node != null) {
-            document.getElementById('adminStudentsBody').appendChild(getStudent(node).createRow());
+            document.getElementById('adminStudentsBody').appendChild(node.student.createRow());
             this.pre_order(node.left);
             this.pre_order(node.right);
         }
@@ -108,7 +107,7 @@ export class TreeAVL {
     in_order(node) {
         if (node != null) {
             this.in_order(node.left);
-            document.getElementById('adminStudentsBody').appendChild(getStudent(node).createRow());
+            document.getElementById('adminStudentsBody').appendChild(node.student.createRow());
             this.in_order(node.right);
         }
     }
@@ -121,7 +120,7 @@ export class TreeAVL {
         if (node != null) {
             this.post_order(node.left);
             this.post_order(node.right);
-            document.getElementById('adminStudentsBody').appendChild(getStudent(node).createRow());
+            document.getElementById('adminStudentsBody').appendChild(node.student.createRow());
         }
     }
 

@@ -37,16 +37,13 @@ export const getTree = () => {
     return treeAVL;
 }
 
-export const getStudent = (node) => {
-    return Object.setPrototypeOf(node.student, Student.prototype);
-}
-
 export const getAdmin = () => {
     return Object.setPrototypeOf(JSON.parse(localStorage.getItem("admin")), Student.prototype);
 }
 
 export const getCurrentUser = () => {
-    const user = Object.setPrototypeOf(JSON.parse(localStorage.getItem("currentUser")), Student.prototype);
-    user.getNaryTree();
-    return user;
+    const tree = getTree();
+    const studentToSearch = JSON.parse(localStorage.getItem("currentUser"));
+    const student = tree.searchStudent(studentToSearch.id, studentToSearch.password);
+    return student;
 }
