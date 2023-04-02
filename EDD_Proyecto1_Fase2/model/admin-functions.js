@@ -2,6 +2,7 @@ import { validFilesLoad } from "../utils/forms.js";
 import { displayUserTable, getTree } from "../utils/objects.js";
 import { Student } from "../controller/classes/student.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
+import { showSnackbar } from "../utils/fields.js";
 
 // Path: model/admin-functions.js
 
@@ -54,6 +55,7 @@ massiveLoadChooser.addEventListener('change', () => {
     if (isInvalidEntry) {
         readJsonFile(files[0]);
         document.getElementById('treeStudentsBtn').disabled = false;
+        showSnackbar('Carga masiva exitosa', 'success');
     } else {
         alert('Invalid file type');
     }

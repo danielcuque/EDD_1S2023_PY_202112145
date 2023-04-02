@@ -20,5 +20,4 @@ loginForm.addEventListener('submit', (e) => {
         }
     }
     showSnackbar('Carnet o contraseña incorrectos', 'default')
-
 });

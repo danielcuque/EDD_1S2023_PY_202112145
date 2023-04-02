@@ -14,11 +14,10 @@ inputFile.addEventListener('change', () => {
         files
     )
     if (isInvalidEntry) {
-        console.log('valid');
+        showSnackbar('Archivo cargado', 'success')
+        return;
     }
-    else {
-        showSnackbar('Archivo no permitido', 'error');
-    }
+    showSnackbar('Archivo no permitido', 'error');
 })
 
 logoutButton.addEventListener('click', () => {
