@@ -1,5 +1,6 @@
 import { Student } from "../controller/classes/student.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
+import { NaryTree } from "../controller/structs/tree-n.js";
 
 export const displayUserTable = (order) => {
     const userTable = document.getElementById('adminStudentsBody');
@@ -44,5 +45,7 @@ export const getAdmin = () => {
 }
 
 export const getCurrentUser = () => {
-    return Object.setPrototypeOf(JSON.parse(localStorage.getItem("currentUser")), Student.prototype);
+    const user = Object.setPrototypeOf(JSON.parse(localStorage.getItem("currentUser")), Student.prototype);
+    user.getNaryTree();
+    return user;
 }

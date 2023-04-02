@@ -76,4 +76,19 @@ export class NaryTree {
         }
         return false;
     }
+
+    // Este método sirve para convertir el árbol del local storage y recuperar todos sus nodos
+    deserializeTree() {
+        Object.setPrototypeOf(this.root, Node.prototype);
+        this.root.children.forEach(child => {
+            this.deserializeNode(child);
+        });
+    }
+
+    deserializeNode(node) {
+        Object.setPrototypeOf(node, Node.prototype);
+        node.children.forEach(child => {
+            this.deserializeNode(child);
+        });
+    }
 }

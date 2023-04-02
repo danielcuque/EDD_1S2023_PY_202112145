@@ -1,5 +1,6 @@
 import { showSnackbar } from "../utils/fields.js";
 import { validFilesLoad } from "../utils/forms.js";
+import { getCurrentUser } from "../utils/objects.js";
 
 // .txt, .pdf, .jpg, .png, .jpeg
 const inputFile = document.getElementById('dropzone-file');
@@ -14,7 +15,10 @@ inputFile.addEventListener('change', () => {
         files
     )
     if (isInvalidEntry) {
-        showSnackbar('Archivo cargado', 'success')
+        const tree = getCurrentUser().storage;
+        tree.createFile(localStorage.getItem('currentPath'), files[0].name);
+        console.log(tree);
+        showSnackbar('Archivo añadido', 'success');
         return;
     }
     showSnackbar('Archivo no permitido', 'error');
