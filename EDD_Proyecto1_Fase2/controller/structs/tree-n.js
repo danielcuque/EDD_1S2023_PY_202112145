@@ -52,6 +52,22 @@ export class NaryTree {
         return false;
     }
 
+    updateFile(path, name, content) {
+
+    }
+
+    updatePath(path, name) {
+
+    }
+
+    getFiles(path) {
+        const current = this.searchPath(path);
+        if (current) {
+            return current.children.filter(child => child.type === 'file');
+        }
+        return [];
+    }
+
     deleteFile(path, name) {
         const current = this.searchPath(path);
         if (current) {

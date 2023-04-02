@@ -37,8 +37,16 @@ export const getTree = () => {
     return treeAVL;
 }
 
+export const setTree = (tree) => {
+    localStorage.setItem("treeAVLContainer", JSON.stringify(tree));
+}
+
 export const getAdmin = () => {
     return Object.setPrototypeOf(JSON.parse(localStorage.getItem("admin")), Student.prototype);
+}
+
+export const getCurrentPath = () => {
+    return localStorage.getItem("currentPath");
 }
 
 export const getCurrentUser = () => {

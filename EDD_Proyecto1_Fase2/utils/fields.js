@@ -72,8 +72,8 @@ export const showSnackbar = (message, type) => {
     }, 100);
 
     setTimeout(() => {
-        snackbar.classList.remove("translate-y-0");
         snackbar.classList.add("opacity-0");
+        snackbar.classList.remove("translate-y-0");
         setTimeout(() => {
             snackbar.remove();
         }, 300);
