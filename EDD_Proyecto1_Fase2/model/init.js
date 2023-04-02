@@ -44,7 +44,6 @@ const initBaseApp = () => {
 
 const initUserView = () => {
     document.getElementById('carnetStudentSpan').innerHTML = `${getCurrentUser().id}`
-    console.log(getCurrentUser());
     localStorage.setItem('currentPath', getCurrentUser().rootFolder);
 }
 

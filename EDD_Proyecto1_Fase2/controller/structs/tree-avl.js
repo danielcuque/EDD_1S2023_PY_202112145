@@ -1,4 +1,5 @@
 import { getStudent } from "../../utils/objects.js";
+import { Student } from "../classes/student.js";
 
 class Node {
     constructor(student) {
@@ -167,6 +168,18 @@ export class TreeAVL {
     }
 
     deserealizeTreeAVL() {
+        this.deserealizeTreeAVLAux(this.root)
+    }
 
+    deserealizeTreeAVLAux(tree) {
+        if (tree != null) {
+            const node = Object.setPrototypeOf(tree, Node.prototype);
+            const student = Object.setPrototypeOf(tree.student, Student.prototype);
+            student.deserealizeStudent();
+            node.left = this.deserealizeTreeAVLAux(tree.left);
+            node.right = this.deserealizeTreeAVLAux(tree.right);
+            return node;
+        }
+        return null;
     }
 }

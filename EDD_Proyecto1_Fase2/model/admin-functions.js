@@ -21,6 +21,7 @@ selectTraverseTree.addEventListener('change', (e) => {
 
 treeStudentsButton.addEventListener('click', () => {
     // Actualizar la URL de la imagen
+    console.log(getTree());
     const imgSrc = getTree().convertToGraphivz();
     modalImg.src = imgSrc;
 

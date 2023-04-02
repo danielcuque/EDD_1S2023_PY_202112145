@@ -33,6 +33,7 @@ export const displayUserTable = (order) => {
 
 export const getTree = () => {
     const treeAVL = Object.setPrototypeOf(JSON.parse(localStorage.getItem("treeAVLContainer")), TreeAVL.prototype);
+    treeAVL.deserealizeTreeAVL();
     return treeAVL;
 }
 
