@@ -15,9 +15,8 @@ inputFile.addEventListener('change', () => {
         files
     )
     if (isInvalidEntry) {
-        const tree = getCurrentUser().storage;
+        const tree = getCurrentUser();
         tree.createFile(localStorage.getItem('currentPath'), files[0].name);
-        console.log(tree);
         showSnackbar('Archivo añadido', 'success');
         return;
     }

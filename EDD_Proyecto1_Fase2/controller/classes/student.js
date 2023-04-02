@@ -29,7 +29,7 @@ export class Student {
     }
     // Este método sirve para recuperar el árbol n-ario del estudiante, reconstruyendo todos sus nodos después de serializarlo
     getNaryTree() {
-        Object.setPrototypeOf(this.storage, NaryTree.prototype).deserializeTree();
+        const tree = Object.setPrototypeOf(this.storage, NaryTree.prototype);
+        tree.deserializeTree();
     }
-
 }

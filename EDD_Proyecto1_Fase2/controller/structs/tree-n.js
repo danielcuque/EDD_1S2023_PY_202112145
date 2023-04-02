@@ -2,7 +2,7 @@ class Node {
     constructor(name, type) {
         this.name = name;
         this.type = type;
-        this.children = [];
+        this.childrens = [];
     }
 }
 
@@ -13,6 +13,7 @@ export class NaryTree {
 
     searchPath(path) {
         let current = this.root;
+        if (path === '/') return current;
         const pathArray = path.split('/');
         for (let i = 1; i < pathArray.length; i++) {
             const child = current.children.find(child => child.name === pathArray[i]);
@@ -80,9 +81,10 @@ export class NaryTree {
     // Este método sirve para convertir el árbol del local storage y recuperar todos sus nodos
     deserializeTree() {
         Object.setPrototypeOf(this.root, Node.prototype);
-        this.root.children.forEach(child => {
-            this.deserializeNode(child);
-        });
+        if (this.root.children)
+            this.root.children.forEach(child => {
+                this.deserializeNode(child);
+            });
     }
 
     deserializeNode(node) {
