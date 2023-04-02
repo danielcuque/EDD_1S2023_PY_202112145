@@ -2,13 +2,13 @@ import { CircularLinkedList } from "../structs/circular-linked-list.js";
 import { NaryTree } from "../structs/tree-n.js";
 
 export class Student {
-    constructor(name, id, password, rootFolder) {
+    constructor(name, id, password) {
         this.name = name;
         this.id = id;
         this.password = password;
-        this.rootFolder = rootFolder;
+        this.rootFolder = '/';
         this.logList = new CircularLinkedList();
-        this.files = new NaryTree();
+        this.storage = new NaryTree();
     }
 
     createRow() {

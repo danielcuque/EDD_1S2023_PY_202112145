@@ -80,7 +80,7 @@ massiveLoadChooser.addEventListener('change', () => {
 */
 
 const insertStudent = (treeAVL, student) => {
-    const newStudent = new Student(student.nombre, student.carnet, student.password, student.carpeta_raiz);
+    const newStudent = new Student(student.nombre, student.carnet, student.password, student.Carpeta_raiz);
     treeAVL.insert(newStudent);
     localStorage.setItem('treeAVLContainer', JSON.stringify(treeAVL));
     displayUserTable('inOrder');
