@@ -2,7 +2,7 @@ class Node {
     constructor(name, type) {
         this.name = name;
         this.type = type;
-        this.childrens = [];
+        this.children = [];
     }
 }
 
@@ -89,8 +89,9 @@ export class NaryTree {
 
     deserializeNode(node) {
         Object.setPrototypeOf(node, Node.prototype);
-        node.children.forEach(child => {
-            this.deserializeNode(child);
-        });
+        if (node.children)
+            node.children.forEach(child => {
+                this.deserializeNode(child);
+            });
     }
 }

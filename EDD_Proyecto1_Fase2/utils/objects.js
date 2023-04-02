@@ -32,7 +32,8 @@ export const displayUserTable = (order) => {
 }
 
 export const getTree = () => {
-    return Object.setPrototypeOf(JSON.parse(localStorage.getItem("treeAVLContainer")), TreeAVL.prototype);
+    const treeAVL = Object.setPrototypeOf(JSON.parse(localStorage.getItem("treeAVLContainer")), TreeAVL.prototype);
+    return treeAVL;
 }
 
 export const getStudent = (node) => {

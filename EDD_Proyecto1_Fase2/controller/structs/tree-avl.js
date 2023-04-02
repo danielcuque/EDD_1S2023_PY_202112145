@@ -165,4 +165,8 @@ export class TreeAVL {
         }
         return null;
     }
+
+    deserealizeTreeAVL() {
+
+    }
 }

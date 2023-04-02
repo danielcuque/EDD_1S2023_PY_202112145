@@ -22,11 +22,6 @@ export class Student {
         return row;
     }
 
-    addFilesToStorage(files) {
-        for (const file of files) {
-            this.storage.createFile(this.rootFolder, file);
-        }
-    }
     // Este método sirve para recuperar el árbol n-ario del estudiante, reconstruyendo todos sus nodos después de serializarlo
     getNaryTree() {
         const tree = Object.setPrototypeOf(this.storage, NaryTree.prototype);

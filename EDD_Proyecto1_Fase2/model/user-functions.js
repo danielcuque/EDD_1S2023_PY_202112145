@@ -14,10 +14,14 @@ inputFile.addEventListener('change', () => {
         allowedExtensions,
         files
     )
-    if (isInvalidEntry) {
-        const tree = getCurrentUser();
-        tree.createFile(localStorage.getItem('currentPath'), files[0].name);
-        showSnackbar('Archivo añadido', 'success');
+    if (isInvalidEntry && files.length > 0) {
+        const isAdded = tree.createFile(localStorage.getItem('currentPath'), files[0].name);
+        if (isAdded) {
+            showFilesInCurrentPath();
+            showSnackbar('Archivo añadido', 'success');
+            return;
+        }
+        showSnackbar('Archivo no añadido', 'error');
         return;
     }
     showSnackbar('Archivo no permitido', 'error');
@@ -27,3 +31,6 @@ logoutButton.addEventListener('click', () => {
     localStorage.removeItem('currentUser');
     window.location.href = 'index.html';
 })
+
+const showFilesInCurrentPath = () => {
+}
