@@ -6,8 +6,17 @@ import { getTree, setTree } from "../utils/objects.js";
 // .txt, .pdf, .jpg, .png, .jpeg
 const inputFile = document.getElementById('dropzone-file');
 const logoutButton = document.getElementById('logoutBtn');
+const searchPathForm = document.getElementById('searchPathForm');
+const createFolderButton = document.getElementById('createFolderBtn');
+const deleteFolderButton = document.getElementById('deleteFolderBtn');
+
 const AVLTree = getTree();
 
+searchPathForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const path = document.getElementById('default-search').value;
+    console.log(path);
+})
 
 // Check if all files are accepted
 inputFile.addEventListener('change', () => {
@@ -20,7 +29,7 @@ inputFile.addEventListener('change', () => {
     if (isInvalidEntry && files.length > 0) {
         const currentUser = getCurrentUser();
         const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
-        const isAdded = user.storage.createFile(getCurrentPath(), files[0].name);
+        const isAdded = user.storage.createFile(getCurrentPath(), files[0]);
 
         if (isAdded) {
             showFilesInCurrentPath();
@@ -39,7 +48,8 @@ logoutButton.addEventListener('click', () => {
     window.location.href = 'index.html';
 })
 
-export const showFilesInCurrentPath = () => {
+
+const showFilesInCurrentPath = () => {
     const currentUser = getCurrentUser();
     const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
     const files = user.storage.getFiles(getCurrentPath());

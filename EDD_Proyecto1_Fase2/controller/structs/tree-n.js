@@ -42,10 +42,10 @@ export class NaryTree {
         return current;
     }
 
-    createFile(path, name) {
+    createFile(path, file) {
         const current = this.searchPath(path);
         if (current) {
-            const newNode = new Node(name, 'file');
+            const newNode = new Node(file.name, 'file');
             current.children.push(newNode);
             return true;
         }
