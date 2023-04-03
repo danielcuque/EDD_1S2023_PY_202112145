@@ -12,15 +12,14 @@ const searchPathForm = document.getElementById('searchPathForm');
 const createFolderButton = document.getElementById('createFolderBtn');
 const deleteFolderButton = document.getElementById('deleteFolderBtn');
 
+// HTML elements for the new path form
 const newPathForm = document.getElementById('newPathForm');
-const deletePathForm = document.getElementById('deletePathForm');
-
 createFolderButton.addEventListener('click', () => {
-    document.getElementById('newPathForm').classList.remove('hidden');
+    document.getElementById('newPathModal').classList.remove('hidden');
 })
 
 document.getElementById('cancelNewFolderBtn').addEventListener('click', () => {
-    document.getElementById('newPathForm').classList.add('hidden');
+    document.getElementById('newPathModal').classList.add('hidden');
 })
 
 newPathForm.addEventListener('submit', (e) => {
@@ -28,6 +27,17 @@ newPathForm.addEventListener('submit', (e) => {
     const path = document.getElementById('newPath').value;
     console.log(path);
 })
+
+// HTML elements for the delete path form
+deleteFolderButton.addEventListener('click', () => {
+    document.getElementById('deletePathModal').classList.remove('hidden');
+})
+
+document.getElementById('cancelDeleteFolderBtn').addEventListener('click', () => {
+    document.getElementById('deletePathModal').classList.add('hidden');
+})
+
+
 
 searchPathForm.addEventListener('submit', (e) => {
     e.preventDefault();
