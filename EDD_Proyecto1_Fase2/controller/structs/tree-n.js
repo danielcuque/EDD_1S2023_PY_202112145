@@ -107,6 +107,28 @@ export class NaryTree {
         return false;
     }
 
+    // Regresamos un string con el reporte de los archivos en graphviz
+    // Recorremos desde el root hasta el final de cada rama
+    getFolderReport() {
+        let report = "https://quickchart.io/graphviz?graph=digraph G {\n";
+        report += "node [shape=box];\n";
+        report += this.getFolderReportRecursive(this.root);
+        report += "}";
+        return report;
+    }
+
+    getFolderReportRecursive(node) {
+        let report = "";
+        if (node.children.length > 0) {
+            node.children.forEach(child => {
+                report += `"${node.name}" -> "${child.name}";\n`;
+                report += this.getFolderReportRecursive(child);
+            });
+        }
+        return report;
+    }
+
+
     // Este método sirve para convertir el árbol del local storage y recuperar todos sus nodos
     deserializeTree() {
         Object.setPrototypeOf(this.root, Node.prototype);

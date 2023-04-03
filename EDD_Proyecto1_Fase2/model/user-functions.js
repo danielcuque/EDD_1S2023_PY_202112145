@@ -47,8 +47,25 @@ document.getElementById('cancelDeleteFolderBtn').addEventListener('click', () =>
     document.getElementById('deletePathModal').classList.add('hidden');
 })
 
+document.getElementById('deletePathForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const path = document.getElementById('deleteFolderInput').value;
 
+    const currentUser = getCurrentUser();
+    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
+    const isDeleted = user.storage.deletePath(getCurrentPath() + '/' + path);
 
+    if (isDeleted) {
+        showFilesInCurrentPath();
+        showSnackbar('Carpeta eliminada', 'success');
+        setTree(AVLTree);
+        document.getElementById('deleteFolderInput').value = '';
+        return;
+    }
+    showSnackbar('Carpeta no encontrada', 'error');
+})
+
+// HTML elements for the search path form
 searchPathForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const path = document.getElementById('default-search').value;
@@ -97,6 +114,23 @@ logoutButton.addEventListener('click', () => {
     window.location.href = 'index.html';
 })
 
+// Reports section
+document.getElementById('reportFolderBtn').addEventListener('click', () => {
+    const currentUser = getCurrentUser();
+    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
+    const report = user.storage.getFolderReport();
+    const img = document.getElementById('treeImagePreview');
+    img.src = report;
+    document.getElementById('treeModalPreview').classList.remove('hidden');
+})
+
+document.getElementById('reportFilesBtn').addEventListener('click', () => {
+
+})
+
+document.getElementById('closeModalBtn').addEventListener('click', () => {
+    document.getElementById('treeModalPreview').classList.add('hidden');
+})
 
 const showFilesInCurrentPath = () => {
     const currentUser = getCurrentUser();
