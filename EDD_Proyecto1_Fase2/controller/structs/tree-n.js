@@ -72,7 +72,7 @@ export class NaryTree {
     getFiles(path) {
         const current = this.searchPath(path);
         if (current) {
-            return current.files;
+            return []
         }
         return null;
     }

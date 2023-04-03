@@ -163,6 +163,10 @@ const showFilesInCurrentPath = () => {
     const folders = user.storage.getFolders(currentPath);
     const files = user.storage.getFiles(currentPath);
 
+    if (folders.length === 0 && files.length === 0) {
+        showSnackbar('No hay archivos en esta carpeta', 'warning');
+    }
+
     const documentsContainers = document.getElementById('showFilesSection');
     documentsContainers.innerHTML = '';
 
