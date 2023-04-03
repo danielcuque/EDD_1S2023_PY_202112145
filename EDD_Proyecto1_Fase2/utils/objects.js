@@ -55,3 +55,36 @@ export const getCurrentUser = () => {
     const student = tree.searchStudent(studentToSearch.id, studentToSearch.password);
     return student;
 }
+
+// Retornamos el string el contenido del archivo en base64
+export const encodeBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            resolve(reader.result.split(',')[1]);
+            // "data:image/jpg;base64,    =sdCXDSAsadsadsa"
+        };
+    });
+}
+
+export const decodeBase64 = (base64) => {
+}
+
+
+export const generateUniqueName = (fileName, existingFiles) => {
+    let newFileName = fileName;
+    let fileExists = existingFiles.includes(newFileName);
+    let counter = 1;
+
+    while (fileExists) {
+        const extensionIndex = fileName.lastIndexOf('.');
+        const extension = fileName.substring(extensionIndex);
+        const baseFileName = fileName.substring(0, extensionIndex);
+        newFileName = `${baseFileName}(${counter})${extension}`;
+        fileExists = existingFiles.includes(newFileName);
+        counter++;
+    }
+
+    return newFileName;
+}

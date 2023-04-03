@@ -1,8 +1,13 @@
+import { encodeBase64, generateUniqueName } from "../../utils/objects.js";
+
 class Node {
     constructor(name, type) {
-        this.name = name;
-        this.type = type;
-        this.children = [];
+        this.name = name;           // name of the file or directory
+        this.type = type;           // directory or file
+        this.children = [];         // array of children
+        this.content = null;        // content of the file
+        this.counterFileName = 0
+        this.typeOfContent = null;  // text, image, pdf
     }
 }
 
@@ -45,7 +50,13 @@ export class NaryTree {
     createFile(path, file) {
         const current = this.searchPath(path);
         if (current) {
-            const newNode = new Node(file.name, 'file');
+            const fileNames = current.children.map(child => child.name);
+            const fileName = generateUniqueName(file.name, fileNames);
+            const newNode = new Node(fileName, 'file');
+            newNode.typeOfContent = file.type;
+            encodeBase64(file).then(content => {
+                newNode.content = content;
+            });
             current.children.push(newNode);
             return true;
         }
