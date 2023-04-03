@@ -85,6 +85,28 @@ searchPathForm.addEventListener('submit', (e) => {
 inputFile.addEventListener('change', () => {
     const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.txt|\.pdf)$/i;
     const files = inputFile.files;
+    processFile(files, allowedExtensions);
+})
+
+inputFile.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+})
+
+inputFile.addEventListener('dragleave', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+})
+
+inputFile.addEventListener('drop', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.txt|\.pdf)$/i;
+    const files = e.dataTransfer.files;
+    processFile(files, allowedExtensions);
+})
+
+const processFile = (files, allowedExtensions) => {
     const isInvalidEntry = validFilesLoad(
         allowedExtensions,
         files
@@ -107,7 +129,8 @@ inputFile.addEventListener('change', () => {
     }
     inputFile.value = '';
     showSnackbar('Archivo no permitido', 'error');
-})
+}
+
 
 logoutButton.addEventListener('click', () => {
     localStorage.removeItem('currentUser');

@@ -112,7 +112,8 @@ export class NaryTree {
     getFolderReport() {
         let report = "https://quickchart.io/graphviz?graph=digraph G {\n";
         report += "node [shape=box];\n";
-        report += this.getFolderReportRecursive(this.root);
+        if (this.root.children.length > 0) report += this.getFolderReportRecursive(this.root);
+        else report += `"${this.root.name}"`;
         report += "}";
         return report;
     }
