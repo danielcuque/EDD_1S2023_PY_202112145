@@ -1,11 +1,9 @@
 import { showSnackbar } from "../utils/fields.js";
 import { validFilesLoad } from "../utils/forms.js";
-import { getCurrentPath, getCurrentUser } from "../utils/objects.js";
-import { getTree, setTree } from "../utils/objects.js";
+import { getCurrentPath, getCurrentUser, getTree, setTree } from "../utils/objects.js";
 
 // .txt, .pdf, .jpg, .png, .jpeg
 const AVLTree = getTree();
-
 const inputFile = document.getElementById('dropzone-file');
 const logoutButton = document.getElementById('logoutBtn');
 const searchPathForm = document.getElementById('searchPathForm');
@@ -115,16 +113,15 @@ const showFilesInCurrentPath = () => {
         const folderContainer = document.createElement('div');
         folderContainer.classList.add('folder-container');
         folderContainer.innerHTML = `
-            <div class="folder-icon">
-                <i class="fas fa-folder"></i>
-            </div>
-            <div class="folder-name">
-                <p>${folder.name}</p>
-            </div>
+        <div class="w-full h-full flex flex-col items-center mt-2 cursor-pointer">
+        <img src="./assets/directoryIcon.svg" class="text-gray-500" alt="si">
+        <span>${folder.name}</span>
+    </div>
         `;
         folderContainer.addEventListener('click', () => {
-            const newPath = currentPath + '/' + folder;
+            const newPath = currentPath === '/' ? currentPath + folder.name : currentPath + '/' + folder.name;
             localStorage.setItem('currentPath', newPath);
+            document.getElementById('default-search').value = newPath;
             showFilesInCurrentPath();
         })
         documentsContainers.appendChild(folderContainer);

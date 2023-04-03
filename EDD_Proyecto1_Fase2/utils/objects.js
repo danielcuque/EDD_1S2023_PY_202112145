@@ -50,10 +50,7 @@ export const getCurrentPath = () => {
 }
 
 export const getCurrentUser = () => {
-    const tree = getTree();
-    const studentToSearch = JSON.parse(localStorage.getItem("currentUser"));
-    const student = tree.searchStudent(studentToSearch.id, studentToSearch.password);
-    return student;
+    return JSON.parse(localStorage.getItem("currentUser"));
 }
 
 // Retornamos el string el contenido del archivo en base64
