@@ -4,6 +4,7 @@ import { getCurrentPath, getCurrentUser, getTree, setTree } from "../utils/objec
 
 // .txt, .pdf, .jpg, .png, .jpeg
 const AVLTree = getTree();
+console.log(AVLTree);
 const inputFile = document.getElementById('dropzone-file');
 const logoutButton = document.getElementById('logoutBtn');
 const searchPathForm = document.getElementById('searchPathForm');
@@ -114,7 +115,7 @@ const processFile = (files, allowedExtensions) => {
     if (isInvalidEntry && files.length > 0) {
         const currentUser = getCurrentUser();
         const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
-        const isAdded = user.storage.createFile(getCurrentPath(), files[0]);
+        const isAdded = user.storage.createFiles(getCurrentPath(), files);
 
         if (isAdded) {
             showFilesInCurrentPath();

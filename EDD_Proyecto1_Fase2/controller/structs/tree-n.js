@@ -48,29 +48,28 @@ export class NaryTree {
         }
         return false;
     }
-
-    createFile(path, file) {
+    createFiles(path, files) {
         const current = this.searchPath(path);
         if (current) {
-            const fileNames = current.children.map(child => child.name);
-            const fileName = generateUniqueName(file.name, fileNames);
-            const newNode = new Node(fileName, 'file');
-            newNode.typeOfContent = file.type;
-            encodeBase64(file).then(content => {
-                newNode.content = content;
+            Array.from(files).forEach(file => {
+                this.createFile(current, file);
             });
-            current.children.push(newNode);
-            return true;
         }
-        return false;
     }
+
+    createFile(path, file) {
+        console.log(file);
+        console.log(path);
+    }
+
+
 
     getFiles(path) {
         const current = this.searchPath(path);
         if (current) {
-            return current.children
+            return current.files;
         }
-        return [];
+        return null;
     }
 
     getFolders(path) {
@@ -133,6 +132,7 @@ export class NaryTree {
     // Este método sirve para convertir el árbol del local storage y recuperar todos sus nodos
     deserializeTree() {
         Object.setPrototypeOf(this.root, Node.prototype);
+        Object.setPrototypeOf(this.root.files, Matrix.prototype);
         if (this.root.children)
             this.root.children.forEach(child => {
                 this.deserializeNode(child);
@@ -141,7 +141,8 @@ export class NaryTree {
 
     deserializeNode(node) {
         Object.setPrototypeOf(node, Node.prototype);
-        if (node.children)
+        Object.setPrototypeOf(node.files, Matrix.prototype);
+        if (node.children && node.children.length > 0)
             node.children.forEach(child => {
                 this.deserializeNode(child);
             });
