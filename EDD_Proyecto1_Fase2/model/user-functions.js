@@ -24,8 +24,20 @@ document.getElementById('cancelNewFolderBtn').addEventListener('click', () => {
 
 newPathForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const path = document.getElementById('newPath').value;
-    console.log(path);
+    const path = document.getElementById('newFolderInput').value;
+
+    const currentUser = getCurrentUser();
+    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
+    const isAdded = user.storage.createPath(getCurrentPath() + '/' + path);
+
+    if (isAdded) {
+        showFilesInCurrentPath();
+        showSnackbar('Carpeta añadida', 'success');
+        setTree(AVLTree);
+        document.getElementById('newFolderInput').value = '';
+        return;
+    }
+
 })
 
 // HTML elements for the delete path form
@@ -42,7 +54,16 @@ document.getElementById('cancelDeleteFolderBtn').addEventListener('click', () =>
 searchPathForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const path = document.getElementById('default-search').value;
-    console.log(path);
+    const currentUser = getCurrentUser();
+    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
+    const isAdded = user.storage.searchPath(path);
+
+    if (isAdded) {
+        localStorage.setItem('currentPath', path);
+        showFilesInCurrentPath();
+        return;
+    }
+    showSnackbar('Carpeta no encontrada', 'error');
 })
 
 // Check if all files are accepted
@@ -82,4 +103,31 @@ logoutButton.addEventListener('click', () => {
 const showFilesInCurrentPath = () => {
     const currentUser = getCurrentUser();
     const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
+
+    const currentPath = getCurrentPath();
+    const folders = user.storage.getFolders(currentPath);
+    const files = user.storage.getFiles(currentPath);
+
+    const documentsContainers = document.getElementById('showFilesSection');
+    documentsContainers.innerHTML = '';
+
+    folders.forEach((folder) => {
+        const folderContainer = document.createElement('div');
+        folderContainer.classList.add('folder-container');
+        folderContainer.innerHTML = `
+            <div class="folder-icon">
+                <i class="fas fa-folder"></i>
+            </div>
+            <div class="folder-name">
+                <p>${folder.name}</p>
+            </div>
+        `;
+        folderContainer.addEventListener('click', () => {
+            const newPath = currentPath + '/' + folder;
+            localStorage.setItem('currentPath', newPath);
+            showFilesInCurrentPath();
+        })
+        documentsContainers.appendChild(folderContainer);
+    }
+    )
 }

@@ -13,7 +13,7 @@ class Node {
 
 export class NaryTree {
     constructor() {
-        this.root = new Node("/", 'directory');
+        this.root = new Node("/");
     }
 
     searchPath(path) {
@@ -31,20 +31,22 @@ export class NaryTree {
         return current;
     }
 
+    // Este método va a recibir currentPath y el nombre del nuevo directorio
+    // El nombre del nuevo directorio se va a agregar al final del currentPath
+    // Se va a buscar el nodo que corresponde al currentPath
+    // Se va a crear un nuevo nodo con el nombre del nuevo directorio
     createPath(path) {
-        let current = this.root;
         const pathArray = path.split('/');
-        for (let i = 1; i < pathArray.length; i++) {
-            const child = current.children.find(child => child.name === pathArray[i]);
-            if (child) {
-                current = child;
-            } else {
-                const newNode = new Node(pathArray[i], 'directory');
-                current.children.push(newNode);
-                current = newNode;
-            }
+        const parentPath = pathArray.slice(0, pathArray.length - 1).join('/');
+        const parent = this.searchPath(parentPath);
+        if (parent) {
+            const fileNames = parent.children.map(child => child.name);
+            const fileName = generateUniqueName(pathArray[pathArray.length - 1], fileNames);
+            const newNode = new Node(fileName);
+            parent.children.push(newNode);
+            return true;
         }
-        return current;
+        return false;
     }
 
     createFile(path, file) {
@@ -66,7 +68,15 @@ export class NaryTree {
     getFiles(path) {
         const current = this.searchPath(path);
         if (current) {
-            return current.children.filter(child => child.type === 'file');
+            return current.children
+        }
+        return [];
+    }
+
+    getFolders(path) {
+        const current = this.searchPath(path);
+        if (current) {
+            return current.children
         }
         return [];
     }
