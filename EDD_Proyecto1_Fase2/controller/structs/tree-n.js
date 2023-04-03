@@ -1,13 +1,13 @@
 import { encodeBase64, generateUniqueName } from "../../utils/objects.js";
+import { Matrix } from "./dispers-matrix.js";
+
+// Los nodos único que tienen son los directorios
 
 class Node {
-    constructor(name, type) {
-        this.name = name;           // name of the file or directory
-        this.type = type;           // directory or file
-        this.children = [];         // array of children
-        this.content = null;        // content of the file
-        this.counterFileName = 0
-        this.typeOfContent = null;  // text, image, pdf
+    constructor(name) {
+        this.name = name                // Nombre del directorio
+        this.children = []              // Arreglo de nodos hijos que serán subdirectorios
+        this.files = new Matrix()       // Matriz dispersa de archivos
     }
 }
 
@@ -61,14 +61,6 @@ export class NaryTree {
             return true;
         }
         return false;
-    }
-
-    updateFile(path, name, content) {
-
-    }
-
-    updatePath(path, name) {
-
     }
 
     getFiles(path) {

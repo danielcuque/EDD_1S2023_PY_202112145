@@ -4,13 +4,17 @@ import { getCurrentPath, getCurrentUser } from "../utils/objects.js";
 import { getTree, setTree } from "../utils/objects.js";
 
 // .txt, .pdf, .jpg, .png, .jpeg
+const AVLTree = getTree();
+
 const inputFile = document.getElementById('dropzone-file');
 const logoutButton = document.getElementById('logoutBtn');
 const searchPathForm = document.getElementById('searchPathForm');
 const createFolderButton = document.getElementById('createFolderBtn');
 const deleteFolderButton = document.getElementById('deleteFolderBtn');
 
-const AVLTree = getTree();
+const newPathForm = document.getElementById('newPathForm');
+const deletePathForm = document.getElementById('deletePathForm');
+
 
 searchPathForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -35,11 +39,14 @@ inputFile.addEventListener('change', () => {
             showFilesInCurrentPath();
             showSnackbar('Archivo añadido', 'success');
             setTree(AVLTree);
+            inputFile.value = '';
             return;
         }
+        inputFile.value = '';
         showSnackbar('Archivo no añadido', 'error');
         return;
     }
+    inputFile.value = '';
     showSnackbar('Archivo no permitido', 'error');
 })
 
@@ -52,16 +59,4 @@ logoutButton.addEventListener('click', () => {
 const showFilesInCurrentPath = () => {
     const currentUser = getCurrentUser();
     const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
-    const files = user.storage.getFiles(getCurrentPath());
-    const filesContainer = document.getElementById('showFilesSection');
-    filesContainer.innerHTML = '';
-    files.forEach(file => {
-        const fileContainer = document.createElement('div');
-        fileContainer.innerHTML = `<div class="w-full h-full">
-        <img src="./assets/directoryIcon.svg" class="text-gray-500" alt="si">
-        <span>${file.name}</span>
-        </div>`
-        filesContainer.appendChild(fileContainer);
-    })
-
 }

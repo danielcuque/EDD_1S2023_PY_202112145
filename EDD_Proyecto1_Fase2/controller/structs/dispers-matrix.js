@@ -1,4 +1,4 @@
-class Node {
+class MatrixNode {
     constructor(value, x, y) {
         this.value = value;
         this.x = x;
@@ -40,8 +40,8 @@ class List {
         this.tail = node;
     }
 
-    insert(node) {
-        let node = new Node(value, null, null);
+    insert(value) {
+        let node = new MatrixNode(value, null, null);
         if (this.head == null) {
             this.head = this.tail = node;
             return
@@ -61,7 +61,7 @@ class List {
     }
 }
 
-class Matrix {
+export class Matrix {
     constructor() {
         this.horizontal = new List();
         this.vertical = new List();

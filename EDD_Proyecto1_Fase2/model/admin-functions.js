@@ -57,8 +57,9 @@ massiveLoadChooser.addEventListener('change', () => {
         document.getElementById('treeStudentsBtn').disabled = false;
         showSnackbar('Carga masiva exitosa', 'success');
     } else {
-        alert('Invalid file type');
+        showSnackbar('Archivo no permitido', 'error');
     }
+    massiveLoadChooser.value = '';
 });
 
 
