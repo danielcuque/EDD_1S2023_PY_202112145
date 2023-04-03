@@ -211,6 +211,17 @@ export class Matrix {
 
     // Vamos a recorrer cada nodo de la matriz y convertirlo en un objeto de tipo nodoMatriz
     deserializeMatrix() {
-        Object.setPrototypeOf(this.principal, nodoMatriz.prototype);
+        Object.setPrototypeOf(this.principal, nodoMatriz.prototype);    // Seteamos el prototipo del nodo principal
+        // let tempX = this.principal;
+        // let tempY = this.principal;
+        // let tempZ = this.principal;
+        // while (tempX) {
+        //     Object.setPrototypeOf(tempX, nodoMatriz.prototype);    // Seteamos el prototipo del nodo actual
+        //     tempX = tempX.siguiente;
+        // }
+        // while (tempY) {
+        //     Object.setPrototypeOf(tempY, nodoMatriz.prototype);    // Seteamos el prototipo del nodo actual
+        //     tempY = tempY.abajo;
+        // }
     }
 }

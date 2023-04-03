@@ -4,7 +4,6 @@ import { getCurrentPath, getCurrentUser, getTree, setTree } from "../utils/objec
 
 // .txt, .pdf, .jpg, .png, .jpeg
 const AVLTree = getTree();
-console.log(AVLTree);
 const inputFile = document.getElementById('dropzone-file');
 const logoutButton = document.getElementById('logoutBtn');
 const searchPathForm = document.getElementById('searchPathForm');

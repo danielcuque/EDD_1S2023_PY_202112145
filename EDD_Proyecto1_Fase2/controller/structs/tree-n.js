@@ -52,14 +52,19 @@ export class NaryTree {
         const current = this.searchPath(path);
         if (current) {
             Array.from(files).forEach(file => {
-                this.createFile(current, file);
+                const isCreated = this.createFile(current, file);
+                if (!isCreated) {
+                    return false;
+                }
             });
         }
+        return true;
     }
 
-    createFile(path, file) {
-        console.log(file);
-        console.log(path);
+    createFile(nodeToInsert, file) {
+        // nodeToInsert.files.insertarArchivo(file.name, 1)
+        console.log(nodeToInsert.files)
+        return true;
     }
 
 
@@ -133,6 +138,7 @@ export class NaryTree {
     deserializeTree() {
         Object.setPrototypeOf(this.root, Node.prototype);
         Object.setPrototypeOf(this.root.files, Matrix.prototype);
+        this.root.files.deserializeMatrix();
         if (this.root.children)
             this.root.children.forEach(child => {
                 this.deserializeNode(child);
@@ -142,6 +148,7 @@ export class NaryTree {
     deserializeNode(node) {
         Object.setPrototypeOf(node, Node.prototype);
         Object.setPrototypeOf(node.files, Matrix.prototype);
+        node.files.deserializeMatrix();
         if (node.children && node.children.length > 0)
             node.children.forEach(child => {
                 this.deserializeNode(child);
