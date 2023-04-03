@@ -15,6 +15,19 @@ const deleteFolderButton = document.getElementById('deleteFolderBtn');
 const newPathForm = document.getElementById('newPathForm');
 const deletePathForm = document.getElementById('deletePathForm');
 
+createFolderButton.addEventListener('click', () => {
+    document.getElementById('newPathForm').classList.remove('hidden');
+})
+
+document.getElementById('cancelNewFolderBtn').addEventListener('click', () => {
+    document.getElementById('newPathForm').classList.add('hidden');
+})
+
+newPathForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const path = document.getElementById('newPath').value;
+    console.log(path);
+})
 
 searchPathForm.addEventListener('submit', (e) => {
     e.preventDefault();
