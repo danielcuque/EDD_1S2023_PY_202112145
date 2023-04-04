@@ -185,6 +185,7 @@ export class Matrix {
             }
             /** Conexiones entre los nodos de la matriz */
             aux2 = aux3;
+
             while (aux2) {
                 aux1 = aux2;
                 while (aux1.siguiente) {
@@ -193,6 +194,7 @@ export class Matrix {
                 }
                 aux2 = aux2.abajo;
             }
+
             aux2 = aux3;
             while (aux2) {
                 aux1 = aux2;

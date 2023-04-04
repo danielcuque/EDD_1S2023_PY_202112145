@@ -69,10 +69,20 @@ export class NaryTree {
         return '';
     }
 
+
     createFile(nodeToInsert, file) {
         nodeToInsert.files.insertarArchivo(file.name, 1, file.name)
         console.log(nodeToInsert.files)
         return true;
+    }
+
+    setPermissions(path, carnet, fileName, permissions) {
+        const current = this.searchPath(path);
+        if (current) {
+            current.files.colocarPermiso(fileName, carnet, permissions);
+            return true;
+        }
+        return false;
     }
 
 

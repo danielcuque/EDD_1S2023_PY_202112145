@@ -131,6 +131,36 @@ const processFile = (files, allowedExtensions) => {
     showSnackbar('Archivo no permitido', 'error');
 }
 
+// Set permissions
+document.getElementById('setPermissionBtn').addEventListener('click', () => {
+    document.getElementById('setPermissionModal').classList.remove('hidden');
+})
+
+document.getElementById('cancelSetPermission').addEventListener('click', () => {
+    document.getElementById('setPermissionModal').classList.add('hidden');
+})
+
+document.getElementById('setPermissionForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const idUserPermission = document.getElementById('idUserPermission').value;
+    const filePermission = document.getElementById('filePermission').value;
+    const canWrite = document.getElementById('canWrite').checked;
+    const canRead = document.getElementById('canRead').checked;
+    const userpermission = (canWrite ? 'w' : '') + (canRead ? 'r' : '');
+
+    // Comprobamos que el usuario existe
+    const existsUser = AVLTree.searchStudentWithId(idUserPermission, '');
+    if (!existsUser || idUserPermission === getCurrentUser().id) {
+        showSnackbar('El usuario no existe o es el usuario actual', 'error');
+        return;
+    }
+
+    const currentUser = getCurrentUser();
+    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
+    user.storage.setPermissions(getCurrentPath(), idUserPermission, filePermission, userpermission);
+
+})
+
 
 logoutButton.addEventListener('click', () => {
     localStorage.removeItem('currentUser');

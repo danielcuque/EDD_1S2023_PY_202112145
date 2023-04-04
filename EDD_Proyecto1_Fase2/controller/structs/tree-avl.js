@@ -149,6 +149,23 @@ export class TreeAVL {
         return graph;
     }
 
+    searchStudentWithId(id) {
+        return this.searchStudentWithIdAux(id, this.root);
+    }
+
+    searchStudentWithIdAux(id, node) {
+        if (node != null) {
+            if (node.student.id == id) {
+                return node.student;
+            } else if (node.student.id > id) {
+                return this.searchStudentWithIdAux(id, node.left);
+            } else {
+                return this.searchStudentWithIdAux(id, node.right);
+            }
+        }
+        return null;
+    }
+
     searchStudent(id, password) {
         return this.searchStudentAux(id, password, this.root);
     }
