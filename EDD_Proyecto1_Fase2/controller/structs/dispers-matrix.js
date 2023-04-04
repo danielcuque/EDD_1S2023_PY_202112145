@@ -196,6 +196,10 @@ export class Matrix {
     }
 
     reporte() {
+        if (this.principal.posicion === "Raiz" && this.principal.siguiente === null && this.principal.abajo === null) {
+            return '';
+        }
+
         let cadena = "";
         let aux1 = this.principal;
         let aux2 = this.principal;

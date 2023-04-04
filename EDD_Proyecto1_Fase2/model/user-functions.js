@@ -205,7 +205,12 @@ document.getElementById('reportFolderBtn').addEventListener('click', () => {
 document.getElementById('reportFilesBtn').addEventListener('click', () => {
     const currentUser = getCurrentUser();
     const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
-    const report = "https://quickchart.io/graphviz?graph=" + user.storage.getFilesReport(getCurrentPath());
+    let report = user.storage.getFilesReport(getCurrentPath());
+    if (report === '') {
+        showSnackbar('No hay archivos en esta carpeta', 'warning');
+        return;
+    }
+    report = "https://quickchart.io/graphviz?graph=" + report;
     const img = document.getElementById('treeImagePreview');
     img.src = report;
     document.getElementById('treeModalPreview').classList.remove('hidden');
