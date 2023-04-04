@@ -145,8 +145,8 @@ export class NaryTree {
     // Este método sirve para convertir el árbol del local storage y recuperar todos sus nodos
     deserializeTree() {
         Object.setPrototypeOf(this.root, Node.prototype);
-        console.log(this.root.files)
-        this.deserializeMatrix(this.root.files);
+        const restoredMatrix = this.deserializeMatrix(this.root.files);
+        this.root.files = restoredMatrix;
         if (this.root.children)
             this.root.children.forEach(child => {
                 this.deserializeNode(child);
@@ -165,11 +165,11 @@ export class NaryTree {
 
     deserializeMatrix(serialized) {
         const matrix = new Matrix();
-        matrix.coordenadaX = serialized.coordenadaX;
-        matrix.coordenadaY = serialized.coordenadaY;
-
-        // Vamos a el nodo principal para reconstruir la matriz
-
-
+        const files = serialized.convertedFiles;
+        files.forEach(file => {
+            matrix.insertarArchivo(file.text, file.numero, file.nombreArchivo);
+        }
+        );
+        return matrix;
     }
 }

@@ -210,33 +210,44 @@ export class Matrix {
     }
 
     toJSON() {
-        const serializedNodes = new Map();
-        const serializeNode = (node) => {
-
-            if (serializedNodes.has(node)) {
-                return { id: serializedNodes.get(node) };
+        /*
+        Los files van a lucir asi:
+        {
+            'text': 'texto',
+            'numero': 1,
+            'nombreArchivo': 'nombreArchivo', 
+        }
+        */
+        const convertedFiles = [];
+        /* 
+        Los permisos van a lucir asi:
+        {
+            'nombreArchivo': 'nombreArchivo',
+            'carnet': 'carnet',
+            'permisos': 'permisos'
+        }
+        */
+        const permisos = [];
+        let aux1 = this.principal;
+        let aux2 = this.principal;
+        if (aux1 !== null) {
+            // Recorremos las filas que son los archivos
+            // Nos saltamos la raíz
+            aux1 = aux1.abajo;
+            while (aux1) {
+                convertedFiles.push({
+                    text: aux1.posicion,
+                    numero: 1,
+                    nombreArchivo: aux1.posicion
+                })
+                aux1 = aux1.abajo;
             }
 
-            const serialized = {
-                posicion: node.posicion,
-                posX: node.posX,
-                posY: node.posY,
-                siguiente: node.siguiente && serializeNode(node.siguiente),
-                anterior: node.anterior && serializeNode(node.anterior),
-                arriba: node.arriba && serializeNode(node.arriba),
-                abajo: node.abajo && serializeNode(node.abajo),
-            }
-
-            serializedNodes.set(node, serialized);
-            return serialized;
         }
 
-        // Serializamos el nodo principal y sus hijos recursivamente
-        const serializedPrincipal = serializeNode(this.principal);
         return {
-            principal: serializedPrincipal,
-            coordenadaY: this.coordenadaY,
-            coordenadaX: this.coordenadaX,
-        };
+            permisos,
+            convertedFiles
+        }
     }
 }
