@@ -176,10 +176,14 @@ export class NaryTree {
     deserializeMatrix(serialized) {
         const matrix = new Matrix();
         const files = serialized.convertedFiles;
+        const permisos = serialized.permisos;
         files.forEach(file => {
             matrix.insertarArchivo(file.text, file.numero, file.nombreArchivo);
         }
         );
+        permisos.forEach(permiso => {
+            matrix.colocarPermiso(permiso.nombreArchivo, permiso.carnet, permiso.permisos);
+        });
         return matrix;
     }
 }

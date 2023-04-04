@@ -279,8 +279,8 @@ export class Matrix {
                             const fileName = this.buscarY(aux1.posY);
                             const carnet = this.buscarX(aux1.posX);
                             permisos.push({
-                                nombreArchivo: fileName,
-                                carnet: carnet,
+                                nombreArchivo: fileName.posicion,
+                                carnet: carnet.posicion,
                                 permisos: aux1.posicion
                             })
                         }
@@ -289,7 +289,6 @@ export class Matrix {
                 }
                 aux2 = aux2.abajo;
             }
-
         }
         return {
             permisos,
