@@ -17,10 +17,33 @@ export class Matrix {
         this.coordenadaX = 0;
     }
 
+    buscarX(x) {
+        let aux = this.principal;
+        while (aux) {
+            if (aux.posX === x && aux.posY === -1) {
+                return aux;
+            } else {
+                aux = aux.siguiente
+            }
+        }
+        return null;
+    }
+
+    buscarY(y) {
+        let aux = this.principal;
+        while (aux) {
+            if (aux.posY === y && aux.posX === -1) {
+                return aux;
+            } else {
+                aux = aux.abajo
+            }
+        }
+        return null;
+    }
+
     buscarF(nombre_archivo) {
         let aux = this.principal
         while (aux) {
-            /**if(aux.posY === y) */
             if (aux.posicion === nombre_archivo) {
                 return aux;
             } else {
@@ -33,7 +56,6 @@ export class Matrix {
     buscarC(carnet) {
         let aux = this.principal;
         while (aux) {
-            /**if(aux.posX === x) */
             if (aux.posicion === carnet) {
                 return aux;
             } else {
@@ -173,6 +195,7 @@ export class Matrix {
                 aux1 = aux1.siguiente;
             }
             cadena += "}"
+            // Recorremos en cada fila
             while (aux2) {
                 aux1 = aux2;
                 cadena += "{rank=same; ";
@@ -184,8 +207,8 @@ export class Matrix {
                 aux2 = aux2.abajo;
             }
             /** Conexiones entre los nodos de la matriz */
+            // Conexiones en X
             aux2 = aux3;
-
             while (aux2) {
                 aux1 = aux2;
                 while (aux1.siguiente) {
@@ -195,6 +218,7 @@ export class Matrix {
                 aux2 = aux2.abajo;
             }
 
+            // Conexiones en Y
             aux2 = aux3;
             while (aux2) {
                 aux1 = aux2;
@@ -245,8 +269,26 @@ export class Matrix {
                 aux1 = aux1.abajo;
             }
 
-        }
+            // Recorremos la matriz buscando los nodos que contienen la informacion de los permisos
+            while (aux2) {
+                aux1 = aux2;
+                while (aux1) {
+                    aux1 = aux1.siguiente;
+                    if (aux1 !== null) {
+                        if (aux1.posY !== -1) {
+                            console.log(aux1)
+                        }
+                        // const fileName = this.buscarY(aux1.posX);
+                        // const carnet = this.buscarX(aux1.posY);
+                        // console.log(fileName.posicion, carnet.posicion, aux1.posicion)
 
+                    }
+
+                }
+                aux2 = aux2.abajo;
+            }
+
+        }
         return {
             permisos,
             convertedFiles

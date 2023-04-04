@@ -159,6 +159,12 @@ document.getElementById('setPermissionForm').addEventListener('submit', (e) => {
     const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
     user.storage.setPermissions(getCurrentPath(), idUserPermission, filePermission, userpermission);
 
+    document.getElementById('idUserPermission').value = '';
+    document.getElementById('filePermission').value = '';
+    document.getElementById('canWrite').checked = false;
+    document.getElementById('canRead').checked = false;
+    setTree(AVLTree);
+    showSnackbar('Permisos establecidos', 'success');
 })
 
 
