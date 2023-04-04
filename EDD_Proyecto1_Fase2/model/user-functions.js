@@ -29,6 +29,12 @@ newPathForm.addEventListener('submit', (e) => {
     const isAdded = user.storage.createPath(getCurrentPath() + '/' + path);
 
     if (isAdded) {
+        user.logList.addWithDate(
+            `Se creó la carpeta ${path} en la ruta ${getCurrentPath()}`,
+            new Date().toLocaleDateString(),
+            new Date().toLocaleTimeString()
+        );
+
         showFilesInCurrentPath();
         showSnackbar('Carpeta añadida', 'success');
         setTree(AVLTree);
@@ -56,6 +62,11 @@ document.getElementById('deletePathForm').addEventListener('submit', (e) => {
     const isDeleted = user.storage.deletePath(getCurrentPath() + '/' + path);
 
     if (isDeleted) {
+        user.logList.addWithDate(
+            `Acción: Se eliminó la carpeta ${path} en la ruta ${getCurrentPath()}`,
+            new Date().toLocaleDateString(),
+            new Date().toLocaleTimeString()
+        )
         showFilesInCurrentPath();
         showSnackbar('Carpeta eliminada', 'success');
         setTree(AVLTree);
@@ -117,6 +128,13 @@ const processFile = (files, allowedExtensions) => {
         const isAdded = user.storage.createFiles(getCurrentPath(), files);
 
         if (isAdded) {
+            files.forEach(file => {
+                user.logList.addWithDate(
+                    `Acción: Se añadió el archivo ${file.name} en la ruta ${getCurrentPath()}`,
+                    new Date().toLocaleDateString(),
+                    new Date().toLocaleTimeString()
+                )
+            })
             showFilesInCurrentPath();
             showSnackbar('Archivo añadido', 'success');
             setTree(AVLTree);

@@ -26,5 +26,16 @@ export class Student {
     deserealizeStudent() {
         const tree = Object.setPrototypeOf(this.storage, NaryTree.prototype);
         tree.deserializeTree();
+        const logList = this.deserializeCircularList(this.logList);
+        this.logList = logList;
+    }
+
+    deserializeCircularList(serialized) {
+        const circularList = new CircularLinkedList();
+        serialized.forEach(node => {
+            circularList.addWithDate(node.description, node.date, node.hour);
+        }
+        );
+        return circularList;
     }
 }

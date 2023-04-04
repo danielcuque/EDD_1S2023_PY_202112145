@@ -72,7 +72,6 @@ export class NaryTree {
 
     createFile(nodeToInsert, file) {
         nodeToInsert.files.insertarArchivo(file.name, 1, file.name)
-        console.log(nodeToInsert.files)
         return true;
     }
 

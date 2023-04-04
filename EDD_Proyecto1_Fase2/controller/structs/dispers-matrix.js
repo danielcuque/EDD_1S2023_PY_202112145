@@ -165,13 +165,12 @@ export class Matrix {
             this.insertarFila(this.coordenadaY, texto)
             this.coordenadaY++
         } else {
-            let copia_archivo = "(" + (numero++) + ")" + nombreArchivo
+            let copia_archivo = nombreArchivo + "(" + (numero++) + ")"
             this.insertarArchivo(copia_archivo, numero)
         }
     }
 
     colocarPermiso(archivo, carnet, permisos) {
-        /** NOTA: Paso Previo Buscar en AVL si existe el carnet*/
         let nuevaColumna = this.buscarC(carnet)
         let nuevaFila = this.buscarF(archivo)
         if (nuevaColumna === null) {
