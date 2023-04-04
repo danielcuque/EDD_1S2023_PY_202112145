@@ -90,7 +90,7 @@ export class NaryTree {
     getFiles(path) {
         const current = this.searchPath(path);
         if (current) {
-            return []
+            return current.files.getFiles();
         }
         return null;
     }
@@ -165,8 +165,8 @@ export class NaryTree {
 
     deserializeNode(node) {
         Object.setPrototypeOf(node, Node.prototype);
-        Object.setPrototypeOf(node.files, Matrix.prototype);
-        // node.files.deserializeMatrix();
+        const restoredMatrix = this.deserializeMatrix(node.files);
+        node.files = restoredMatrix;
         if (node.children && node.children.length > 0)
             node.children.forEach(child => {
                 this.deserializeNode(child);

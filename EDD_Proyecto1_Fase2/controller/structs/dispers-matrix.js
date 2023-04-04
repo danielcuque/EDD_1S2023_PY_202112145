@@ -7,6 +7,7 @@ class nodoMatriz {
         this.posX = posX;
         this.posY = posY;
         this.posicion = nombre_archivo;
+        this.typeOfFile = "";
     }
 }
 
@@ -103,6 +104,7 @@ export class Matrix {
         }
         nuevoNodo.arriba = piv;
         piv.abajo = nuevoNodo;
+        return nuevoNodo;
     }
 
     insertarNodo(x, y, texto) {
@@ -180,6 +182,18 @@ export class Matrix {
         if (nuevaColumna !== null && nuevaFila !== null) {
             this.insertarNodo(nuevaColumna.posX, nuevaFila.posY, permisos)
         }
+    }
+
+    getFiles() {
+        let aux = this.principal;
+        let lista = [];
+        while (aux) {
+            if (aux.posicion !== "Raiz") {
+                lista.push(aux.posicion)
+            }
+            aux = aux.abajo;
+        }
+        return lista;
     }
 
     reporte() {

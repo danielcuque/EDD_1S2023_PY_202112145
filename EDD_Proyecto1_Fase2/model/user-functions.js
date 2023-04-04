@@ -1,4 +1,4 @@
-import { showSnackbar } from "../utils/fields.js";
+import { getTypeOfFile, showSnackbar } from "../utils/fields.js";
 import { validFilesLoad } from "../utils/forms.js";
 import { getCurrentPath, getCurrentUser, getTree, setTree } from "../utils/objects.js";
 
@@ -205,7 +205,7 @@ const showFilesInCurrentPath = () => {
     const files = user.storage.getFiles(currentPath);
 
     if (folders.length === 0 && files.length === 0) {
-        showSnackbar('No hay archivos en esta carpeta', 'warning');
+        showSnackbar('No hay contenido en esta carpeta', 'warning');
     }
 
     const documentsContainers = document.getElementById('showFilesSection');
@@ -229,4 +229,18 @@ const showFilesInCurrentPath = () => {
         documentsContainers.appendChild(folderContainer);
     }
     )
+
+    files.forEach((file) => {
+        const fileIcon = getTypeOfFile(file);
+
+        const fileContainer = document.createElement('div');
+        fileContainer.classList.add('file-container');
+        fileContainer.innerHTML = `
+        <div class="w-full h-full flex flex-col items-center mt-2 cursor-pointer">
+        <img src=${fileIcon} class="text-gray-500" alt="si">
+        <span>${file}</span>
+    </div>`;
+        documentsContainers.appendChild(fileContainer);
+
+    })
 }

@@ -80,3 +80,23 @@ export const showSnackbar = (message, type) => {
     }, 3000);
 
 }
+
+// const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.txt|\.pdf)$/i;
+const typeOfFiles = {
+    ".txt": "https://drive-thirdparty.googleusercontent.com/32/type/text/plain",
+    ".pdf": "https://drive-thirdparty.googleusercontent.com/32/type/application/pdf",
+    ".png": "https://drive-thirdparty.googleusercontent.com/32/type/image/png",
+    ".jpg": "https://drive-thirdparty.googleusercontent.com/32/type/image/png",
+    ".jpeg": "https://drive-thirdparty.googleusercontent.com/32/type/image/png",
+    "default": "./assets/icons/file.svg",
+}
+
+// Funcion que retorna el tipo de archivo
+export const getTypeOfFile = (file) => {
+    const extension = file.split(".").pop();
+    // Si no es ninguno de los tipos de archivos que tenemos, retornamos el icono de archivo
+    if (!typeOfFiles[`.${extension}`]) {
+        return typeOfFiles["default"];
+    }
+    return typeOfFiles[`.${extension}`];
+}
