@@ -148,7 +148,12 @@ document.getElementById('reportFolderBtn').addEventListener('click', () => {
 })
 
 document.getElementById('reportFilesBtn').addEventListener('click', () => {
-
+    const currentUser = getCurrentUser();
+    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
+    const report = "https://quickchart.io/graphviz?graph=" + user.storage.getFilesReport(getCurrentPath());
+    const img = document.getElementById('treeImagePreview');
+    img.src = report;
+    document.getElementById('treeModalPreview').classList.remove('hidden');
 })
 
 document.getElementById('closeModalBtn').addEventListener('click', () => {

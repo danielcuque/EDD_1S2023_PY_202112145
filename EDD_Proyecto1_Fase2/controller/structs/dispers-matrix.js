@@ -135,7 +135,7 @@ export class Matrix {
         }
     }
 
-    insertarArchivo(texto, numero) {
+    insertarArchivo(texto, numero, nombreArchivo) {
         let nuevaFila = this.buscarF(texto)
         if (nuevaFila === null) {
             this.insertarFila(this.coordenadaY, texto)
@@ -209,19 +209,34 @@ export class Matrix {
         return cadena;
     }
 
-    // Vamos a recorrer cada nodo de la matriz y convertirlo en un objeto de tipo nodoMatriz
-    deserializeMatrix() {
-        Object.setPrototypeOf(this.principal, nodoMatriz.prototype);    // Seteamos el prototipo del nodo principal
-        // let tempX = this.principal;
-        // let tempY = this.principal;
-        // let tempZ = this.principal;
-        // while (tempX) {
-        //     Object.setPrototypeOf(tempX, nodoMatriz.prototype);    // Seteamos el prototipo del nodo actual
-        //     tempX = tempX.siguiente;
-        // }
-        // while (tempY) {
-        //     Object.setPrototypeOf(tempY, nodoMatriz.prototype);    // Seteamos el prototipo del nodo actual
-        //     tempY = tempY.abajo;
-        // }
+    toJSON() {
+        const serializedNodes = new Map();
+        const serializeNode = (node) => {
+
+            if (serializedNodes.has(node)) {
+                return { id: serializedNodes.get(node) };
+            }
+
+            const serialized = {
+                posicion: node.posicion,
+                posX: node.posX,
+                posY: node.posY,
+                siguiente: node.siguiente && serializeNode(node.siguiente),
+                anterior: node.anterior && serializeNode(node.anterior),
+                arriba: node.arriba && serializeNode(node.arriba),
+                abajo: node.abajo && serializeNode(node.abajo),
+            }
+
+            serializedNodes.set(node, serialized);
+            return serialized;
+        }
+
+        // Serializamos el nodo principal y sus hijos recursivamente
+        const serializedPrincipal = serializeNode(this.principal);
+        return {
+            principal: serializedPrincipal,
+            coordenadaY: this.coordenadaY,
+            coordenadaX: this.coordenadaX,
+        };
     }
 }

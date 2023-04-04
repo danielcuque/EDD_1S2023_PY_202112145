@@ -61,8 +61,16 @@ export class NaryTree {
         return true;
     }
 
+    getFilesReport(path) {
+        const current = this.searchPath(path);
+        if (current) {
+            return current.files.reporte();
+        }
+        return '';
+    }
+
     createFile(nodeToInsert, file) {
-        // nodeToInsert.files.insertarArchivo(file.name, 1)
+        nodeToInsert.files.insertarArchivo(file.name, 1, file.name)
         console.log(nodeToInsert.files)
         return true;
     }
@@ -137,8 +145,8 @@ export class NaryTree {
     // Este método sirve para convertir el árbol del local storage y recuperar todos sus nodos
     deserializeTree() {
         Object.setPrototypeOf(this.root, Node.prototype);
-        Object.setPrototypeOf(this.root.files, Matrix.prototype);
-        this.root.files.deserializeMatrix();
+        console.log(this.root.files)
+        this.deserializeMatrix(this.root.files);
         if (this.root.children)
             this.root.children.forEach(child => {
                 this.deserializeNode(child);
@@ -148,10 +156,20 @@ export class NaryTree {
     deserializeNode(node) {
         Object.setPrototypeOf(node, Node.prototype);
         Object.setPrototypeOf(node.files, Matrix.prototype);
-        node.files.deserializeMatrix();
+        // node.files.deserializeMatrix();
         if (node.children && node.children.length > 0)
             node.children.forEach(child => {
                 this.deserializeNode(child);
             });
+    }
+
+    deserializeMatrix(serialized) {
+        const matrix = new Matrix();
+        matrix.coordenadaX = serialized.coordenadaX;
+        matrix.coordenadaY = serialized.coordenadaY;
+
+        // Vamos a el nodo principal para reconstruir la matriz
+
+
     }
 }
