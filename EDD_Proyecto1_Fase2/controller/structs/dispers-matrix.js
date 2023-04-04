@@ -276,12 +276,14 @@ export class Matrix {
                     aux1 = aux1.siguiente;
                     if (aux1 !== null) {
                         if (aux1.posY !== -1) {
-                            console.log(aux1)
+                            const fileName = this.buscarY(aux1.posY);
+                            const carnet = this.buscarX(aux1.posX);
+                            permisos.push({
+                                nombreArchivo: fileName,
+                                carnet: carnet,
+                                permisos: aux1.posicion
+                            })
                         }
-                        // const fileName = this.buscarY(aux1.posX);
-                        // const carnet = this.buscarX(aux1.posY);
-                        // console.log(fileName.posicion, carnet.posicion, aux1.posicion)
-
                     }
 
                 }
