@@ -128,13 +128,14 @@ const processFile = (files, allowedExtensions) => {
         const isAdded = user.storage.createFiles(getCurrentPath(), files);
 
         if (isAdded) {
-            files.forEach(file => {
+            Array.from(files).forEach(file => {
                 user.logList.addWithDate(
-                    `Acción: Se añadió el archivo ${file.name} en la ruta ${getCurrentPath()}`,
+                    `Se añadió el archivo ${file.name} en la ruta ${getCurrentPath()}`,
                     new Date().toLocaleDateString(),
                     new Date().toLocaleTimeString()
                 )
             })
+
             showFilesInCurrentPath();
             showSnackbar('Archivo añadido', 'success');
             setTree(AVLTree);
@@ -262,3 +263,16 @@ const showFilesInCurrentPath = () => {
 
     })
 }
+
+document.getElementById('showLogsBtn').addEventListener('click', () => {
+    const currentUser = getCurrentUser();
+    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
+    const report = user.logList.convertToGraphviz();
+    if (report === '') {
+        showSnackbar('No hay logs', 'warning');
+        return;
+    }
+    const img = document.getElementById('treeImagePreview');
+    img.src = report;
+    document.getElementById('treeModalPreview').classList.remove('hidden');
+})

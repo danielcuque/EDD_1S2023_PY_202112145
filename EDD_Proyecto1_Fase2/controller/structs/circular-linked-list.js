@@ -5,6 +5,12 @@ class Node {
     this.hour = null;
     this.next = null;
   }
+
+  nodeDescriptionToGraphviz() {
+    return `${this.description} \\n
+    Fecha: ${this.date} \\n
+    Hora: ${this.hour}`
+  }
 }
 
 export class CircularLinkedList {
@@ -22,57 +28,36 @@ export class CircularLinkedList {
     // If the list is empty, set the head to the new node
     if (!this.head) {
       this.head = newNode;
+      this.tail = newNode;
+      this.tail.next = this.head
     } else {
       newNode.next = this.head;
       this.head = newNode;
+      this.tail.next = this.head;
     }
-  }
-
-
-  // Remove the node at the front of the list
-  remove() {
-    // If the list is empty, return
-    if (!this.head) {
-      return;
-    }
-
-    // If the list has only one node, set the head and tail to null
-    if (this.head === this.tail) {
-      this.head = null;
-      this.tail = null;
-      return;
-    }
-
-    // Set the head to the next node
-    this.head = this.head.next;
-
-    // Set the next of the tail to the new head
-    this.tail.next = this.head;
+    this.size++;
+    return newNode
   }
 
   convertToGraphviz() {
-    let nodoActual = cabeza;
-    let codigo = "digraph G {\n";
-    codigo += "  rankdir=LR;\n";
-    codigo += "  node [shape=circle];\n";
-    codigo += "  edge [arrowhead=vee];\n";
-
-    if (cabeza) {
-      codigo += `  "${nodoActual.valor}" -> "${nodoActual.siguiente.valor}";\n`;
-      nodoActual = nodoActual.siguiente;
-
-      while (nodoActual != cabeza) {
-        codigo += `  "${nodoActual.valor}" -> "${nodoActual.siguiente.valor}";\n`;
-        nodoActual = nodoActual.siguiente;
-      }
+    if (!this.head) {
+      return "";
     }
+    let report = "https://quickchart.io/graphviz?graph=digraph G { \n";
+    report += "node [shape=box]; \n";
+    report += "rankdir=LR; \n";
+    let current = this.head;
+    let index = 0;
 
-    codigo += "  { rank=same; ";
-    codigo += `"${cabeza.valor}" -> "${cabeza.anterior.valor}" -> "${cabeza.valor}"`;
-    codigo += " }\n";
-    codigo += "}";
-
-    return codigo;
+    while (index < this.size) {
+      report += `node${index} [label="${current.nodeDescriptionToGraphviz()}"]; \n`;
+      report += `node${index} -> node${index + 1 >= this.size ? 0 + ' [constraint=false]' : index + 1} ;\n`;
+      current = current.next;
+      index++;
+    }
+    report += "rank = same; \n";
+    report += "}";
+    return report;
 
   }
 
@@ -93,7 +78,7 @@ export class CircularLinkedList {
       );
       current = current.next;
     } while (current !== this.head);
-    console.log(nodesArray);
+
     return nodesArray;
   }
 }
