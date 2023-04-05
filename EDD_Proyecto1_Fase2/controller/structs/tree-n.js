@@ -48,15 +48,16 @@ export class NaryTree {
         }
         return false;
     }
-    createFiles(path, files) {
+
+    async createFiles(path, files) {
         const current = this.searchPath(path);
         if (current) {
-            Array.from(files).forEach(file => {
-                const isCreated = this.createFile(current, file);
+            for (const file of files) {
+                const isCreated = await this.createFile(current, file);
                 if (!isCreated) {
                     return false;
                 }
-            });
+            }
         }
         return true;
     }
@@ -70,8 +71,9 @@ export class NaryTree {
     }
 
 
-    createFile(nodeToInsert, file) {
-        nodeToInsert.files.insertarArchivo(file.name, 1, file.name)
+    async createFile(nodeToInsert, file) {
+        const encodedFile = await encodeBase64(file);
+        nodeToInsert.files.insertarArchivo(file.name, 1, file.name, encodedFile);
         return true;
     }
 

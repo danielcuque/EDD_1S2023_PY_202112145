@@ -1,5 +1,5 @@
 class nodoMatriz {
-    constructor(posX, posY, nombre_archivo) {
+    constructor(posX, posY, nombre_archivo, content) {
         this.siguiente = null;
         this.anterior = null;
         this.abajo = null;
@@ -7,7 +7,7 @@ class nodoMatriz {
         this.posX = posX;
         this.posY = posY;
         this.posicion = nombre_archivo;
-        this.typeOfFile = "";
+        this.content = content;
     }
 }
 
@@ -86,8 +86,8 @@ export class Matrix {
         piv.siguiente = nuevoNodo;
     }
 
-    insertarFila(posicion, texto) {
-        const nuevoNodo = new nodoMatriz(-1, posicion, texto);
+    insertarFila(posicion, texto, content) {
+        const nuevoNodo = new nodoMatriz(-1, posicion, texto, content);
         let piv = this.principal;
         let pivA = this.principal;
         while (piv.abajo) {
@@ -159,14 +159,14 @@ export class Matrix {
         }
     }
 
-    insertarArchivo(texto, numero, nombreArchivo) {
+    insertarArchivo(texto, numero, nombreArchivo, content) {
         let nuevaFila = this.buscarF(texto)
         if (nuevaFila === null) {
-            this.insertarFila(this.coordenadaY, texto)
+            this.insertarFila(this.coordenadaY, texto, content)
             this.coordenadaY++
         } else {
-            let copia_archivo = nombreArchivo + "(" + (numero++) + ")"
-            this.insertarArchivo(copia_archivo, numero)
+            let copia_archivo = "(" + (numero++) + ")" + nombreArchivo
+            this.insertarArchivo(copia_archivo, numero, nombreArchivo, content)
         }
     }
 
@@ -253,23 +253,7 @@ export class Matrix {
     }
 
     toJSON() {
-        /*
-        Los files van a lucir asi:
-        {
-            'text': 'texto',
-            'numero': 1,
-            'nombreArchivo': 'nombreArchivo', 
-        }
-        */
         const convertedFiles = [];
-        /* 
-        Los permisos van a lucir asi:
-        {
-            'nombreArchivo': 'nombreArchivo',
-            'carnet': 'carnet',
-            'permisos': 'permisos'
-        }
-        */
         const permisos = [];
         let aux1 = this.principal;
         let aux2 = this.principal;
@@ -281,7 +265,8 @@ export class Matrix {
                 convertedFiles.push({
                     text: aux1.posicion,
                     numero: 1,
-                    nombreArchivo: aux1.posicion
+                    nombreArchivo: aux1.posicion,
+                    content: aux1.content || ''
                 })
                 aux1 = aux1.abajo;
             }

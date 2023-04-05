@@ -55,14 +55,16 @@ export const getCurrentUser = () => {
 
 // Retornamos el string el contenido del archivo en base64
 export const encodeBase64 = (file) => {
+    // Retornamos la promesa resuelta 
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onloadend = () => {
+        reader.onload = () => {
             resolve(reader.result.split(',')[1]);
-            // "data:image/jpg;base64,    =sdCXDSAsadsadsa"
         };
-    });
+        reader.onerror = error => reject(error);
+    }
+    );
 }
 
 export const decodeBase64 = (base64) => {

@@ -117,7 +117,7 @@ inputFile.addEventListener('drop', (e) => {
     processFile(files, allowedExtensions);
 })
 
-const processFile = (files, allowedExtensions) => {
+const processFile = async (files, allowedExtensions) => {
     const isInvalidEntry = validFilesLoad(
         allowedExtensions,
         files
@@ -125,7 +125,7 @@ const processFile = (files, allowedExtensions) => {
     if (isInvalidEntry && files.length > 0) {
         const currentUser = getCurrentUser();
         const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
-        const isAdded = user.storage.createFiles(getCurrentPath(), files);
+        const isAdded = await user.storage.createFiles(getCurrentPath(), files);
 
         if (isAdded) {
             Array.from(files).forEach(file => {
@@ -136,10 +136,10 @@ const processFile = (files, allowedExtensions) => {
                 )
             })
 
-            showFilesInCurrentPath();
-            showSnackbar('Archivo añadido', 'success');
             setTree(AVLTree);
+            showFilesInCurrentPath();
             inputFile.value = '';
+            showSnackbar('Archivo añadido', 'success');
             return;
         }
         inputFile.value = '';
