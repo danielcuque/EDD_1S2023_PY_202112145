@@ -71,7 +71,7 @@ Retorna: un array de objetos JSON que representan los nodos de la lista.
 
 La clase nodoMatriz representa un nodo de la matriz dispersa, que contiene información sobre la posición (posX, posY) del nodo en la matriz, el nombre del archivo y su contenido. Cada nodo también tiene referencias a los nodos adyacentes en las cuatro direcciones: arriba, abajo, izquierda y derecha.
 
-### **Clase Matrix**
+## **Clase Matrix**
 La clase Matrix representa la matriz dispersa en sí misma. La matriz comienza con un nodo raíz, y se expande a medida que se agregan nodos en las columnas y filas.
 
 La matriz dispersa admite cuatro operaciones principales: búsqueda por fila, búsqueda por columna, inserción de fila y columna, e inserción de nodo.
@@ -80,7 +80,37 @@ La matriz dispersa admite cuatro operaciones principales: búsqueda por fila, b�
 - `buscarY(y)`: busca el nodo en la fila y. Si el nodo no existe, devuelve null.
 - `buscarF(nombre_archivo)`: busca la fila que contiene el archivo nombre_archivo. Si la fila no existe, devuelve null.
 - `buscarC(carnet)`: busca la columna que contiene el carnet carnet. Si la columna no existe, devuelve null.
-- `insertarColumna(posicion`, texto): inserta una columna en la posición posicion, con el texto texto.
-- `insertarFila(posicion`, texto, content): inserta una fila en la posición posicion, con el texto texto y el contenido content.
-- `insertarNodo(x`, y, texto): inserta un nodo en la posición (x, y), con el texto texto.
-- `insertarArchivo(texto`, numero, nombreArchivo, content): inserta un archivo con el nombre nombreArchivo, en la posición texto y numero, y con el contenido content.
+- `insertarColumna(posicion, texto)`: inserta una columna en la posición posicion, con el texto texto.
+- `insertarFila(posicion, texto, content)`: inserta una fila en la posición posicion, con el texto texto y el contenido content.
+- `insertarNodo(x, y, texto)`: inserta un nodo en la posición (x, y), con el texto texto.
+- `insertarArchivo(texto, numero, nombreArchivo, content)`: inserta un archivo con el nombre nombreArchivo, en la posición texto y numero, y con el contenido content.
+
+## **Clase TreeAVL **
+La clase TreeAVL representa un árbol AVL, que es un árbol binario de búsqueda balanceado. El árbol AVL admite las siguientes operaciones:
+
+- `insertar(nodo)`: inserta un nodo en el árbol.
+- `buscar(nodo)`: busca un nodo en el árbol.
+- `eliminar(nodo)`: elimina un nodo del árbol.
+- `inOrden()`: recorre el árbol en inOrden.
+- `preOrden()`: recorre el árbol en preOrden.
+- `postOrden()`: recorre el árbol en postOrden.
+- `graficar()`: grafica el árbol en Graphviz.
+
+## **Clase NodeAVL**
+La clase NodeAVL representa un nodo del árbol AVL. Cada nodo tiene una referencia a su padre, a su hijo izquierdo y a su hijo derecho, y también tiene un factor de equilibrio.
+
+## **Clase NaryTree**
+La clase NaryTree representa un árbol n-ario. El árbol n-ario admite las siguientes operaciones:
+
+- `insertNode(node, parent)`: inserta un nodo en el árbol.
+- `deleteNode(node)`: elimina un nodo del árbol.
+- `searchNode(node)`: busca un nodo en el árbol.
+- `serializeTree()`: serializa el árbol en un array de objetos JSON.
+- `deserializeTree(serialized)`: reconstruye el árbol a partir de un array de objetos JSON.
+- `toGraphviz()`: convierte el árbol en una cadena de texto en formato Graphviz para su visualización.
+
+## **Clase NodeNaryTree**
+La clase NodeNaryTree representa un nodo del árbol n-ario. Cada nodo tiene una referencia a su padre, a su hijo izquierdo y a su hijo derecho, y también tiene un factor de equilibrio.
+
+## **Clase Node**
+La clase Node representa un nodo del árbol binario de búsqueda. Cada nodo tiene una referencia a su padre, a su hijo izquierdo y a su hijo derecho, y también tiene un factor de equilibrio.
