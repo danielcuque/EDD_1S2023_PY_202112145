@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { "50": "#eff6ff", "100": "#dbeafe", "200": "#bfdbfe", "300": "#93c5fd", "400": "#60a5fa", "500": "#3b82f6", "600": "#2563eb", "700": "#1d4ed8", "800": "#1e40af", "900": "#1e3a8a" }
+                    }
+                },
+                fontFamily: {
+                    'body': [
+                        'Inter',
+                        'ui-sans-serif',
+                        'system-ui',
+                        '-apple-system',
+                        'system-ui',
+                        'Segoe UI',
+                        'Roboto',
+                        'Helvetica Neue',
+                        'Arial',
+                        'Noto Sans',
+                        'sans-serif',
+                        'Apple Color Emoji',
+                        'Segoe UI Emoji',
+                        'Segoe UI Symbol',
+                        'Noto Color Emoji'
+                    ],
+                    'sans': [
+                        'Inter',
+                        'ui-sans-serif',
+                        'system-ui',
+                        '-apple-system',
+                        'system-ui',
+                        'Segoe UI',
+                        'Roboto',
+                        'Helvetica Neue',
+                        'Arial',
+                        'Noto Sans',
+                        'sans-serif',
+                        'Apple Color Emoji',
+                        'Segoe UI Emoji',
+                        'Segoe UI Symbol',
+                        'Noto Color Emoji'
+                    ]
+                }
+            }
+        }
+    </script>
+    <script type="module" src="./model/init.js"></script>
+    <title>Panel de administrador</title>
+</head>
+
+<body>
+    <section>
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <h1 class="items-center my-6 text-3xl font-semibold text-gray-900">
+                Panel de administrador
+            </h1>
+            <!-- Botón de cerrar sesión flotante -->
+            <button class="fixed text-sm top-5 right-5 px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg"
+                id="logoutBtn">
+                Cerrar sesión
+            </button>
+
+            <div id="panels" class="flex flex-row w-screen h-full justify-between px-10">
+                <div id="adminButtons" class="flex flex-col justify-center gap-10 w-1/3">
+                    <input type="file" id="showStudentsChooser" class="hidden">
+                    <div>
+                        <label for="traverseTree" class="block mb-2 text-sm font-medium text-gray-900">Elige
+                            un recorrido</label>
+                        <select id="selectTraverseTree" name="traverseTree"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                            <option value="inOrder" selected>In Order</option>
+                            <option value="preOrder">Pre Order</option>
+                            <option value="postOrder">Post Order</option>
+                        </select>
+                    </div>
+                    <input type="file" id="studentsTreeChooser" class="hidden">
+                    <button id="treeStudentsBtn" data-modal-target="staticModal" data-modal-toggle="staticModal"
+                        type="button" disabled
+                        class="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-blue-600 text-white hover:text-slate-100 hover:bg-blue-500 active:bg-blue-800 active:text-blue-100 focus-visible:outline-blue-600 disabled:bg-blue-300">
+                        Árbol de estudiantes
+                    </button>
+
+                    <div class="fixed z-50 top-0 left-0 w-full h-full flex justify-center items-center hidden"
+                        id="treeModalPreview">
+                        <!-- Modal Overlay -->
+                        <div class="absolute top-0 left-0 w-full h-full bg-gray-800 opacity-50"></div>
+
+                        <!-- Modal Content -->
+                        <div class="relative bg-white rounded-lg w-2/3">
+                            <!-- Close Button -->
+                            <button class="absolute top-0 right-0 m-3 text-gray-500 hover:text-gray-800"
+                                id="closeModalBtn">
+                                <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd"
+                                        d="M5.293 5.293a1 1 0 011.414 0L10 8.586l3.293-3.293a1 1 0 011.414 1.414L11.414 10l3.293 3.293a1 1 0 01-1.414 1.414L10 11.414l-3.293 3.293a1 1 0 01-1.414-1.414L8.586 10 5.293 6.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+
+                            <!-- Image Preview -->
+                            <div class="flex justify-center p-5">
+                                <img id="treeImagePreview"
+                                    src="https://quickchart.io/graphviz?graph=digraph{ a -> b }" />
+                            </div>
+                        </div>
+                    </div>
+                    <input type="file" id="massiveLoadChooser" class="hidden">
+                    <button id="massiveLoadBtn"
+                        class="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-blue-600 text-white hover:text-slate-100 hover:bg-blue-500 active:bg-blue-800 active:text-blue-100 focus-visible:outline-blue-600">
+                        Carga Masiva
+                    </button>
+                </div>
+                <div id="mostrarEstudiantes" class="flex flex-col w-2/3 mx-8">
+                    <h3 class="text-2xl font-semibold text-center mb-4">Estudiantes</h3>
+                    <div id="adminStudentsTable" class="overflow-x-auto overflow-y-hidden w-full">
+                        <div id="adminStudentsHeaders" class="bg-blue-600 w-full flex flex-row rounded-t-lg">
+                            <div class="w-1/2 text-center p-4 text-white font-semibold text-lg">
+                                Carné
+                            </div>
+                            <div class="w-1/2 text-center p-4 text-white font-semibold text-lg">
+                                Nombre
+                            </div>
+                        </div>
+                        <div id="adminStudentsBody"
+                            class="h-full max-h-[35rem] overflow-y-auto [&>*:nth-child(odd)]:bg-gray-100 [&>*:nth-child(even)]:bg-white">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+</body>
+<script type="module" src="./model/admin-functions.js"></script>
+
+</html>
