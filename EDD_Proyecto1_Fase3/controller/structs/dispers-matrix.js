@@ -292,7 +292,7 @@ export class Matrix {
             }
         }
         return {
-            permisos: credentials,
+            credentials,
             convertedFiles
         }
     }
