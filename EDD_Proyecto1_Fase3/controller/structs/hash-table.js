@@ -94,9 +94,7 @@ export class HashTable {
         if (index < this.maxSize) {
             try {
                 if (this.data[index] == null) {
-                    alert("Bienvenido " + this.data[index].name)
                 } else if (this.data[index] != null && this.data[index].id == id) {
-                    alert("Bienvenido " + this.data[index].name)
                 } else {
                     let contador = 1
                     index = this.recalculateNewIndex(id, contador)
@@ -104,8 +102,32 @@ export class HashTable {
                         contador++
                         index = this.recalculateNewIndex(id, contador)
                         if (this.data[index].id == id) {
-                            alert("Bienvenido " + this.data[index].name)
                             return
+                        }
+                    }
+                }
+            } catch (err) {
+                console.log("Hubo un error en busqueda")
+            }
+        }
+    }
+
+    findUserByIdAndPass(id, password) {
+        let index = this.hashMethod(id)
+        if (index < this.maxSize) {
+            try {
+                if (this.data[index] == null) {
+                    return null
+                } else if (this.data[index] != null && this.data[index].id == id && this.data[index].password == password) {
+                    return this.data[index]
+                } else {
+                    let contador = 1
+                    index = this.recalculateNewIndex(id, contador)
+                    while (this.data[index] != null) {
+                        contador++
+                        index = this.recalculateNewIndex(id, contador)
+                        if (this.data[index].id == id && this.data[index].password == password) {
+                            return this.data[index]
                         }
                     }
                 }

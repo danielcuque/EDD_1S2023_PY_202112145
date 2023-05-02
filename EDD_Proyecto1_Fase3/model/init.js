@@ -49,10 +49,4 @@ const initUserView = () => {
 
 const initAdminView = () => {
     displayUserTable('inOrder');
-    // const treeStudentsButton = document.getElementById('treeStudentsBtn');
-    // if (getTree().root === null) {
-    //     treeStudentsButton.disabled = true;
-    //     return;
-    // }
-    // treeStudentsButton.disabled = false;
 }

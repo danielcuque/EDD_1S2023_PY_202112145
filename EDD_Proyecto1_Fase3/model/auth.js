@@ -1,4 +1,4 @@
-import { getAdmin, getTree } from "../utils/objects.js";
+import { getAdmin, getHashTable, getTree } from "../utils/objects.js";
 
 export const checkLogin = (id, password) => {
     const adminObj = getAdmin();
@@ -10,8 +10,8 @@ export const checkLogin = (id, password) => {
     }
 
     // Si no es admin, se busca en el árbol AVL de usuarios
-    const tree = getTree();
-    const student = tree.searchStudent(id, password);
+    const hashTable = getHashTable();
+    const student = hashTable.findUserByIdAndPass(id, password);
     if (student != null) {
         localStorage.setItem("currentUser", JSON.stringify(student));
         return true;
