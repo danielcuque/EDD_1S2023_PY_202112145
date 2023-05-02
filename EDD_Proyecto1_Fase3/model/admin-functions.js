@@ -26,7 +26,6 @@ massiveLoadChooser.addEventListener('change', () => {
     )
     if (isInvalidEntry) {
         readJsonFile(files[0]);
-        document.getElementById('treeStudentsBtn').disabled = false;
         showSnackbar('Carga masiva exitosa', 'success');
     } else {
         showSnackbar('Archivo no permitido', 'error');

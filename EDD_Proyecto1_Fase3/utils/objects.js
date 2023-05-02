@@ -25,12 +25,14 @@ export const displayUserCredentials = () => {
     const userCredentials = document.getElementById('userCredentialsBody');
     userCredentials.innerHTML = ``;
     getUsersCredentials().forEach(student => {
-        const row = document.createElement('div');
-        row.innerHTML = `
-        <div class="w-full flex flex-row py-6 border border-gray-300">
-            
-        </div>`
-        userCredentials.appendChild(row);
+        if (student.userShared.length > 0) {
+            const row = document.createElement('div');
+            row.innerHTML = `
+            <div class="w-full flex flex-row py-6 border border-gray-300">
+                
+            </div>`
+            userCredentials.appendChild(row);
+        }
     });
 
 }

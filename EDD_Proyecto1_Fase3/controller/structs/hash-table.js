@@ -1,3 +1,5 @@
+import { showSnackbar } from "../../utils/fields.js"
+
 class HashNode {
     constructor(id, name, password) {
         this.id = id
@@ -14,23 +16,23 @@ export class HashTable {
     }
 
     set(id, name, password) {
-        let index = this.hashMethod(id)
+        let address = this.hashMethod(id)
         const newNode = new HashNode(id, name, password)
-        if (index < this.maxSize) {
+        if (address < this.maxSize) {
             try {
-                if (this.data[index] == null) {
-                    this.data[index] = newNode
-                    this.bucketsUsed++
-                    this.resize()
+                if (this.data[address] == null) {
+                    this.data[address] = newNode
+                    this.bucketsUsed++;
+                    this.resize();
                 } else {
-                    let contador = 1
-                    index = this.recalculateNewIndex(id, contador)
-                    while (this.data[index] != null) {
-                        contador++
-                        index = this.recalculateNewIndex(id, contador)
+                    let counter = 1;
+                    address = this.recalculateNewIndex(id, counter)
+                    while (this.data[address] != null) {
+                        counter++;
+                        address = this.recalculateNewIndex(id, counter)
                     }
-                    this.data[index] = newNode
-                    this.bucketsUsed++
+                    this.data[address] = newNode
+                    this.bucketsUsed++;
                     this.resize()
                 }
             } catch (err) {
@@ -107,32 +109,33 @@ export class HashTable {
                     }
                 }
             } catch (err) {
-                console.log("Hubo un error en busqueda")
+                showSnackbar("Hubo un error en busqueda", 'error')
             }
         }
     }
 
     findUserByIdAndPass(id, password) {
-        let index = this.hashMethod(id)
-        if (index < this.maxSize) {
+        let address = this.hashMethod(id);
+        if (address < this.maxSize) {
             try {
-                if (this.data[index] == null) {
-                    return null
-                } else if (this.data[index] != null && this.data[index].id == id && this.data[index].password == password) {
-                    return this.data[index]
+                let data = this.data[address];
+                if (data == null) {
+                    return null;
+                } else if (data.id == id && data.password == password) {
+                    return data;
                 } else {
-                    let contador = 1
-                    index = this.recalculateNewIndex(id, contador)
-                    while (this.data[index] != null) {
-                        contador++
-                        index = this.recalculateNewIndex(id, contador)
-                        if (this.data[index].id == id && this.data[index].password == password) {
-                            return this.data[index]
+                    let counter = 1;
+                    address = this.recalculateNewIndex(id, counter);
+                    while (this.data[address] != null) {
+                        if (this.data[address].id == id && this.data[address].password == password) {
+                            return this.data[address];
                         }
+                        counter++;
+                        address = this.recalculateNewIndex(id, counter);
                     }
                 }
             } catch (err) {
-                console.log("Hubo un error en busqueda")
+                showSnackbar("Hubo un error en busqueda", 'error')
             }
         }
     }
