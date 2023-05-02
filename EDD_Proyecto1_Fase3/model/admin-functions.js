@@ -15,29 +15,6 @@ const modal = document.getElementById('treeModalPreview');
 const modalImg = document.getElementById('treeImagePreview');
 const logoutButton = document.getElementById('logoutBtn');
 
-selectTraverseTree.addEventListener('change', (e) => {
-    displayUserTable(e.target.value);
-});
-
-treeStudentsButton.addEventListener('click', () => {
-    // Actualizar la URL de la imagen
-    const imgSrc = getTree().convertToGraphivz();
-    modalImg.src = imgSrc;
-
-    // Mostrar el modal
-    modal.classList.remove('hidden');
-});
-
-closeModalButton.addEventListener('click', () => {
-
-    // Ocultar el modal
-    modal.classList.add('hidden');
-
-    // Limpiar la URL de la imagen y del enlace de descarga
-    modalImg.src = '';
-
-});
-
 const massiveLoadChooser = document.getElementById('massiveLoadChooser');
 
 massiveLoadButton.addEventListener('click', () => {
@@ -61,24 +38,6 @@ massiveLoadChooser.addEventListener('change', () => {
     }
     massiveLoadChooser.value = '';
 });
-
-
-// In this section, we'll be creating the functions that will be user to modify the avl tree
-
-/*
- The json file will look like this:
- 
-    interface Root {
-    alumnos: Alumno[]
-    }
- 
-    interface Alumno {
-    nombre: string
-    carnet: string
-    password: string
-    carpeta_raiz: string
-    }
-*/
 
 const insertStudent = (treeAVL, student) => {
     const newStudent = new Student(student.nombre, student.carnet, student.password);

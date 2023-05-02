@@ -1,39 +1,37 @@
 class HashNode {
-    constructor(userId, username, password) {
-        this.userId = userId
-        this.username = username
+    constructor(id, name, password) {
+        this.id = id
+        this.name = name
         this.password = password
     }
 }
 
-
-class HashTable {
+export class HashTable {
     constructor() {
         this.data = new Array(7)
         this.maxSize = 7
         this.bucketsUsed = 0
     }
 
-    set(userId, username, password) {
-        let index = this.hashFunction(userId)
-        const nuevoNodo = new nodoHash(userId, username, password)
-        if (index < this.maxSize) {
+    set(id, name, password) {
+        let indice = this.hashMethod(id)
+        const nuevoNodo = new HashNode(id, name, password)
+        if (indice < this.maxSize) {
             try {
-                if (this.data[index] == null) {
-                    console.log("Entre")
-                    this.data[index] = nuevoNodo
+                if (this.data[indice] == null) {
+                    this.data[indice] = nuevoNodo
                     this.bucketsUsed++
-                    this.capacityTable()
+                    this.capacidad_tabla()
                 } else {
                     let contador = 1
-                    index = this.recalculateIndex(userId, contador)
-                    while (this.data[index] != null) {
+                    indice = this.RecalculoIndice(id, contador)
+                    while (this.data[indice] != null) {
                         contador++
-                        index = this.recalculateIndex(userId, contador)
+                        indice = this.RecalculoIndice(id, contador)
                     }
-                    this.data[index] = nuevoNodo
+                    this.data[indice] = nuevoNodo
                     this.bucketsUsed++
-                    this.capacityTable()
+                    this.capacidad_tabla()
                 }
             } catch (err) {
                 console.log("Hubo un error en insercion")
@@ -41,73 +39,74 @@ class HashTable {
         }
     }
 
-    hashFunction(userId) {
-        let userIdStr = userId.toString()
-        let hash = 0
-        for (let i = 0; i < userIdStr.length; i++) {
-            hash = (hash + userIdStr.charCodeAt(i) * i) % this.maxSize
+    hashMethod(id) {
+        let carnet_cadena = id.toString()
+        let divisor = 0
+        for (let i = 0; i < carnet_cadena.length; i++) {
+            divisor = divisor + carnet_cadena.charCodeAt(i)
         }
-        return hash
-
+        let indice_final = divisor % this.maxSize
+        return indice_final
     }
 
-    capacityTable() {
+    capacidad_tabla() {
         let aux_utilizacion = this.maxSize * 0.75
         if (this.bucketsUsed > aux_utilizacion) {
-            this.maxSize = this.newCapacityTable()
+            this.maxSize = this.nueva_capacidad()
             this.bucketsUsed = 0
-            this.reSet()
+            this.ReInsertar()
         }
     }
 
-    newCapacityTable() { //Sustituir por un algoritmo del siguiente numero primo
-        let i = this.maxSize + 1;
-        while (!this.isPrime(i)) {
-            i++;
+    nueva_capacidad() { //Sustituir por un algoritmo del siguiente numero primo
+        let numero = this.maxSize + 1;
+        while (!this.isPrime(numero)) {
+            numero++;
         }
-        return i;
+        return numero;
     }
 
-    reSet() {
-        const auxTable = this.data
+    ReInsertar() {
+        const auxiliar_tabla = this.data
         this.data = new Array(this.maxSize)
-        auxTable.forEach((alumno) => {
-            this.set(alumno.carnet, alumno.usuario, alumno.password)
+        auxiliar_tabla.forEach((alumno) => {
+            this.set(alumno.id, alumno.name, alumno.password)
         })
     }
 
-    recalculateIndex(userId, intento) {
-        let index = this.hashFunction(userId) + intento * intento
-        return this.newIndex(index)
+    RecalculoIndice(id, intento) {
+        let nuevo_indice = this.hashMethod(id) + intento * intento
+        let nuevo = this.nuevo_Indice(nuevo_indice)
+        return nuevo
     }
 
-    newIndex(number) {
-        let newPosition = 0
-        if (number < this.maxSize) {
-            newPosition = number
+    nuevo_Indice(numero) {
+        let nueva_posicion = 0
+        if (numero < this.maxSize) {
+            nueva_posicion = numero
         } else {
-            newPosition = number - this.maxSize
-            newPosition = this.newIndex(newPosition)
+            nueva_posicion = numero - this.maxSize
+            nueva_posicion = this.nuevo_Indice(nueva_posicion)
         }
-        return newPosition
+        return nueva_posicion
     }
 
-    findUserById(userId) {
-        let index = this.hashFunction(userId)
-        if (index < this.maxSize) {
+    busquedaUsuario(id) {
+        let indice = this.hashMethod(id)
+        if (indice < this.maxSize) {
             try {
-                if (this.data[index] == null) {
-                    alert("Bienvenido " + this.data[index].usuario)
-                } else if (this.data[index] != null && this.data[index].carnet == userId) {
-                    alert("Bienvenido " + this.data[index].usuario)
+                if (this.data[indice] == null) {
+                    alert("Bienvenido " + this.data[indice].name)
+                } else if (this.data[indice] != null && this.data[indice].id == id) {
+                    alert("Bienvenido " + this.data[indice].name)
                 } else {
-                    let counter = 1
-                    index = this.recalculateIndex(userId, counter)
-                    while (this.data[index] != null) {
-                        counter++
-                        index = this.recalculateIndex(userId, counter)
-                        if (this.data[index].carnet == userId) {
-                            alert("Bienvenido " + this.data[index].usuario)
+                    let contador = 1
+                    indice = this.RecalculoIndice(id, contador)
+                    while (this.data[indice] != null) {
+                        contador++
+                        indice = this.RecalculoIndice(id, contador)
+                        if (this.data[indice].id == id) {
+                            alert("Bienvenido " + this.data[indice].name)
                             return
                         }
                     }
@@ -122,64 +121,6 @@ class HashTable {
      * Este codigo es un extra para generar una tabla 
      */
 
-    generateTable() {
-        // Obtener la referencia del elemento body
-        var body = document.getElementsByTagName("body")[0];
-
-        // Crea un elemento <table> y un elemento <tbody>
-        var divtable = document.createElement("div");
-        var tabla = document.createElement("table");
-        var tblBody = document.createElement("tbody");
-        var salto_html = document.createElement("br")
-        divtable.className = "container"
-        tabla.className = "table"
-        //carnet
-        var encabezado = document.createElement("tr")
-        var celda_encabezado = document.createElement("td");
-        var encabezado_contenido = document.createTextNode("Carnet")
-        celda_encabezado.appendChild(encabezado_contenido);
-        encabezado.appendChild(celda_encabezado)
-        tblBody.appendChild(encabezado)
-        //Nombre
-        celda_encabezado = document.createElement("td");
-        encabezado_contenido = document.createTextNode("Nombre")
-        celda_encabezado.appendChild(encabezado_contenido);
-        encabezado.appendChild(celda_encabezado)
-        tblBody.appendChild(encabezado)
-        //Password
-        celda_encabezado = document.createElement("td");
-        encabezado_contenido = document.createTextNode("Password")
-        celda_encabezado.appendChild(encabezado_contenido);
-        encabezado.appendChild(celda_encabezado)
-        tblBody.appendChild(encabezado)
-
-        for (var i = 0; i < this.maxSize; i++) {
-            if (this.data[i] != null) {
-                var hilera = document.createElement("tr");
-                var arreglo = new Array(3)
-                arreglo[0] = this.data[i].carnet
-                arreglo[1] = this.data[i].usuario
-                arreglo[2] = this.data[i].password
-                for (var j = 0; j < 3; j++) {
-                    var celda = document.createElement("td");
-                    var textoCelda = document.createTextNode(arreglo[j]);
-                    celda.appendChild(textoCelda);
-                    hilera.appendChild(celda);
-                }
-                tblBody.appendChild(hilera);
-            }
-        }
-
-
-        divtable.appendChild(tabla)
-        // posiciona el <tbody> debajo del elemento <table>
-        tabla.appendChild(tblBody);
-        // appends <table> into <body>
-        body.appendChild(salto_html);
-        body.appendChild(divtable);
-        // modifica el atributo "border" de la tabla y lo fija a "2";
-        tabla.setAttribute("border", "2");
-    }
 
     isPrime(numero) {
         if (numero <= 1) { return false }

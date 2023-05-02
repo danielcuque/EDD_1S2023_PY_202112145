@@ -112,6 +112,21 @@ export class TreeAVL {
         }
     }
 
+    getInorder() {
+        let students = [];
+        this.in_order_aux(this.root, students);
+        return students;
+    }
+
+    in_order_aux(node, students) {
+        if (node != null) {
+            this.in_order_aux(node.left, students);
+            students.push(node.student);
+            this.in_order_aux(node.right, students);
+        }
+    }
+
+
     postOrder() {
         this.post_order(this.root);
     }

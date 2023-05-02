@@ -1,40 +1,41 @@
 import { Student } from "../controller/classes/student.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
+import { HashTable } from "../controller/structs/hash-table.js";
 
 export const displayUserTable = (order) => {
     const userTable = document.getElementById('adminStudentsBody');
-    const tree = getTree();
-
-    if (tree.root === null) {
-        userTable.innerHTML = `
-            <div class="text-center font-semibold py-10 text-lg">
-                No hay estudiantes registrados
-            </div>
-        `;
-        return;
-    }
-
     userTable.innerHTML = ``;
-    switch (order) {
-        case 'inOrder':
-            tree.inOrder();
-            break;
-        case 'preOrder':
-            tree.preOrder();
-            break;
-        case 'postOrder':
-            tree.postOrder();
-            break;
-        default:
-            tree.inOrder();
-            break;
-    }
+
+    const hashTable = getHashTable();
+
+    hashTable.data.forEach(student => {
+        const row = document.createElement('div');
+        row.innerHTML = `
+        <div class="w-full flex flex-row py-6 border border-gray-300">
+            <div class="w-1/4 text-center">${student.id}</div>
+            <div class="w-1/4 text-center">${student.name}</div>
+            <div class="w-1/2 text-center">${'9c1185a5c5e9fc54612808977ee8f548b2258d31c56eda5b6d5ae1b5bc6b2f4'}</div>
+        </div>`
+        document.getElementById('adminStudentsBody').appendChild(row);
+    });
+
 }
 
 export const getTree = () => {
     const treeAVL = Object.setPrototypeOf(JSON.parse(localStorage.getItem("treeAVLContainer")), TreeAVL.prototype);
     treeAVL.deserealizeTreeAVL();
     return treeAVL;
+}
+
+export const getHashTable = () => {
+    const tree = getTree();
+    const hashTable = new HashTable();
+    console.log(tree.getInorder());
+
+    tree.getInorder().forEach(student => {
+        hashTable.set(student.id, student.name, student.password);
+    });
+    return hashTable;
 }
 
 export const setTree = (tree) => {
