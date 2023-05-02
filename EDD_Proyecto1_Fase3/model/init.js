@@ -1,6 +1,6 @@
 import { Student } from '../controller/classes/student.js'
 import { TreeAVL } from '../controller/structs/tree-avl.js';
-import { displayUserTable, getCurrentUser, getTree } from '../utils/objects.js';
+import { displayUserCredentials, displayUserTable, getCurrentUser, getTree } from '../utils/objects.js';
 
 // Vamos a verificar en que ruta estamos
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -48,5 +48,6 @@ const initUserView = () => {
 }
 
 const initAdminView = () => {
-    displayUserTable('inOrder');
+    displayUserTable();
+    displayUserCredentials();
 }

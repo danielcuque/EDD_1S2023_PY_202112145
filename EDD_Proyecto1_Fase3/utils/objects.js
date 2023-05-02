@@ -16,7 +16,21 @@ export const displayUserTable = () => {
             <div class="w-1/4 text-center">${student.name}</div>
             <div class="w-1/2 text-center">${student.password}</div>
         </div>`
-        document.getElementById('adminStudentsBody').appendChild(row);
+        userTable.appendChild(row);
+    });
+
+}
+
+export const displayUserCredentials = () => {
+    const userCredentials = document.getElementById('userCredentialsBody');
+    userCredentials.innerHTML = ``;
+    getUsersCredentials().forEach(student => {
+        const row = document.createElement('div');
+        row.innerHTML = `
+        <div class="w-full flex flex-row py-6 border border-gray-300">
+            
+        </div>`
+        userCredentials.appendChild(row);
     });
 
 }
@@ -67,7 +81,20 @@ export const encodeBase64 = (file) => {
     );
 }
 
-export const decodeBase64 = (base64) => {
+export const getUsersCredentials = () => {
+    const tree = getTree();
+    return tree.getInorder().map(student => {
+        if (student.storage.files === undefined) {
+            return {
+                owner: student.id,
+                userShared: [],
+            }
+        }
+        return {
+            owner: student.id,
+            userShared: JSON.parse(JSON.stringify(student.storage.files)),
+        }
+    });
 }
 
 

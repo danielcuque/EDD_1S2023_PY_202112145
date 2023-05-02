@@ -6,7 +6,7 @@ class AdjacentNode {
     }
 }
 
-class AdjacentList {
+export class AdjacentMatrix {
     constructor() {
         this.root = null
     }

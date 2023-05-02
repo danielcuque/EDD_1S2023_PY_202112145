@@ -1,5 +1,5 @@
 import { validFilesLoad } from "../utils/forms.js";
-import { displayUserTable, getTree } from "../utils/objects.js";
+import { displayUserTable } from "../utils/objects.js";
 import { Student } from "../controller/classes/student.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
 import { showSnackbar } from "../utils/fields.js";
@@ -7,12 +7,7 @@ import { showSnackbar } from "../utils/fields.js";
 // Path: model/admin-functions.js
 
 // Buttons for actions
-const selectTraverseTree = document.getElementById('selectTraverseTree');
-const treeStudentsButton = document.getElementById('treeStudentsBtn');
 const massiveLoadButton = document.getElementById('massiveLoadBtn');
-const closeModalButton = document.getElementById('closeModalBtn');
-const modal = document.getElementById('treeModalPreview');
-const modalImg = document.getElementById('treeImagePreview');
 const logoutButton = document.getElementById('logoutBtn');
 
 const massiveLoadChooser = document.getElementById('massiveLoadChooser');
