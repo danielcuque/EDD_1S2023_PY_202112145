@@ -2,7 +2,7 @@ import { Student } from "../controller/classes/student.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
 import { HashTable } from "../controller/structs/hash-table.js";
 
-export const displayUserTable = (order) => {
+export const displayUserTable = () => {
     const userTable = document.getElementById('adminStudentsBody');
     userTable.innerHTML = ``;
 
@@ -14,7 +14,7 @@ export const displayUserTable = (order) => {
         <div class="w-full flex flex-row py-6 border border-gray-300">
             <div class="w-1/4 text-center">${student.id}</div>
             <div class="w-1/4 text-center">${student.name}</div>
-            <div class="w-1/2 text-center">${'9c1185a5c5e9fc54612808977ee8f548b2258d31c56eda5b6d5ae1b5bc6b2f4'}</div>
+            <div class="w-1/2 text-center">${student.password}</div>
         </div>`
         document.getElementById('adminStudentsBody').appendChild(row);
     });
@@ -30,7 +30,6 @@ export const getTree = () => {
 export const getHashTable = () => {
     const tree = getTree();
     const hashTable = new HashTable();
-    console.log(tree.getInorder());
 
     tree.getInorder().forEach(student => {
         hashTable.set(student.id, student.name, student.password);

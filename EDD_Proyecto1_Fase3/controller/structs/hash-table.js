@@ -14,24 +14,24 @@ export class HashTable {
     }
 
     set(id, name, password) {
-        let indice = this.hashMethod(id)
-        const nuevoNodo = new HashNode(id, name, password)
-        if (indice < this.maxSize) {
+        let index = this.hashMethod(id)
+        const newNode = new HashNode(id, name, password)
+        if (index < this.maxSize) {
             try {
-                if (this.data[indice] == null) {
-                    this.data[indice] = nuevoNodo
+                if (this.data[index] == null) {
+                    this.data[index] = newNode
                     this.bucketsUsed++
-                    this.capacidad_tabla()
+                    this.resize()
                 } else {
                     let contador = 1
-                    indice = this.RecalculoIndice(id, contador)
-                    while (this.data[indice] != null) {
+                    index = this.recalculateNewIndex(id, contador)
+                    while (this.data[index] != null) {
                         contador++
-                        indice = this.RecalculoIndice(id, contador)
+                        index = this.recalculateNewIndex(id, contador)
                     }
-                    this.data[indice] = nuevoNodo
+                    this.data[index] = newNode
                     this.bucketsUsed++
-                    this.capacidad_tabla()
+                    this.resize()
                 }
             } catch (err) {
                 console.log("Hubo un error en insercion")
@@ -40,73 +40,71 @@ export class HashTable {
     }
 
     hashMethod(id) {
-        let carnet_cadena = id.toString()
+        let idStr = id.toString()
         let divisor = 0
-        for (let i = 0; i < carnet_cadena.length; i++) {
-            divisor = divisor + carnet_cadena.charCodeAt(i)
+        for (let i = 0; i < idStr.length; i++) {
+            divisor = divisor + idStr.charCodeAt(i)
         }
-        let indice_final = divisor % this.maxSize
-        return indice_final
+        return divisor % this.maxSize
     }
 
-    capacidad_tabla() {
+    resize() {
         let aux_utilizacion = this.maxSize * 0.75
         if (this.bucketsUsed > aux_utilizacion) {
-            this.maxSize = this.nueva_capacidad()
+            this.maxSize = this.nextPrime()
             this.bucketsUsed = 0
-            this.ReInsertar()
+            this.reset()
         }
     }
 
-    nueva_capacidad() { //Sustituir por un algoritmo del siguiente numero primo
-        let numero = this.maxSize + 1;
-        while (!this.isPrime(numero)) {
-            numero++;
+    nextPrime() {
+        let number = this.maxSize + 1;
+        while (!this.isPrime(number)) {
+            number++;
         }
-        return numero;
+        return number;
     }
 
-    ReInsertar() {
-        const auxiliar_tabla = this.data
+    reset() {
+        const auxTable = this.data
         this.data = new Array(this.maxSize)
-        auxiliar_tabla.forEach((alumno) => {
-            this.set(alumno.id, alumno.name, alumno.password)
+        auxTable.forEach((student) => {
+            this.set(student.id, student.name, student.password)
         })
     }
 
-    RecalculoIndice(id, intento) {
-        let nuevo_indice = this.hashMethod(id) + intento * intento
-        let nuevo = this.nuevo_Indice(nuevo_indice)
-        return nuevo
+    recalculateNewIndex(id, iteration) {
+        let index = this.hashMethod(id) + iteration * iteration
+        return this.calculateNewIndex(index)
     }
 
-    nuevo_Indice(numero) {
-        let nueva_posicion = 0
-        if (numero < this.maxSize) {
-            nueva_posicion = numero
+    calculateNewIndex(index) {
+        let newIndex = 0
+        if (index < this.maxSize) {
+            newIndex = index
         } else {
-            nueva_posicion = numero - this.maxSize
-            nueva_posicion = this.nuevo_Indice(nueva_posicion)
+            newIndex = index - this.maxSize
+            newIndex = this.calculateNewIndex(newIndex)
         }
-        return nueva_posicion
+        return newIndex
     }
 
-    busquedaUsuario(id) {
-        let indice = this.hashMethod(id)
-        if (indice < this.maxSize) {
+    findUserById(id) {
+        let index = this.hashMethod(id)
+        if (index < this.maxSize) {
             try {
-                if (this.data[indice] == null) {
-                    alert("Bienvenido " + this.data[indice].name)
-                } else if (this.data[indice] != null && this.data[indice].id == id) {
-                    alert("Bienvenido " + this.data[indice].name)
+                if (this.data[index] == null) {
+                    alert("Bienvenido " + this.data[index].name)
+                } else if (this.data[index] != null && this.data[index].id == id) {
+                    alert("Bienvenido " + this.data[index].name)
                 } else {
                     let contador = 1
-                    indice = this.RecalculoIndice(id, contador)
-                    while (this.data[indice] != null) {
+                    index = this.recalculateNewIndex(id, contador)
+                    while (this.data[index] != null) {
                         contador++
-                        indice = this.RecalculoIndice(id, contador)
-                        if (this.data[indice].id == id) {
-                            alert("Bienvenido " + this.data[indice].name)
+                        index = this.recalculateNewIndex(id, contador)
+                        if (this.data[index].id == id) {
+                            alert("Bienvenido " + this.data[index].name)
                             return
                         }
                     }
@@ -117,17 +115,12 @@ export class HashTable {
         }
     }
 
-    /**
-     * Este codigo es un extra para generar una tabla 
-     */
-
-
-    isPrime(numero) {
-        if (numero <= 1) { return false }
-        if (numero === 2) { return true }
-        if (numero % 2 === 0) { return false }
-        for (let i = 3; i <= Math.sqrt(numero); i += 2) {
-            if (numero % i === 0) { return false };
+    isPrime(index) {
+        if (index <= 1) { return false }
+        if (index === 2) { return true }
+        if (index % 2 === 0) { return false }
+        for (let i = 3; i <= Math.sqrt(index); i += 2) {
+            if (index % i === 0) { return false };
         }
         return true;
     }
