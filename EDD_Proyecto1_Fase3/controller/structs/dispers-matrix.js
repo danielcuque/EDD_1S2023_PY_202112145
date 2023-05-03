@@ -14,6 +14,7 @@ class MatrixNode {
 export class Matrix {
     constructor() {
         this.root = new MatrixNode(-1, -1, "Raiz")
+        this.path = "";
         this.coordinateY = 0;
         this.coordinateX = 0;
     }
@@ -293,7 +294,8 @@ export class Matrix {
         }
         return {
             credentials,
-            convertedFiles
+            convertedFiles,
+            path: this.path
         }
     }
 }

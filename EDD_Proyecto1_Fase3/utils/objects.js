@@ -24,15 +24,18 @@ export const displayUserTable = () => {
 export const displayUserCredentials = () => {
     const userCredentials = document.getElementById('userCredentialsBody');
     userCredentials.innerHTML = ``;
-    getUsersCredentials().forEach(student => {
-        if (student.userShared.length > 0) {
-            const row = document.createElement('div');
-            row.innerHTML = `
+    getUsersCredentials().forEach(obj => {
+        const row = document.createElement('div');
+        row.innerHTML = `
             <div class="w-full flex flex-row py-6 border border-gray-300">
-                
+            <div class="w-1/6 text-center">${obj.owner}</div>
+            <div class="w-1/6 text-center">${obj.userShared}</div>
+            <div class="w-1/3 text-center">${obj.path}</div>
+            <div class="w-1/3 text-center">${obj.filename}</div>
+            <div class="w-1/6 text-center">${obj.credentials}</div>
             </div>`
-            userCredentials.appendChild(row);
-        }
+        userCredentials.appendChild(row);
+
     });
 
 }
@@ -85,19 +88,22 @@ export const encodeBase64 = (file) => {
 
 export const getUsersCredentials = () => {
     const tree = getTree();
-    return tree.getInorder().map(student => {
-        console.log(student.storage.getAllFiles(), "files");
-        if (student.storage.files === undefined) {
-            return {
-                owner: student.id,
-                userShared: [],
-            }
-        }
-        return {
-            owner: student.id,
-            userShared: student.storage.getAllFiles()
-        }
+    const table = []
+    tree.getInorder().map(student => {
+        student.storage.getAllFiles().map(file => {
+            file.credentials.map(objCredential => {
+                table.push({
+                    owner: student.id,
+                    userShared: objCredential.id,
+                    path: file.path,
+                    filename: objCredential.filename,
+                    credentials: objCredential.credential
+                });
+
+            })
+        })
     });
+    return table;
 }
 
 

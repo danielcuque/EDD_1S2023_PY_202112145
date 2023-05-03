@@ -4,10 +4,13 @@ import { Matrix } from "./dispers-matrix.js";
 // Los nodos único que tienen son los directorios
 
 class Node {
-    constructor(name) {
+    constructor(name, path) {
+        this.path = path                // Ruta del directorio
         this.name = name                // Nombre del directorio
         this.children = []              // Arreglo de nodos hijos que serán subdirectorios
         this.files = new Matrix()       // Matriz dispersa de archivos
+        this.files.path = path          // Ruta del directorio
+        console.log(this.files.path)
     }
 }
 
@@ -42,7 +45,7 @@ export class NaryTree {
         if (parent) {
             const fileNames = parent.children.map(child => child.name);
             const fileName = generateUniqueName(pathArray[pathArray.length - 1], fileNames);
-            const newNode = new Node(fileName);
+            const newNode = new Node(fileName, path);
             parent.children.push(newNode);
             return true;
         }
@@ -180,7 +183,7 @@ export class NaryTree {
 
     deserializeNode(node) {
         Object.setPrototypeOf(node, Node.prototype);
-        const restoredMatrix = this.deserializeMatrix(node.files);
+        const restoredMatrix = this.deserializeMatrix(node.files, node.path);
         node.files = restoredMatrix;
         if (node.children && node.children.length > 0)
             node.children.forEach(child => {
@@ -188,15 +191,16 @@ export class NaryTree {
             });
     }
 
-    deserializeMatrix(serialized) {
+    deserializeMatrix(serialized, path) {
         const matrix = new Matrix();
+        matrix.path = path ? path : '/';
         const files = serialized.convertedFiles;
-        const permisos = serialized.credentials;
+        const credentials = serialized.credentials;
         files.forEach(file => {
             matrix.insertNewFile(file.text, file.index, file.filename, file.content);
         }
         );
-        permisos.forEach(permiso => {
+        credentials.forEach(permiso => {
             matrix.setCredentials(permiso.filename, permiso.id, permiso.credential);
         });
         return matrix;
