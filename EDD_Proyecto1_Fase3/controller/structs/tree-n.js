@@ -73,20 +73,34 @@ export class NaryTree {
 
     async createFile(nodeToInsert, file) {
         const encodedFile = await encodeBase64(file);
-        nodeToInsert.files.insertarArchivo(file.name, 1, file.name, encodedFile);
+        nodeToInsert.files.insertNewFile(file.name, 1, file.name, encodedFile);
         return true;
     }
 
     setPermissions(path, carnet, fileName, permissions) {
         const current = this.searchPath(path);
         if (current) {
-            current.files.colocarPermiso(fileName, carnet, permissions);
+            current.files.setCredentials(fileName, carnet, permissions);
             return true;
         }
         return false;
     }
 
+    getAllFiles() {
+        // Recorremos todo el arbol
+        let arrayToSave = [];
+        this.getAllFilesRecursive(this.root, arrayToSave);
+        return arrayToSave;
+    }
 
+    getAllFilesRecursive(node, arrayToSave) {
+        if (node.files) {
+            arrayToSave.push(node.files.toJSON());
+        }
+        for (const child of node.children) {
+            this.getAllFilesRecursive(child, arrayToSave);
+        }
+    }
 
     getFiles(path) {
         const current = this.searchPath(path);
@@ -179,11 +193,11 @@ export class NaryTree {
         const files = serialized.convertedFiles;
         const permisos = serialized.credentials;
         files.forEach(file => {
-            matrix.insertNewFile(file.text, file.numero, file.nombreArchivo);
+            matrix.insertNewFile(file.text, file.index, file.filename, file.content);
         }
         );
         permisos.forEach(permiso => {
-            matrix.setCredentials(permiso.nombreArchivo, permiso.carnet, permiso.permisos);
+            matrix.setCredentials(permiso.filename, permiso.id, permiso.credential);
         });
         return matrix;
     }

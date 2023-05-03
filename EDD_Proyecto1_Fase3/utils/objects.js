@@ -86,6 +86,7 @@ export const encodeBase64 = (file) => {
 export const getUsersCredentials = () => {
     const tree = getTree();
     return tree.getInorder().map(student => {
+        console.log(student.storage.getAllFiles(), "files");
         if (student.storage.files === undefined) {
             return {
                 owner: student.id,
@@ -94,7 +95,7 @@ export const getUsersCredentials = () => {
         }
         return {
             owner: student.id,
-            userShared: JSON.parse(JSON.stringify(student.storage.files)),
+            userShared: student.storage.getAllFiles()
         }
     });
 }

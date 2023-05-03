@@ -220,7 +220,7 @@ document.getElementById('closeModalBtn').addEventListener('click', () => {
     document.getElementById('treeModalPreview').classList.add('hidden');
 })
 
-const showFilesInCurrentPath = () => {
+export const showFilesInCurrentPath = () => {
     const currentUser = getCurrentUser();
     const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
 

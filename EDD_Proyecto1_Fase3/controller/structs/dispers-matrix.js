@@ -184,14 +184,14 @@ export class Matrix {
 
     getFiles() {
         let aux = this.root;
-        let lista = [];
+        let auxList = [];
         while (aux) {
             if (aux.fileName !== "Raiz") {
-                lista.push(aux.fileName)
+                auxList.push(aux.fileName)
             }
             aux = aux.below;
         }
-        return lista;
+        return auxList;
     }
 
     toDot() {
@@ -263,8 +263,8 @@ export class Matrix {
             while (aux1) {
                 convertedFiles.push({
                     text: aux1.fileName,
-                    numero: 1,
-                    nombreArchivo: aux1.fileName,
+                    index: 1,
+                    filename: aux1.fileName,
                     content: aux1.content || ''
                 })
                 aux1 = aux1.below;
@@ -280,9 +280,9 @@ export class Matrix {
                             const fileName = this.searchCol(aux1.posY);
                             const carnet = this.searchRow(aux1.posX);
                             credentials.push({
-                                nombreArchivo: fileName.fileName,
-                                carnet: carnet.fileName,
-                                permisos: aux1.fileName
+                                filename: fileName.fileName,
+                                id: carnet.fileName,
+                                credential: aux1.fileName
                             })
                         }
                     }

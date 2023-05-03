@@ -1,6 +1,6 @@
 import { Student } from '../controller/classes/student.js'
 import { TreeAVL } from '../controller/structs/tree-avl.js';
-import { displayUserCredentials, displayUserTable, getCurrentUser, getTree } from '../utils/objects.js';
+import { displayUserCredentials, displayUserTable, getCurrentUser } from '../utils/objects.js';
 
 // Vamos a verificar en que ruta estamos
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -44,7 +44,8 @@ const initBaseApp = () => {
 
 const initUserView = () => {
     document.getElementById('carnetStudentSpan').innerHTML = `${getCurrentUser().id}`
-    localStorage.setItem('currentPath', getCurrentUser().rootFolder);
+    localStorage.setItem('currentPath', '/');
+    // showFilesInCurrentPath();
 }
 
 const initAdminView = () => {
