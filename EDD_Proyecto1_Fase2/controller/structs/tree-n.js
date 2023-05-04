@@ -4,10 +4,12 @@ import { Matrix } from "./dispers-matrix.js";
 // Los nodos único que tienen son los directorios
 
 class Node {
-    constructor(name) {
+    constructor(name, path) {
+        this.path = path                // Ruta del directorio
         this.name = name                // Nombre del directorio
         this.children = []              // Arreglo de nodos hijos que serán subdirectorios
         this.files = new Matrix()       // Matriz dispersa de archivos
+        this.files.path = path          // Ruta del directorio
     }
 }
 
@@ -42,7 +44,7 @@ export class NaryTree {
         if (parent) {
             const fileNames = parent.children.map(child => child.name);
             const fileName = generateUniqueName(pathArray[pathArray.length - 1], fileNames);
-            const newNode = new Node(fileName);
+            const newNode = new Node(fileName, path);
             parent.children.push(newNode);
             return true;
         }
@@ -65,7 +67,7 @@ export class NaryTree {
     getFilesReport(path) {
         const current = this.searchPath(path);
         if (current) {
-            return current.files.reporte();
+            return current.files.toDot();
         }
         return '';
     }
@@ -73,20 +75,34 @@ export class NaryTree {
 
     async createFile(nodeToInsert, file) {
         const encodedFile = await encodeBase64(file);
-        nodeToInsert.files.insertarArchivo(file.name, 1, file.name, encodedFile);
+        nodeToInsert.files.insertNewFile(file.name, 1, file.name, encodedFile);
         return true;
     }
 
     setPermissions(path, carnet, fileName, permissions) {
         const current = this.searchPath(path);
         if (current) {
-            current.files.colocarPermiso(fileName, carnet, permissions);
+            current.files.setCredentials(fileName, carnet, permissions);
             return true;
         }
         return false;
     }
 
+    getAllFiles() {
+        // Recorremos todo el arbol
+        let arrayToSave = [];
+        this.getAllFilesRecursive(this.root, arrayToSave);
+        return arrayToSave;
+    }
 
+    getAllFilesRecursive(node, arrayToSave) {
+        if (node.files) {
+            arrayToSave.push(node.files.toJSON());
+        }
+        for (const child of node.children) {
+            this.getAllFilesRecursive(child, arrayToSave);
+        }
+    }
 
     getFiles(path) {
         const current = this.searchPath(path);
@@ -166,7 +182,7 @@ export class NaryTree {
 
     deserializeNode(node) {
         Object.setPrototypeOf(node, Node.prototype);
-        const restoredMatrix = this.deserializeMatrix(node.files);
+        const restoredMatrix = this.deserializeMatrix(node.files, node.path);
         node.files = restoredMatrix;
         if (node.children && node.children.length > 0)
             node.children.forEach(child => {
@@ -174,16 +190,19 @@ export class NaryTree {
             });
     }
 
-    deserializeMatrix(serialized) {
+    deserializeMatrix(serialized, path) {
         const matrix = new Matrix();
+        matrix.path = path ? path : '/';
         const files = serialized.convertedFiles;
-        const permisos = serialized.permisos;
+        const credentials = serialized.credentials;
+
+
         files.forEach(file => {
-            matrix.insertarArchivo(file.text, file.numero, file.nombreArchivo);
-        }
-        );
-        permisos.forEach(permiso => {
-            matrix.colocarPermiso(permiso.nombreArchivo, permiso.carnet, permiso.permisos);
+            matrix.insertNewFile(file.text, file.index, file.filename, file.content);
+        });
+
+        credentials.forEach(credential => {
+            matrix.setCredentials(credential.filename, credential.id, credential.credential);
         });
         return matrix;
     }

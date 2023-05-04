@@ -1,6 +1,5 @@
 import { Student } from '../controller/classes/student.js'
-import { TreeAVL } from '../controller/structs/tree-avl.js';
-import { displayUserCredentials, displayUserTable, getCurrentUser } from '../utils/objects.js';
+import { displayUserCredentials, displayUserTable, getCurrentUser, getHashTable } from '../utils/objects.js';
 
 // Vamos a verificar en que ruta estamos
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -25,10 +24,10 @@ const initBaseApp = () => {
     // Si el valor de verifyTree no existe en localStorage, asignar un valor del tree vacío
 
     const verifyTree = localStorage.getItem("treeAVLContainer");
-    if (verifyTree === null) {
-        const treeContainer = new TreeAVL();
-        const treeContainerJSON = JSON.stringify(treeContainer);
-        localStorage.setItem("treeAVLContainer", treeContainerJSON);
+    if (verifyTree != null) {
+        getHashTable();
+        // console.log("Ya existe un arbol en el localStorage", getHashTable());
+        // localStorage.setItem("hashTableContainer", JSON.stringify(getHashTable()));
     }
 
     // Verificar si el valor de admin ya existe en localStorage
@@ -49,6 +48,6 @@ const initUserView = () => {
 }
 
 const initAdminView = () => {
-    displayUserTable();
-    displayUserCredentials();
+    // displayUserTable();
+    // displayUserCredentials();
 }

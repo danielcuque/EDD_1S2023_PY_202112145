@@ -10,7 +10,6 @@ class Node {
         this.children = []              // Arreglo de nodos hijos que serán subdirectorios
         this.files = new Matrix()       // Matriz dispersa de archivos
         this.files.path = path          // Ruta del directorio
-        console.log(this.files.path)
     }
 }
 
@@ -196,12 +195,14 @@ export class NaryTree {
         matrix.path = path ? path : '/';
         const files = serialized.convertedFiles;
         const credentials = serialized.credentials;
+
+
         files.forEach(file => {
             matrix.insertNewFile(file.text, file.index, file.filename, file.content);
-        }
-        );
-        credentials.forEach(permiso => {
-            matrix.setCredentials(permiso.filename, permiso.id, permiso.credential);
+        });
+
+        credentials.forEach(credential => {
+            matrix.setCredentials(credential.filename, credential.id, credential.credential);
         });
         return matrix;
     }

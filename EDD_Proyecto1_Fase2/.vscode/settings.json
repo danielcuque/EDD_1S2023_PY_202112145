@@ -1,5 +1,6 @@
 {
     "conventionalCommits.scopes": [
         "fase-2"
-    ]
+    ],
+    "liveServer.settings.port": 5501
 }

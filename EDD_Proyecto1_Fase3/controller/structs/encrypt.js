@@ -1,37 +1,37 @@
-const clave = 'clave-secreta'
+const secretKey = 'clave-secreta'
 const buffer = new ArrayBuffer(16)
 const view = new Uint8Array(buffer)
-for (let i = 0; i < clave.length; i++) {
-    view[i] = clave.charCodeAt(i)
+for (let i = 0; i < secretKey.length; i++) {
+    view[i] = secretKey.charCodeAt(i)
 }
 
 const iv = crypto.getRandomValues(new Uint8Array(16))
-const algoritmo = { name: 'AES-GCM', iv: iv }
+const algorithm = { name: 'AES-GCM', iv: iv }
 
-async function encriptacion(mensaje) {
+async function encode(message) {
     const enconder = new TextEncoder()
-    const data = enconder.encode(mensaje)
+    const data = enconder.encode(message)
 
-    const claveCrypto = await crypto.subtle.importKey('raw', view, 'AES-GCM', true, ['encrypt'])
+    const cryptoKey = await crypto.subtle.importKey('raw', view, 'AES-GCM', true, ['encrypt'])
 
-    const mensajeCifrado = await crypto.subtle.encrypt(algoritmo, claveCrypto, data)
+    const encodeMessage = await crypto.subtle.encrypt(algorithm, cryptoKey, data)
 
-    const cifradoBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(mensajeCifrado)))
+    const encodeBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(encodeMessage)))
 
-    return cifradoBase64;
+    return encodeBase64;
 }
 
-async function desencriptacion(mensaje) {
-    const mensajeCifrado = new Uint8Array(atob(mensaje).split('').map(char => char.charCodeAt(0)))
+async function decode(message) {
+    const messageEncoded = new Uint8Array(atob(message).split('').map(char => char.charCodeAt(0)))
 
-    const claveCrypto = await crypto.subtle.importKey('raw', view, 'AES-GCM', true, ['decrypt'])
+    const cryptoKey = await crypto.subtle.importKey('raw', view, 'AES-GCM', true, ['decrypt'])
 
-    const mensajeDescifrado = await crypto.subtle.decrypt(algoritmo, claveCrypto, mensajeCifrado)
+    const decodedMessage = await crypto.subtle.decrypt(algorithm, cryptoKey, messageEncoded)
 
     const decoder = new TextDecoder()
-    const mensajeOriginal = decoder.decode(mensajeDescifrado)
+    const originalMessage = decoder.decode(decodedMessage)
 
-    return mensajeOriginal
+    return originalMessage
 }
 
-export { encriptacion, desencriptacion }
+export { encode, decode }

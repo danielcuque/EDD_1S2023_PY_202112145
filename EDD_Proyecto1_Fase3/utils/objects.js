@@ -48,6 +48,7 @@ export const getTree = () => {
 
 export const getHashTable = () => {
     const tree = getTree();
+    console.log(tree);
     const hashTable = new HashTable();
 
     tree.getInorder().forEach(student => {
