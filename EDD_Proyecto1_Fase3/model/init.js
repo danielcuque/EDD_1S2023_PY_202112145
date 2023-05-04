@@ -20,13 +20,15 @@ document.addEventListener("DOMContentLoaded", (e) => {
     }
 });
 
-const initBaseApp = () => {
+const initBaseApp = async () => {
     // Si el valor de verifyTree no existe en localStorage, asignar un valor del tree vacío
 
     const verifyTree = localStorage.getItem("treeAVLContainer");
     if (verifyTree != null) {
-        localStorage.setItem("hashTableContainer", JSON.stringify(getHashTable()));
-        localStorage.removeItem("treeAVLContainer");
+        const hashTable = await getHashTable();
+        console.log(hashTable);
+        localStorage.setItem("hashTableContainer", JSON.stringify(hashTable));
+        // localStorage.removeItem("treeAVLContainer");
     }
 
     // Verificar si el valor de admin ya existe en localStorage

@@ -48,18 +48,19 @@ export const getTree = () => {
     return treeAVL;
 }
 
-export const getHashTable = () => {
-
-    const tree = localStorage.getItem("treeAVLContainer");
+export const getHashTable = async () => {
+    let tree = localStorage.getItem("treeAVLContainer");
     if (tree == null) {
         return Object.setPrototypeOf(JSON.parse(localStorage.getItem("hashTableContainer")), HashTable.prototype);
     }
 
+    tree = getTree();
     const hashTable = new HashTable();
+    const students = tree.getInorder();
 
-    tree.getInorder().forEach(student => {
-        hashTable.set(student.id, student.name, student.password);
-    });
+    for (const student of students) {
+        await hashTable.set(student.id, student.name, student.password);
+    }
     return hashTable;
 }
 

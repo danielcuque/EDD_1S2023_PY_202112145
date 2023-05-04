@@ -8,7 +8,7 @@ for (let i = 0; i < secretKey.length; i++) {
 const iv = crypto.getRandomValues(new Uint8Array(16))
 const algorithm = { name: 'AES-GCM', iv: iv }
 
-async function encode(message) {
+const encode = async (message) => {
     const enconder = new TextEncoder()
     const data = enconder.encode(message)
 
@@ -21,7 +21,7 @@ async function encode(message) {
     return encodeBase64;
 }
 
-async function decode(message) {
+const decode = async (message) => {
     const messageEncoded = new Uint8Array(atob(message).split('').map(char => char.charCodeAt(0)))
 
     const cryptoKey = await crypto.subtle.importKey('raw', view, 'AES-GCM', true, ['decrypt'])

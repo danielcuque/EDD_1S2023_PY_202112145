@@ -1,4 +1,5 @@
 import { showSnackbar } from "../../utils/fields.js"
+import { encode } from "./encrypt.js"
 
 class HashNode {
     constructor(id, name, password) {
@@ -15,9 +16,10 @@ export class HashTable {
         this.bucketsUsed = 0
     }
 
-    set(id, name, password) {
+    async set(id, name, password) {
+        const encryptedPassword = await encode(password)
         let address = this.hashMethod(id)
-        const newNode = new HashNode(id, name, password)
+        const newNode = new HashNode(id, name, encryptedPassword)
         if (address < this.maxSize) {
             try {
                 if (this.data[address] == null) {
