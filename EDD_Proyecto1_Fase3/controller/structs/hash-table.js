@@ -16,10 +16,9 @@ export class HashTable {
         this.bucketsUsed = 0
     }
 
-    async set(id, name, password) {
-        const encryptedPassword = await encode(password)
+    set(id, name, password) {
         let address = this.hashMethod(id)
-        const newNode = new HashNode(id, name, encryptedPassword)
+        const newNode = new HashNode(id, name, password)
         if (address < this.maxSize) {
             try {
                 if (this.data[address] == null) {

@@ -5,7 +5,11 @@ for (let i = 0; i < secretKey.length; i++) {
     view[i] = secretKey.charCodeAt(i)
 }
 
-const iv = crypto.getRandomValues(new Uint8Array(16))
+// Cambiamos para que sea un solo array de 16 bytes
+const iv = new Uint8Array(16)
+for (let i = 0; i < iv.length; i++) {
+    iv[i] = i
+}
 const algorithm = { name: 'AES-GCM', iv: iv }
 
 const encode = async (message) => {

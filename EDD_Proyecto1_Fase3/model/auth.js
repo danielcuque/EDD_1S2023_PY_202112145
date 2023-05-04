@@ -1,8 +1,8 @@
-import { getAdmin, getHashTable, getTree } from "../utils/objects.js";
+import { getAdmin, getHashTable } from "../utils/objects.js";
 
-export const checkLogin = (id, password) => {
+export const checkLogin = async (id, password) => {
     const adminObj = getAdmin();
-    // Si es admin, se compara directamente con el objeto admin
+
     if (adminObj != null && adminObj != undefined) {
         if (adminObj.name === password && adminObj.id === id) {
             return true;
@@ -10,7 +10,7 @@ export const checkLogin = (id, password) => {
     }
 
     // Si no es admin, se busca en el árbol AVL de usuarios
-    const hashTable = getHashTable();
+    const hashTable = await getHashTable();
     const student = hashTable.findUserByIdAndPass(id, password);
     if (student != null) {
         localStorage.setItem("currentUser", JSON.stringify(student));

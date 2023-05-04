@@ -1,12 +1,13 @@
 import { Student } from "../controller/classes/student.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
 import { HashTable } from "../controller/structs/hash-table.js";
+import { encode } from "../controller/structs/encrypt.js";
 
-export const displayUserTable = () => {
+export const displayUserTable = async () => {
     const userTable = document.getElementById('adminStudentsBody');
     userTable.innerHTML = ``;
 
-    const hashTable = getHashTable();
+    const hashTable = await getHashTable();
 
     hashTable.data.forEach(student => {
         if (student !== null) {
@@ -15,7 +16,7 @@ export const displayUserTable = () => {
             <div class="w-full flex flex-row py-6 border border-gray-300">
                 <div class="w-1/4 text-center">${student.id}</div>
                 <div class="w-1/4 text-center">${student.name}</div>
-                <div class="w-1/2 text-center">${student.password}</div>
+                <div class="w-1/2 text-center text-xs break-words pr-2">${student.password}</div>
             </div>`
             userTable.appendChild(row);
         }
@@ -59,7 +60,8 @@ export const getHashTable = async () => {
     const students = tree.getInorder();
 
     for (const student of students) {
-        await hashTable.set(student.id, student.name, student.password);
+        const encryptedPassword = await encode(student.password);
+        hashTable.set(student.id, student.name, encryptedPassword);
     }
     return hashTable;
 }
@@ -95,7 +97,6 @@ export const encodeBase64 = (file) => {
 }
 
 export const getUsersCredentials = () => {
-    // const tree = getTree();
     const table = []
     // tree.getInorder().map(student => {
     //     student.storage.getAllFiles().map(file => {
