@@ -9,14 +9,16 @@ export const displayUserTable = () => {
     const hashTable = getHashTable();
 
     hashTable.data.forEach(student => {
-        const row = document.createElement('div');
-        row.innerHTML = `
-        <div class="w-full flex flex-row py-6 border border-gray-300">
-            <div class="w-1/4 text-center">${student.id}</div>
-            <div class="w-1/4 text-center">${student.name}</div>
-            <div class="w-1/2 text-center">${student.password}</div>
-        </div>`
-        userTable.appendChild(row);
+        if (student !== null) {
+            const row = document.createElement('div');
+            row.innerHTML = `
+            <div class="w-full flex flex-row py-6 border border-gray-300">
+                <div class="w-1/4 text-center">${student.id}</div>
+                <div class="w-1/4 text-center">${student.name}</div>
+                <div class="w-1/2 text-center">${student.password}</div>
+            </div>`
+            userTable.appendChild(row);
+        }
     });
 
 }
@@ -47,8 +49,12 @@ export const getTree = () => {
 }
 
 export const getHashTable = () => {
-    const tree = getTree();
-    console.log(tree);
+
+    const tree = localStorage.getItem("treeAVLContainer");
+    if (tree == null) {
+        return Object.setPrototypeOf(JSON.parse(localStorage.getItem("hashTableContainer")), HashTable.prototype);
+    }
+
     const hashTable = new HashTable();
 
     tree.getInorder().forEach(student => {
@@ -88,22 +94,22 @@ export const encodeBase64 = (file) => {
 }
 
 export const getUsersCredentials = () => {
-    const tree = getTree();
+    // const tree = getTree();
     const table = []
-    tree.getInorder().map(student => {
-        student.storage.getAllFiles().map(file => {
-            file.credentials.map(objCredential => {
-                table.push({
-                    owner: student.id,
-                    userShared: objCredential.id,
-                    path: file.path,
-                    filename: objCredential.filename,
-                    credentials: objCredential.credential
-                });
+    // tree.getInorder().map(student => {
+    //     student.storage.getAllFiles().map(file => {
+    //         file.credentials.map(objCredential => {
+    //             table.push({
+    //                 owner: student.id,
+    //                 userShared: objCredential.id,
+    //                 path: file.path,
+    //                 filename: objCredential.filename,
+    //                 credentials: objCredential.credential
+    //             });
 
-            })
-        })
-    });
+    //         })
+    //     })
+    // });
     return table;
 }
 

@@ -25,9 +25,8 @@ const initBaseApp = () => {
 
     const verifyTree = localStorage.getItem("treeAVLContainer");
     if (verifyTree != null) {
-        getHashTable();
-        // console.log("Ya existe un arbol en el localStorage", getHashTable());
-        // localStorage.setItem("hashTableContainer", JSON.stringify(getHashTable()));
+        localStorage.setItem("hashTableContainer", JSON.stringify(getHashTable()));
+        localStorage.removeItem("treeAVLContainer");
     }
 
     // Verificar si el valor de admin ya existe en localStorage
@@ -44,10 +43,9 @@ const initBaseApp = () => {
 const initUserView = () => {
     document.getElementById('carnetStudentSpan').innerHTML = `${getCurrentUser().id}`
     localStorage.setItem('currentPath', '/');
-    // showFilesInCurrentPath();
 }
 
 const initAdminView = () => {
-    // displayUserTable();
-    // displayUserCredentials();
+    displayUserTable();
+    displayUserCredentials();
 }
