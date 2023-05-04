@@ -9,9 +9,9 @@ export const checkLogin = async (id, password) => {
         }
     }
 
-    // Si no es admin, se busca en el árbol AVL de usuarios
+    const encryptedPassword = await encode(password);
     const hashTable = await getHashTable();
-    const student = hashTable.findUserByIdAndPass(id, password);
+    const student = hashTable.findUserByIdAndPass(id, encryptedPassword);
     if (student != null) {
         localStorage.setItem("currentUser", JSON.stringify(student));
         return true;
