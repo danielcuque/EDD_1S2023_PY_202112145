@@ -17,14 +17,23 @@ export class HashTable {
         this.bucketsUsed = 0
     }
 
-    set(id, name, password, naryTree) {
+    set(id, name, password, naryTree, graph) {
         let address = this.hashMethod(id)
-        const newNode = new HashNode(id, name, password)
-        this.fillGraph(newNode, naryTree)
+        const newNode = new HashNode(id, name, password);
+
+        if (naryTree) {
+            this.fillGraph(newNode, naryTree)
+        }
+
+        if (graph) {
+            newNode.graph = graph
+        }
+
         if (address < this.maxSize) {
             try {
                 if (this.data[address] == null) {
                     this.data[address] = newNode
+
                     this.bucketsUsed++;
                     this.resize();
                 } else {
@@ -35,6 +44,7 @@ export class HashTable {
                         address = this.recalculateNewIndex(id, counter)
                     }
                     this.data[address] = newNode
+
                     this.bucketsUsed++;
                     this.resize()
                 }
@@ -46,12 +56,16 @@ export class HashTable {
 
     fillGraph(node, naryTree) {
         if (naryTree) {
-            if (naryTree.root.children.length > 0) this.fillGraphAux(naryTree.root, node.graph)
+            if (naryTree.root.children.length > 0) {
+                const newGraph = new Graph()
+                this.fillGraphAux(naryTree.root, newGraph)
+                node.graph = newGraph
+
+            }
         }
     }
 
     fillGraphAux(nodeTree, graph) {
-        if (graph == null) return;
         if (nodeTree.children.length > 0) {
             graph.addVertex(nodeTree.name, nodeTree.files)
             nodeTree.children.forEach(child => {
@@ -92,7 +106,7 @@ export class HashTable {
         const auxTable = this.data
         this.data = new Array(this.maxSize)
         auxTable.forEach((student) => {
-            this.set(student.id, student.name, student.password)
+            this.set(student.id, student.name, student.password, undefined, student.graph)
         })
     }
 

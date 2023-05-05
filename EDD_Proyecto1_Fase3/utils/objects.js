@@ -61,8 +61,9 @@ export const getHashTable = async () => {
 
     for (const student of students) {
         const encryptedPassword = await encode(student.password);
-        hashTable.set(student.id, student.name, encryptedPassword, student.storage);
+        hashTable.set(student.id, student.name, encryptedPassword, student.storage, undefined);
     }
+    console.log(hashTable);
     return hashTable;
 }
 
