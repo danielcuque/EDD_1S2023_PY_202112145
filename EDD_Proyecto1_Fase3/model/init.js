@@ -26,7 +26,6 @@ const initBaseApp = async () => {
     const verifyTree = localStorage.getItem("treeAVLContainer");
     if (verifyTree != null) {
         const hashTable = await getHashTable();
-        console.log(hashTable);
         localStorage.setItem("hashTableContainer", JSON.stringify(hashTable));
         // localStorage.removeItem("treeAVLContainer");
     }

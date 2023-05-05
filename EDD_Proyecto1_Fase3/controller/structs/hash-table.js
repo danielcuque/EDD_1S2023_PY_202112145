@@ -1,11 +1,12 @@
 import { showSnackbar } from "../../utils/fields.js"
-import { encode } from "./encrypt.js"
+import { Graph } from "./directed-graph.js"
 
 class HashNode {
     constructor(id, name, password) {
         this.id = id
         this.name = name
         this.password = password
+        this.graph = new Graph()
     }
 }
 
@@ -16,9 +17,10 @@ export class HashTable {
         this.bucketsUsed = 0
     }
 
-    set(id, name, password) {
+    set(id, name, password, naryTree) {
         let address = this.hashMethod(id)
         const newNode = new HashNode(id, name, password)
+        this.fillGraph(newNode, naryTree)
         if (address < this.maxSize) {
             try {
                 if (this.data[address] == null) {
@@ -39,6 +41,25 @@ export class HashTable {
             } catch (err) {
                 console.log("Hubo un error en insercion")
             }
+        }
+    }
+
+    fillGraph(node, naryTree) {
+        if (naryTree) {
+            if (naryTree.root.children.length > 0) this.fillGraphAux(naryTree.root, node.graph)
+            console.log(node.graph.toDot())
+        }
+    }
+
+    fillGraphAux(nodeTree, graph) {
+        if (graph == null) return;
+        if (nodeTree.children.length > 0) {
+            graph.addVertex(nodeTree.name)
+            nodeTree.children.forEach(child => {
+                graph.addVertex(child.name)
+                graph.addEdge(nodeTree.name, child.name)
+                this.fillGraphAux(child, graph);
+            })
         }
     }
 

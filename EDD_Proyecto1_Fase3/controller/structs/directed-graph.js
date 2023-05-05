@@ -1,86 +1,29 @@
-class AdjacentNode {
-    constructor(valor) {
-        this.next = null
-        this.below = null
-        this.value = valor
-    }
-}
-
-export class AdjacentMatrix {
+export class Graph {
     constructor() {
-        this.root = null
+        this.nodes = 0;
+        this.adjacentMatrix = {};
     }
-
-    newRow(text) {
-        const newNode = new AdjacentNode(text)
-        if (this.root === null) {
-            this.root = newNode
-        } else {
-            let aux = this.root
-            while (aux.below) {
-                if (aux.value === newNode.value) {
-                    return
-                }
-                aux = aux.below
-            }
-            aux.below = newNode
+    addVertex(node) {
+        if (!this.adjacentMatrix[node]) {
+            this.adjacentMatrix[node] = [];
+            this.nodes++;
         }
     }
-
-    newColumn(parent, children) {
-        const newNode = new AdjacentNode(children)
-        if (this.root !== null && this.root.value === parent) {
-            let aux = this.root
-            while (aux.next) {
-                aux = aux.next
-            }
-            aux.next = newNode
-        } else {
-            this.newRow(parent)
-            let aux = this.root
-            while (aux) {
-                if (aux.value === parent) {
-                    break;
-                }
-                aux = aux.below
-            }
-            if (aux !== null) {
-                while (aux.next) {
-                    aux = aux.next
-                }
-                aux.next = newNode
-            }
-        }
-    }
-
-    insertValues(parent, children) {
-        let str = children.split(',')
-        for (let i = 0; i < str.length; i++) {
-            this.newColumn(parent, str[i])
-        }
+    addEdge(node1, node2) {
+        this.adjacentMatrix[node1].push(node2);
     }
 
     toDot() {
-        let cadena = "graph grafoDirigido{ rankdir=LR; node [shape=box]; \"/\"; node [shape = ellipse] ; layout=neato; "
-        let auxPadre = this.root
-        let auxHijo = this.root
-        let peso = 0
-        while (auxPadre) {
-            auxHijo = auxPadre.next
-            let profundidad = auxPadre.value.split('/')
-            let padre = ""
-            if (profundidad.length == 2 && profundidad[1] == "") { peso = 1 }
-            else if (profundidad.length == 2 && profundidad[1] != "") { peso = 2 }
-            else { peso = profundidad.length }
-            if (auxPadre.value != "/") { padre = profundidad[profundidad.length - 1] }
-            else { padre = "/" }
-            while (auxHijo) {
-                cadena += "\"" + padre + "\"" + " -- " + "\"" + auxHijo.value + "\"" + " [label=\"" + peso + "\"] "
-                auxHijo = auxHijo.next
-            }
-            auxPadre = auxPadre.below
+        let dot = "graph G { \n rankdir=LR; node [shape=box]; \"/\"; node [shape = ellipse] ; layout=neato;\n";
+        for (let node in this.adjacentMatrix) {
+            dot += `    "${node}";\n`;
         }
-        cadena += "}"
-        return cadena
+        for (let node in this.adjacentMatrix) {
+            this.adjacentMatrix[node].forEach(adjacentNode => {
+                dot += `    "${node}" -- "${adjacentNode}" [len=2.00];\n`;
+            });
+        }
+        dot += "}";
+        return dot;
     }
 }

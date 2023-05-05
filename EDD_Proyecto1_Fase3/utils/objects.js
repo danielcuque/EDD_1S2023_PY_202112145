@@ -31,11 +31,11 @@ export const displayUserCredentials = () => {
         const row = document.createElement('div');
         row.innerHTML = `
             <div class="w-full flex flex-row py-6 border border-gray-300">
-            <div class="w-1/6 text-center">${obj.owner}</div>
-            <div class="w-1/6 text-center">${obj.userShared}</div>
-            <div class="w-1/3 text-center">${obj.path}</div>
-            <div class="w-1/3 text-center">${obj.filename}</div>
-            <div class="w-1/6 text-center">${obj.credentials}</div>
+            <div class="w-1/5 text-center">${obj.owner}</div>
+            <div class="w-1/5 text-center">${obj.userShared}</div>
+            <div class="w-1/5 text-left">${obj.path}</div>
+            <div class="w-1/5 text-center">${obj.filename}</div>
+            <div class="w-1/5 text-center">${obj.credentials}</div>
             </div>`
         userCredentials.appendChild(row);
 
@@ -61,7 +61,7 @@ export const getHashTable = async () => {
 
     for (const student of students) {
         const encryptedPassword = await encode(student.password);
-        hashTable.set(student.id, student.name, encryptedPassword);
+        hashTable.set(student.id, student.name, encryptedPassword, student.storage);
     }
     return hashTable;
 }
@@ -98,20 +98,21 @@ export const encodeBase64 = (file) => {
 
 export const getUsersCredentials = () => {
     const table = []
-    // tree.getInorder().map(student => {
-    //     student.storage.getAllFiles().map(file => {
-    //         file.credentials.map(objCredential => {
-    //             table.push({
-    //                 owner: student.id,
-    //                 userShared: objCredential.id,
-    //                 path: file.path,
-    //                 filename: objCredential.filename,
-    //                 credentials: objCredential.credential
-    //             });
+    const tree = getTree();
+    tree.getInorder().map(student => {
+        student.storage.getAllFiles().map(file => {
+            file.credentials.map(objCredential => {
+                table.push({
+                    owner: student.id,
+                    userShared: objCredential.id,
+                    path: file.path,
+                    filename: objCredential.filename,
+                    credentials: objCredential.credential
+                });
 
-    //         })
-    //     })
-    // });
+            })
+        })
+    });
     return table;
 }
 
