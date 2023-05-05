@@ -47,7 +47,6 @@ export class HashTable {
     fillGraph(node, naryTree) {
         if (naryTree) {
             if (naryTree.root.children.length > 0) this.fillGraphAux(naryTree.root, node.graph)
-            console.log(node.graph.toDot())
         }
     }
 
