@@ -54,9 +54,9 @@ export class HashTable {
     fillGraphAux(nodeTree, graph) {
         if (graph == null) return;
         if (nodeTree.children.length > 0) {
-            graph.addVertex(nodeTree.name)
+            graph.addVertex(nodeTree.name, nodeTree.files)
             nodeTree.children.forEach(child => {
-                graph.addVertex(child.name)
+                graph.addVertex(child.name, child.files)
                 graph.addEdge(nodeTree.name, child.name)
                 this.fillGraphAux(child, graph);
             })

@@ -3,25 +3,28 @@ export class Graph {
         this.nodes = 0;
         this.adjacentMatrix = {};
     }
-    addVertex(node) {
-        if (!this.adjacentMatrix[node]) {
-            this.adjacentMatrix[node] = [];
+    addVertex(path, files) {
+        if (!this.adjacentMatrix[path]) {
+            this.adjacentMatrix[path] = {
+                children: [],
+                files: files,
+            }
             this.nodes++;
         }
     }
-    addEdge(node1, node2) {
-        this.adjacentMatrix[node1].push(node2);
+    addEdge(path1, path2) {
+        this.adjacentMatrix[path1].children.push(path2);
     }
 
     toDot() {
         let dot = "graph G { \n rankdir=LR; node [shape=box]; \"/\"; node [shape = ellipse] ; layout=neato;\n";
-        for (let node in this.adjacentMatrix) {
-            dot += `    "${node}";\n`;
+        for (const key in this.adjacentMatrix) {
+            dot += `"${key}" [label="${key}"];\n`
         }
-        for (let node in this.adjacentMatrix) {
-            this.adjacentMatrix[node].forEach(adjacentNode => {
-                dot += `    "${node}" -- "${adjacentNode}" [len=2.00];\n`;
-            });
+        for (const key in this.adjacentMatrix) {
+            this.adjacentMatrix[key].children.forEach(child => {
+                dot += `"${key}" -- "${child}" [len=2.00];\n`
+            })
         }
         dot += "}";
         return dot;
