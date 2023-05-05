@@ -49,12 +49,13 @@ export const getTree = () => {
     return treeAVL;
 }
 
-export const getHashTable = async () => {
-    let tree = localStorage.getItem("treeAVLContainer");
-    if (tree == null) {
-        return Object.setPrototypeOf(JSON.parse(localStorage.getItem("hashTableContainer")), HashTable.prototype);
-    }
+export const getHashTable = () => {
+    const hashTable = Object.setPrototypeOf(JSON.parse(localStorage.getItem("hashTableContainer")), HashTable.prototype);
+    hashTable.deserializeHashTable();
+    return hashTable;
+}
 
+export const setHashTable = async () => {
     tree = getTree();
     const hashTable = new HashTable();
     const students = tree.getInorder();
@@ -63,7 +64,6 @@ export const getHashTable = async () => {
         const encryptedPassword = await encode(student.password);
         hashTable.set(student.id, student.name, encryptedPassword, student.storage, undefined);
     }
-    console.log(hashTable);
     return hashTable;
 }
 
@@ -99,20 +99,23 @@ export const encodeBase64 = (file) => {
 
 export const getUsersCredentials = () => {
     const table = []
-    const tree = getTree();
-    tree.getInorder().map(student => {
-        student.storage.getAllFiles().map(file => {
-            file.credentials.map(objCredential => {
-                table.push({
-                    owner: student.id,
-                    userShared: objCredential.id,
-                    path: file.path,
-                    filename: objCredential.filename,
-                    credentials: objCredential.credential
-                });
-
+    const hashTable = getHashTable();
+    const students = hashTable.data;
+    students.map(student => {
+        if (student !== null) {
+            const graph = student.graph
+            graph.getAllFiles().map(file => {
+                file.credentials.map(objCredential => {
+                    table.push({
+                        owner: student.id,
+                        userShared: objCredential.id,
+                        path: file.path,
+                        filename: objCredential.filename,
+                        credentials: objCredential.credential
+                    });
+                })
             })
-        })
+        }
     });
     return table;
 }

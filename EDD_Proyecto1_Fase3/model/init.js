@@ -1,5 +1,5 @@
 import { Student } from '../controller/classes/student.js'
-import { displayUserCredentials, displayUserTable, getCurrentUser, getHashTable } from '../utils/objects.js';
+import { displayUserCredentials, displayUserTable, getCurrentUser, getHashTable, setHashTable } from '../utils/objects.js';
 
 // Vamos a verificar en que ruta estamos
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -25,7 +25,7 @@ const initBaseApp = async () => {
 
     const verifyTree = localStorage.getItem("treeAVLContainer");
     if (verifyTree != null) {
-        const hashTable = await getHashTable();
+        const hashTable = await setHashTable();
         localStorage.setItem("hashTableContainer", JSON.stringify(hashTable));
         // localStorage.removeItem("treeAVLContainer");
     }

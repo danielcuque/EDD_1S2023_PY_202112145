@@ -184,4 +184,16 @@ export class HashTable {
         }
         return true;
     }
+
+    deserializeHashTable() {
+        this.data.forEach((student) => {
+            if (student != null) {
+                Object.setPrototypeOf(student, HashNode.prototype)
+                const graph = student.graph
+                Object.setPrototypeOf(graph, Graph.prototype)
+                graph.deserializeGraph()
+            }
+        })
+    }
+
 }
