@@ -54,6 +54,7 @@
             }
         }
     </script>
+    <script type="module" src="./model/init.js"></script>
     <title>Chat</title>
 </head>
 
@@ -70,7 +71,7 @@
         <!-- Sidebar -->
         <div class="w-1/5 h-screen fixed top-0 left-0 overflow-y-auto mt-[70px] shadow-md">
             <p class="px-4 py-2 font-medium text-center">Chats</p>
-            <ul class="mt-4">
+            <ul class="mt-4" id="userList">
                 <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 1</li>
                 <!-- <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 2</li>
                 <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 3</li>

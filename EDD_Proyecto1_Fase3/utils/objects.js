@@ -24,6 +24,29 @@ export const displayUserTable = async () => {
 
 }
 
+export const displayUserList = () => {
+    const userList = getElement('userList');
+    const hashTable = getHashTable();
+    userList.innerHTML = ``;
+    hashTable.data.forEach(student => {
+        if (student !== null) {
+            const li = document.createElement('li');
+            li.classList.add('px-4', 'py-2', 'hover:bg-gray-300', 'border-b', 'border-gray-200', 'cursor-pointer');
+            li.innerHTML = `
+            <div class="flex flex-col">
+            <div>${student.name}</div>
+            <div>${student.id}</div>
+            </div>
+            `
+
+            li.addEventListener('click', (e) => {
+                localStorage.setItem('chatUser', JSON.stringify(student));
+            })
+            userList.appendChild(li);
+        }
+    })
+}
+
 export const displayUserCredentials = () => {
     const userCredentials = document.getElementById('userCredentialsBody');
     userCredentials.innerHTML = ``;
@@ -172,4 +195,8 @@ export const generateUniqueName = (fileName, existingFiles) => {
     }
 
     return newFileName;
+}
+
+export const getElement = (id) => {
+    return document.getElementById(id);
 }
