@@ -2,6 +2,7 @@ import { Student } from "../controller/classes/student.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
 import { HashTable } from "../controller/structs/hash-table.js";
 import { encode } from "../controller/structs/encrypt.js";
+import { BlockChain } from "../controller/structs/block-chain.js";
 
 export const displayUserTable = async () => {
     const userTable = document.getElementById('adminStudentsBody');
@@ -199,4 +200,54 @@ export const generateUniqueName = (fileName, existingFiles) => {
 
 export const getElement = (id) => {
     return document.getElementById(id);
+}
+
+// Blockchain
+
+export const setBlockChain = (blockChain) => {
+
+    const blocks = []
+
+    let aux = blockChain.start;
+    while (aux != null) {
+
+        blocks.push({
+            ...aux.data,
+        });
+
+        aux = aux.next;
+    }
+
+    localStorage.setItem('blockChainContainer', JSON.stringify(blocks));
+
+}
+
+export const getBlockChain = () => {
+
+    const serializeBlockChain = localStorage.getItem('blockChainContainer');
+    const parsedBlockChain = serializeBlockChain ? JSON.parse(serializeBlockChain) : null;
+
+    const blockChain = new BlockChain();
+    if (parsedBlockChain) {
+
+        const blocks = parsedBlockChain.map(b => {
+            return new Block(
+                b.index,
+                new Date(Date.parse(b.date)),
+                b.emiter,
+                b.receptor,
+                b.msg,
+                null,
+                b.hash
+            );
+        });
+
+        blocks.forEach(block => {
+            blockChain.insertBlock(block);
+        });
+
+    }
+
+    return blockChain;
+
 }

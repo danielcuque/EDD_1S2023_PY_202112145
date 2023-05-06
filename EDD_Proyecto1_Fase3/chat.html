@@ -59,7 +59,7 @@
 </head>
 
 <body>
-    <nav class="py-4 px-6 fixed top-0 right-0 w-[80%] shadow-md">
+    <nav class="py-4 px-6 fixed top-0 right-0 w-[80%] shadow-md z-50">
         <div class="container flex mx-auto justify-between">
             <a href="./user-view.html" class="text-lg font-bold">GoDrive</a>
             <button class="text-sm px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg" id="logoutBtn">
@@ -69,39 +69,88 @@
     </nav>
     <div class="flex">
         <!-- Sidebar -->
-        <div class="w-1/5 h-full fixed left-0 bg-white shadow-md">
+        <div class="w-1/5 h-full fixed left-0 bg-white shadow-md overflow-y-auto">
             <p class="px-4 py-2 font-medium text-center">Chats</p>
-            <ul class="px-4 overflow-y-auto" id="userList">
-                <!-- <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 1</li> -->
-                <!-- <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 2</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 3</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 4</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 5</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 6</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 7</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 8</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 9</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 10</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 1</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 2</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 3</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 4</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 5</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 6</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 7</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 8</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 9</li>
-                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 10</li> -->
+            <ul class="px-4" id="userList">
+                <!-- Aquí van los chats -->
             </ul>
         </div>
 
         <!-- Contenido principal -->
-        <div class="w-4/5 ml-auto">
-            <!-- Aquí va el contenido principal -->
+        <div class="w-4/5 ml-auto mt-[70px] overflow-hidden" id="chatContainer">
+            <h1 class="font-bold text-lg">Chat con 202112145</h1>
+            <div class="flex flex-col w-full px-2 overflow-y-auto h-[calc(100vh-300px)]" id="messageContainer">
+                <p class="w-1/2 self-end text-justify mb-2">
+                    El administrador podrá visualizar de manera general todo el sistema de mensajería mediante un
+                    reporte, que se muestra a continuación, teniendo en cuenta que el mensaje siempre debe
+                    visualizarse encriptado para mayor seguridad, este sera generado un textarea donde cargara esa
+                    información con la posibilidad de ver cada bloque, la estructura del texto será la siguiente:
+                </p>
+                <p class="w-1/2 self-end text-justify mb-2">
+                    El administrador podrá visualizar de manera general todo el sistema de mensajería mediante un
+                    reporte, que se muestra a continuación, teniendo en cuenta que el mensaje siempre debe
+                    visualizarse encriptado para mayor seguridad, este sera generado un textarea donde cargara esa
+                    información con la posibilidad de ver cada bloque, la estructura del texto será la siguiente:
+                </p>
+                <p class="w-1/2 self-end text-justify mb-2">
+                    El administrador podrá visualizar de manera general todo el sistema de mensajería mediante un
+                    reporte, que se muestra a continuación, teniendo en cuenta que el mensaje siempre debe
+                    visualizarse encriptado para mayor seguridad, este sera generado un textarea donde cargara esa
+                    información con la posibilidad de ver cada bloque, la estructura del texto será la siguiente:
+                </p>
+                <p class="w-1/2 self-end text-justify mb-2">
+                    El administrador podrá visualizar de manera general todo el sistema de mensajería mediante un
+                    reporte, que se muestra a continuación, teniendo en cuenta que el mensaje siempre debe
+                    visualizarse encriptado para mayor seguridad, este sera generado un textarea donde cargara esa
+                    información con la posibilidad de ver cada bloque, la estructura del texto será la siguiente:
+                </p>
+                <p class="w-1/2 self-end text-justify mb-2">
+                    El administrador podrá visualizar de manera general todo el sistema de mensajería mediante un
+                    reporte, que se muestra a continuación, teniendo en cuenta que el mensaje siempre debe
+                    visualizarse encriptado para mayor seguridad, este sera generado un textarea donde cargara esa
+                    información con la posibilidad de ver cada bloque, la estructura del texto será la siguiente:
+                </p>
+                <p class="w-1/2 self-end text-justify mb-2 break-words">
+                    VAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOSVAMOS
+                </p>
+                <p class="w-1/2 self-end text-justify mb-2">
+                    El administrador podrá visualizar de manera general todo el sistema de mensajería mediante un
+                    reporte, que se muestra a continuación, teniendo en cuenta que el mensaje siempre debe
+                    visualizarse encriptado para mayor seguridad, este sera generado un textarea donde cargara esa
+                    información con la posibilidad de ver cada bloque, la estructura del texto será la siguiente:
+                </p>
+                <p class="w-1/2 self-star text-justify mb-2">
+                    Hola
+                </p>
+                <p class="w-1/2 self-star text-justify mb-2">
+                    Hola
+                </p>
+                <p class="w-1/2 self-star text-justify mb-2">
+                    Hola
+                </p>
+                <p class="w-1/2 self-star text-justify mb-2">
+                    Hola
+                </p>
+                <p class="w-1/2 self-star text-justify mb-2">
+                    Hola
+                </p>
+                <p class="w-1/2 self-end text-justify mb-2">
+                    El administrador podrá visualizar de manera general todo el sistema de mensajería mediante un
+                    reporte, que se muestra a continuación, teniendo en cuenta que el mensaje siempre debe
+                    visualizarse encriptado para mayor seguridad, este sera generado un textarea donde cargara esa
+                    información con la posibilidad de ver cada bloque, la estructura del texto será la siguiente:
+                </p>
+
+            </div>
         </div>
+        <form id="messageForm" class="py-4 px-6 fixed bottom-0 right-0 w-[80%] shadow-md bg-white">
+            <textarea class="w-full h-20 border-2 border-gray-300 rounded-lg p-2" id="messageInput"
+                placeholder="Escribe un mensaje..."></textarea>
+            <input type="submit" value="Enviar" class="w-full bg-primary-500 text-white rounded-lg p-2 mt-2">
+        </form>
     </div>
 
 </body>
-<script type="module" src="./model/chat.js"></script>
+<script type=" module" src="./model/chat.js"></script>
 
 </html>

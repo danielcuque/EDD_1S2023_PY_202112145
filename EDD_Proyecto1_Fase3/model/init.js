@@ -1,5 +1,6 @@
 import { Student } from '../controller/classes/student.js'
-import { displayUserCredentials, displayUserList, displayUserTable, getCurrentUser, setHashTable } from '../utils/objects.js';
+import { BlockChain } from '../controller/structs/block-chain.js';
+import { displayUserCredentials, displayUserList, displayUserTable, getCurrentUser, setBlockChain, setHashTable } from '../utils/objects.js';
 
 // Vamos a verificar en que ruta estamos
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -31,6 +32,13 @@ const initBaseApp = async () => {
         const hashTable = await setHashTable();
         localStorage.setItem("hashTableContainer", JSON.stringify(hashTable));
         // localStorage.removeItem("treeAVLContainer");
+    }
+
+    // Verificar si ya existe un blockchain
+    const verifyBlockChain = localStorage.getItem("blockChainContainer");
+    if (verifyBlockChain === null) {
+        const blockChain = new BlockChain();
+        setBlockChain(blockChain);
     }
 
     // Verificar si el valor de admin ya existe en localStorage
