@@ -66,17 +66,20 @@ export class Graph {
         for (const key in this.adjacentMatrix) {
             dot += `"${key}" [label="${key}"];\n`
         }
+        let weight = 1;
         for (const key in this.adjacentMatrix) {
             this.adjacentMatrix[key].children.forEach(child => {
-                dot += `"${key}" -- "${child}" [len=2.00];\n`
+                dot += `"${key}" -- "${child}" [len=2.00, label=\"${weight}\"];\n`
             })
+            if (this.adjacentMatrix[key].children.length > 0) {
+                weight++;
+            }
         }
         dot += "}";
         return dot;
     }
 
     deserializeGraph() {
-        // Covertimos nuevamente la matriz dispersa a su estado original
         for (const node in this.adjacentMatrix) {
             const node_ = this.adjacentMatrix[node];
             const nodeFiles = node_.files;
