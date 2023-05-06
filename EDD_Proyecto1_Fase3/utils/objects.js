@@ -2,7 +2,7 @@ import { Student } from "../controller/classes/student.js";
 import { TreeAVL } from "../controller/structs/tree-avl.js";
 import { HashTable } from "../controller/structs/hash-table.js";
 import { encode } from "../controller/structs/encrypt.js";
-import { BlockChain } from "../controller/structs/block-chain.js";
+import { Block, BlockChain } from "../controller/structs/block-chain.js";
 
 export const displayUserTable = async () => {
     const userTable = document.getElementById('adminStudentsBody');
@@ -30,7 +30,7 @@ export const displayUserList = () => {
     const hashTable = getHashTable();
     userList.innerHTML = ``;
     hashTable.data.forEach(student => {
-        if (student !== null && getCurrentUser().id !== student.id) {
+        if (student !== null && getCurrentUser('currentUser').id !== student.id) {
             const li = document.createElement('li');
             li.classList.add('px-4', 'py-2', 'hover:bg-gray-300', 'border-b', 'border-gray-200', 'cursor-pointer');
             const container = document.createElement('div');
@@ -45,7 +45,7 @@ export const displayUserList = () => {
             li.appendChild(container);
 
             li.addEventListener('click', (e) => {
-                localStorage.setItem('chatUser', JSON.stringify(student));
+                localStorage.setItem('userChat', JSON.stringify(student));
             })
             userList.appendChild(li);
         }
@@ -54,7 +54,7 @@ export const displayUserList = () => {
     const userListChildren = userList.children;
     if (userListChildren.length > 0) {
         const user = hashTable.data.find(student => student !== null && student.id == userListChildren[0].querySelector('#userId').innerHTML);
-        localStorage.setItem('chatUser', JSON.stringify(user));
+        localStorage.setItem('userChat', JSON.stringify(user));
     }
 
 }

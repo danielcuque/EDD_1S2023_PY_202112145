@@ -8,7 +8,7 @@ for (let i = 0; i < secretKey.length; i++) {
 const iv = new Uint8Array(16)
 const algorithm = { name: 'AES-CBC', iv: iv }
 
-const encode = async (message) => {
+export const encode = async (message) => {
     const enconder = new TextEncoder()
     const data = enconder.encode(message)
 
@@ -21,7 +21,7 @@ const encode = async (message) => {
     return encodeBase64;
 }
 
-const decode = async (message) => {
+export const decode = async (message) => {
     const messageEncoded = new Uint8Array(atob(message).split('').map(char => char.charCodeAt(0)))
 
     const cryptoKey = await crypto.subtle.importKey('raw', view, 'AES-CBC', true, ['decrypt'])
@@ -34,4 +34,10 @@ const decode = async (message) => {
     return originalMessage
 }
 
-export { encode, decode }
+export const encryptSha256 = async (password) => {
+    const passwordBytes = new TextEncoder().encode(password);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', passwordBytes);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    return hashHex;
+}

@@ -1,4 +1,4 @@
-import { decode, encode } from "./encrypt.js"
+import { decode, encode, encryptSha256 } from "./encrypt.js"
 
 export class Block {
     constructor(index, date, emiter, receptor, msg, previousHash, hash) {
@@ -40,7 +40,7 @@ export class BlockChain {
     async insert(date, emiter, receptor, msg) {
 
         const seed = this.blockCounter + date + emiter + receptor + msg
-        const hash = await hashPassword(seed)
+        const hash = await encryptSha256(seed)
         const encryptedMsg = await encode(msg)
 
         if (this.start === null) {
