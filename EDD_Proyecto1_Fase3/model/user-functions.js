@@ -4,11 +4,11 @@ import { getCurrentPath, getCurrentUser, getFileContentConverted, getHashTable, 
 
 // .txt, .pdf, .jpg, .png, .jpeg
 const hashTable = getHashTable();
-const inputFile = document.getElementById('dropzone-file');
 const logoutButton = document.getElementById('logoutBtn');
 const searchPathForm = document.getElementById('searchPathForm');
-const createFolderButton = document.getElementById('createFolderBtn');
-const deleteFolderButton = document.getElementById('deleteFolderBtn');
+// const inputFile = document.getElementById('dropzone-file');
+// const createFolderButton = document.getElementById('createFolderBtn');
+// const deleteFolderButton = document.getElementById('deleteFolderBtn');
 
 document.getElementById('closeSharedFilesModal').addEventListener('click', () => {
     document.getElementById('sharedFilesModal').classList.add('hidden');
@@ -17,77 +17,38 @@ document.getElementById('closeSharedFilesModal').addEventListener('click', () =>
 
 // HTML elements for the new path form
 const newPathForm = document.getElementById('newPathForm');
-createFolderButton.addEventListener('click', () => {
-    document.getElementById('newPathModal').classList.remove('hidden');
-})
+// createFolderButton.addEventListener('click', () => {
+//     document.getElementById('newPathModal').classList.remove('hidden');
+// })
 
 document.getElementById('cancelNewFolderBtn').addEventListener('click', () => {
     document.getElementById('newPathModal').classList.add('hidden');
 })
 
 newPathForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const path = document.getElementById('newFolderInput').value;
 
-    const currentUser = getCurrentUser();
-    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
-    const isAdded = user.graph.createPath(getCurrentPath() + '/' + path);
-
-    if (isAdded) {
-        user.logList.addWithDate(
-            `Se creó la carpeta ${path} en la ruta ${getCurrentPath()}`,
-            new Date().toLocaleDateString(),
-            new Date().toLocaleTimeString()
-        );
-
-        showFilesInCurrentPath();
-        showSnackbar('Carpeta añadida', 'success');
-        setHashTableContainer(hashTable);
-        document.getElementById('newFolderInput').value = '';
-        return;
-    }
 
 })
 
 // HTML elements for the delete path form
-deleteFolderButton.addEventListener('click', () => {
-    document.getElementById('deletePathModal').classList.remove('hidden');
-})
+// deleteFolderButton.addEventListener('click', () => {
+//     document.getElementById('deletePathModal').classList.remove('hidden');
+// })
 
 document.getElementById('cancelDeleteFolderBtn').addEventListener('click', () => {
     document.getElementById('deletePathModal').classList.add('hidden');
 })
 
 document.getElementById('deletePathForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const path = document.getElementById('deleteFolderInput').value;
 
-    const currentUser = getCurrentUser();
-    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
-    const isDeleted = user.graph.deletePath(getCurrentPath() + '/' + path);
-
-    if (isDeleted) {
-        user.logList.addWithDate(
-            `Acción: Se eliminó la carpeta ${path} en la ruta ${getCurrentPath()}`,
-            new Date().toLocaleDateString(),
-            new Date().toLocaleTimeString()
-        )
-        showFilesInCurrentPath();
-        showSnackbar('Carpeta eliminada', 'success');
-        setHashTableContainer(hashTable);
-        document.getElementById('deleteFolderInput').value = '';
-        return;
-    }
-    showSnackbar('Carpeta no encontrada', 'error');
 })
 
 // HTML elements for the search path form
 searchPathForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const path = document.getElementById('default-search').value;
-    const currentUser = getCurrentUser();
-    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
-    const isAdded = user.graph.findPath(path);
+    const currentUser = getCurrentUser('currentUser');
+    const isAdded = currentUser.graph.findPath(path);
 
     if (isAdded) {
         localStorage.setItem('currentPath', path);
@@ -98,97 +59,45 @@ searchPathForm.addEventListener('submit', (e) => {
 })
 
 // Check if all files are accepted
-inputFile.addEventListener('change', () => {
-    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.txt|\.pdf)$/i;
-    const files = inputFile.files;
-    processFile(files, allowedExtensions);
-})
+// inputFile.addEventListener('change', () => {
+//     const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.txt|\.pdf)$/i;
+//     const files = inputFile.files;
+//     processFile(files, allowedExtensions);
+// })
 
-inputFile.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-})
+// inputFile.addEventListener('dragover', (e) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+// })
 
-inputFile.addEventListener('dragleave', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-})
+// inputFile.addEventListener('dragleave', (e) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+// })
 
-inputFile.addEventListener('drop', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.txt|\.pdf)$/i;
-    const files = e.dataTransfer.files;
-    processFile(files, allowedExtensions);
-})
+// inputFile.addEventListener('drop', (e) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+//     const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.txt|\.pdf)$/i;
+//     const files = e.dataTransfer.files;
+//     processFile(files, allowedExtensions);
+// })
 
 const processFile = async (files, allowedExtensions) => {
-    const isInvalidEntry = validFilesLoad(
-        allowedExtensions,
-        files
-    )
-    if (isInvalidEntry && files.length > 0) {
-        const currentUser = getCurrentUser();
-        const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
-        const isAdded = await user.graph.createFiles(getCurrentPath(), files);
 
-        if (isAdded) {
-            Array.from(files).forEach(file => {
-                user.logList.addWithDate(
-                    `Se añadió el archivo ${file.name} en la ruta ${getCurrentPath()}`,
-                    new Date().toLocaleDateString(),
-                    new Date().toLocaleTimeString()
-                )
-            })
-
-            setHashTableContainer(hashTable);
-            showFilesInCurrentPath();
-            inputFile.value = '';
-            showSnackbar('Archivo añadido', 'success');
-            return;
-        }
-        inputFile.value = '';
-        showSnackbar('Archivo no añadido', 'error');
-        return;
-    }
-    inputFile.value = '';
-    showSnackbar('Archivo no permitido', 'error');
 }
 
 // Set permissions
-document.getElementById('setPermissionBtn').addEventListener('click', () => {
-    document.getElementById('setPermissionModal').classList.remove('hidden');
-})
+// document.getElementById('setPermissionBtn').addEventListener('click', () => {
+//     document.getElementById('setPermissionModal').classList.remove('hidden');
+// })
 
 document.getElementById('cancelSetPermission').addEventListener('click', () => {
     document.getElementById('setPermissionModal').classList.add('hidden');
 })
 
 document.getElementById('setPermissionForm').addEventListener('submit', (e) => {
-    e.preventDefault();
-    const idUserPermission = document.getElementById('idUserPermission').value;
-    const filePermission = document.getElementById('filePermission').value;
-    const canWrite = document.getElementById('canWrite').checked;
-    const canRead = document.getElementById('canRead').checked;
-    const userpermission = (canWrite ? 'w' : '') + (canRead ? 'r' : '');
 
-    // Comprobamos que el usuario existe
-    const existsUser = hashTable.findUserById(idUserPermission, '');
-    if (!existsUser || idUserPermission === getCurrentUser().id) {
-        showSnackbar('El usuario no existe o es el usuario actual', 'error');
-        return;
-    }
-
-    const currentUser = getCurrentUser();
-    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
-    user.graph.setPermissions(getCurrentPath(), idUserPermission, filePermission, userpermission);
-
-    document.getElementById('idUserPermission').value = '';
-    document.getElementById('filePermission').value = '';
-    document.getElementById('canWrite').checked = false;
-    document.getElementById('canRead').checked = false;
-    setHashTableContainer(hashTable);
-    showSnackbar('Permisos establecidos', 'success');
 })
 
 logoutButton.addEventListener('click', () => {
@@ -198,7 +107,7 @@ logoutButton.addEventListener('click', () => {
 
 // Reports section
 document.getElementById('reportFolderBtn').addEventListener('click', () => {
-    const currentUser = getCurrentUser();
+    const currentUser = getCurrentUser('currentUser');
     const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
     const report = user.graph.toDot();
     const img = document.getElementById('treeImagePreview');
@@ -206,26 +115,16 @@ document.getElementById('reportFolderBtn').addEventListener('click', () => {
     document.getElementById('treeModalPreview').classList.remove('hidden');
 })
 
-document.getElementById('reportFilesBtn').addEventListener('click', () => {
-    const currentUser = getCurrentUser();
-    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
-    let report = user.graph.getFilesReport(getCurrentPath());
-    if (report === '') {
-        showSnackbar('No hay archivos en esta carpeta', 'warning');
-        return;
-    }
-    report = "https://quickchart.io/graphviz?graph=" + report;
-    const img = document.getElementById('treeImagePreview');
-    img.src = report;
-    document.getElementById('treeModalPreview').classList.remove('hidden');
-})
+// document.getElementById('reportFilesBtn').addEventListener('click', () => {
+
+// })
 
 document.getElementById('closeModalBtn').addEventListener('click', () => {
     document.getElementById('treeModalPreview').classList.add('hidden');
 })
 
 export const showFilesInCurrentPath = () => {
-    const currentUser = getCurrentUser();
+    const currentUser = getCurrentUser('currentUser');
     const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
 
     const currentPath = getCurrentPath();
@@ -273,19 +172,6 @@ export const showFilesInCurrentPath = () => {
     })
 }
 
-document.getElementById('showLogsBtn').addEventListener('click', () => {
-    const currentUser = getCurrentUser();
-    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
-    const report = user.logList.convertToGraphviz();
-    if (report === '') {
-        showSnackbar('No hay logs', 'warning');
-        return;
-    }
-    const img = document.getElementById('treeImagePreview');
-    img.src = report;
-    document.getElementById('treeModalPreview').classList.remove('hidden');
-})
-
 // Shared files
 
 document.getElementById('sharedFilesBtn').addEventListener('click', () => {
@@ -294,7 +180,7 @@ document.getElementById('sharedFilesBtn').addEventListener('click', () => {
 
     const userCredentials = getUsersCredentials();
     userCredentials.forEach((user) => {
-        if (user.userShared == getCurrentUser().id) {
+        if (user.userShared == getCurrentUser('currentUser').id) {
             const fileContainer = document.createElement('div');
             fileContainer.classList.add('w-full', 'h-full', 'flex', 'flex-col', 'items-center', 'mt-2', 'border-t-2', 'border-gray-500', 'p-2');
             fileContainer.innerHTML = `

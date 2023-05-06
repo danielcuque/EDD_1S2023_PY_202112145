@@ -33,12 +33,16 @@ export const displayUserList = () => {
         if (student !== null && getCurrentUser().id !== student.id) {
             const li = document.createElement('li');
             li.classList.add('px-4', 'py-2', 'hover:bg-gray-300', 'border-b', 'border-gray-200', 'cursor-pointer');
-            li.innerHTML = `
-            <div class="flex flex-col">
-            <div>${student.name}</div>
-            <div>${student.id}</div>
-            </div>
-            `
+            const container = document.createElement('div');
+            container.classList.add('flex', 'flex-col');
+            const name = document.createElement('div');
+            const userId = document.createElement('div');
+            name.innerHTML = `${student.name}`;
+            userId.innerHTML = `${student.id}`;
+            userId.setAttribute('id', 'userId');
+            container.appendChild(name);
+            container.appendChild(userId);
+            li.appendChild(container);
 
             li.addEventListener('click', (e) => {
                 localStorage.setItem('chatUser', JSON.stringify(student));
@@ -46,6 +50,13 @@ export const displayUserList = () => {
             userList.appendChild(li);
         }
     })
+    // Colocamos como chatUser al primer chat de la lista
+    const userListChildren = userList.children;
+    if (userListChildren.length > 0) {
+        const user = hashTable.data.find(student => student !== null && student.id == userListChildren[0].querySelector('#userId').innerHTML);
+        localStorage.setItem('chatUser', JSON.stringify(user));
+    }
+
 }
 
 export const displayUserCredentials = () => {
@@ -107,8 +118,11 @@ export const getCurrentPath = () => {
     return localStorage.getItem("currentPath");
 }
 
-export const getCurrentUser = () => {
-    return JSON.parse(localStorage.getItem("currentUser"));
+export const getCurrentUser = (objectToFind) => {
+    const hashTable = getHashTable();
+    const userObj = JSON.parse(localStorage.getItem(objectToFind));
+    const user = hashTable.findUserByIdAndPass(userObj.id, userObj.password);
+    return user;
 }
 
 // Retornamos el string el contenido del archivo en base64

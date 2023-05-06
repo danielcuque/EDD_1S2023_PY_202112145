@@ -1,4 +1,4 @@
-import { getBlockChain, getElement } from "../utils/objects.js";
+import { getBlockChain, getCurrentUser, getElement } from "../utils/objects.js";
 
 const blockChain = getBlockChain();
 
@@ -9,6 +9,8 @@ document.getElementById('logoutBtn').addEventListener('click', (e) => {
 });
 
 
-getElement('chatContainer').addEventListener('click', (e) => {
-
-})
+export const displayUserChat = () => {
+    const chatContainer = getElement('chatContainer');
+    const userChat = getCurrentUser('userChat');
+    getElement('chatName').innerHTML = `Chat con ${userChat.id}`;
+}

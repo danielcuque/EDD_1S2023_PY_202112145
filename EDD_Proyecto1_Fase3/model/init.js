@@ -1,6 +1,7 @@
 import { Student } from '../controller/classes/student.js'
 import { BlockChain } from '../controller/structs/block-chain.js';
 import { displayUserCredentials, displayUserList, displayUserTable, getCurrentUser, setBlockChain, setHashTable } from '../utils/objects.js';
+import { displayUserChat } from './chat.js';
 
 // Vamos a verificar en que ruta estamos
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -53,7 +54,7 @@ const initBaseApp = async () => {
 }
 
 const initUserView = () => {
-    document.getElementById('carnetStudentSpan').innerHTML = `${getCurrentUser().id}`
+    document.getElementById('carnetStudentSpan').innerHTML = `${getCurrentUser('currentUser').id}`
     localStorage.setItem('currentPath', '/');
 }
 
@@ -64,4 +65,5 @@ const initAdminView = () => {
 
 const initChatView = () => {
     displayUserList();
+    displayUserChat();
 }
