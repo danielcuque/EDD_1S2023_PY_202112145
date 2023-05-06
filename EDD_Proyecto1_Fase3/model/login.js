@@ -4,11 +4,11 @@ import { showSnackbar } from '../utils/fields.js';
 
 const loginForm = document.querySelector('#login-form');
 
-loginForm.addEventListener('submit', (e) => {
+loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const carnet = document.getElementById('carnet').value;
     const password = document.getElementById('password').value;
-    const isLogged = checkLogin(carnet, password)
+    const isLogged = await checkLogin(carnet, password)
     if (isLogged) {
         clearLoginForm();
         if (carnet === 'admin') {

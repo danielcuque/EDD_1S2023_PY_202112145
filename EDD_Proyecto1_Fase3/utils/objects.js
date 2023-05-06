@@ -56,7 +56,7 @@ export const getHashTable = () => {
 }
 
 export const setHashTable = async () => {
-    tree = getTree();
+    const tree = getTree();
     const hashTable = new HashTable();
     const students = tree.getInorder();
 

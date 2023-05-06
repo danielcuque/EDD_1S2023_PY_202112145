@@ -1,3 +1,4 @@
+import { encode } from "../controller/structs/encrypt.js";
 import { getAdmin, getHashTable } from "../utils/objects.js";
 
 export const checkLogin = async (id, password) => {
