@@ -62,7 +62,7 @@ export class Graph {
 
 
     toDot() {
-        let dot = "graph G { \n rankdir=LR; node [shape=box]; \"/\"; node [shape = ellipse] ; layout=neato;\n";
+        let dot = "https://quickchart.io/graphviz?graph=graph G { \n rankdir=LR; node [shape=box]; \"/\"; node [shape = ellipse] ; layout=neato;\n";
         for (const key in this.adjacentMatrix) {
             dot += `"${key}" [label="${key}"];\n`
         }

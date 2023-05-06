@@ -196,7 +196,7 @@ logoutButton.addEventListener('click', () => {
 document.getElementById('reportFolderBtn').addEventListener('click', () => {
     const currentUser = getCurrentUser();
     const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
-    const report = user.graph.getFolderReport();
+    const report = user.graph.toDot();
     const img = document.getElementById('treeImagePreview');
     img.src = report;
     document.getElementById('treeModalPreview').classList.remove('hidden');
