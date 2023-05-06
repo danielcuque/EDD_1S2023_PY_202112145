@@ -29,7 +29,7 @@ export const displayUserList = () => {
     const hashTable = getHashTable();
     userList.innerHTML = ``;
     hashTable.data.forEach(student => {
-        if (student !== null) {
+        if (student !== null && getCurrentUser().id !== student.id) {
             const li = document.createElement('li');
             li.classList.add('px-4', 'py-2', 'hover:bg-gray-300', 'border-b', 'border-gray-200', 'cursor-pointer');
             li.innerHTML = `
