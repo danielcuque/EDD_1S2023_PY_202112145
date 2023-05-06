@@ -1,9 +1,9 @@
 import { getTypeOfFile, showSnackbar } from "../utils/fields.js";
 import { validFilesLoad } from "../utils/forms.js";
-import { getCurrentPath, getCurrentUser, getTree, setTree } from "../utils/objects.js";
+import { getCurrentPath, getCurrentUser, getHashTable, setHashTableContainer } from "../utils/objects.js";
 
 // .txt, .pdf, .jpg, .png, .jpeg
-const AVLTree = getTree();
+const hashTable = getHashTable();
 const inputFile = document.getElementById('dropzone-file');
 const logoutButton = document.getElementById('logoutBtn');
 const searchPathForm = document.getElementById('searchPathForm');
@@ -25,8 +25,8 @@ newPathForm.addEventListener('submit', (e) => {
     const path = document.getElementById('newFolderInput').value;
 
     const currentUser = getCurrentUser();
-    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
-    const isAdded = user.storage.createPath(getCurrentPath() + '/' + path);
+    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
+    const isAdded = user.graph.createPath(getCurrentPath() + '/' + path);
 
     if (isAdded) {
         user.logList.addWithDate(
@@ -37,7 +37,7 @@ newPathForm.addEventListener('submit', (e) => {
 
         showFilesInCurrentPath();
         showSnackbar('Carpeta añadida', 'success');
-        setTree(AVLTree);
+        setHashTableContainer(hashTable);
         document.getElementById('newFolderInput').value = '';
         return;
     }
@@ -58,8 +58,8 @@ document.getElementById('deletePathForm').addEventListener('submit', (e) => {
     const path = document.getElementById('deleteFolderInput').value;
 
     const currentUser = getCurrentUser();
-    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
-    const isDeleted = user.storage.deletePath(getCurrentPath() + '/' + path);
+    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
+    const isDeleted = user.graph.deletePath(getCurrentPath() + '/' + path);
 
     if (isDeleted) {
         user.logList.addWithDate(
@@ -69,7 +69,7 @@ document.getElementById('deletePathForm').addEventListener('submit', (e) => {
         )
         showFilesInCurrentPath();
         showSnackbar('Carpeta eliminada', 'success');
-        setTree(AVLTree);
+        setHashTableContainer(hashTable);
         document.getElementById('deleteFolderInput').value = '';
         return;
     }
@@ -81,8 +81,8 @@ searchPathForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const path = document.getElementById('default-search').value;
     const currentUser = getCurrentUser();
-    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
-    const isAdded = user.storage.searchPath(path);
+    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
+    const isAdded = user.graph.findPath(path);
 
     if (isAdded) {
         localStorage.setItem('currentPath', path);
@@ -124,8 +124,8 @@ const processFile = async (files, allowedExtensions) => {
     )
     if (isInvalidEntry && files.length > 0) {
         const currentUser = getCurrentUser();
-        const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
-        const isAdded = await user.storage.createFiles(getCurrentPath(), files);
+        const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
+        const isAdded = await user.graph.createFiles(getCurrentPath(), files);
 
         if (isAdded) {
             Array.from(files).forEach(file => {
@@ -136,7 +136,7 @@ const processFile = async (files, allowedExtensions) => {
                 )
             })
 
-            setTree(AVLTree);
+            setHashTableContainer(hashTable);
             showFilesInCurrentPath();
             inputFile.value = '';
             showSnackbar('Archivo añadido', 'success');
@@ -168,21 +168,21 @@ document.getElementById('setPermissionForm').addEventListener('submit', (e) => {
     const userpermission = (canWrite ? 'w' : '') + (canRead ? 'r' : '');
 
     // Comprobamos que el usuario existe
-    const existsUser = AVLTree.searchStudentWithId(idUserPermission, '');
+    const existsUser = hashTable.findUserById(idUserPermission, '');
     if (!existsUser || idUserPermission === getCurrentUser().id) {
         showSnackbar('El usuario no existe o es el usuario actual', 'error');
         return;
     }
 
     const currentUser = getCurrentUser();
-    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
-    user.storage.setPermissions(getCurrentPath(), idUserPermission, filePermission, userpermission);
+    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
+    user.graph.setPermissions(getCurrentPath(), idUserPermission, filePermission, userpermission);
 
     document.getElementById('idUserPermission').value = '';
     document.getElementById('filePermission').value = '';
     document.getElementById('canWrite').checked = false;
     document.getElementById('canRead').checked = false;
-    setTree(AVLTree);
+    setHashTableContainer(hashTable);
     showSnackbar('Permisos establecidos', 'success');
 })
 
@@ -195,8 +195,8 @@ logoutButton.addEventListener('click', () => {
 // Reports section
 document.getElementById('reportFolderBtn').addEventListener('click', () => {
     const currentUser = getCurrentUser();
-    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
-    const report = user.storage.getFolderReport();
+    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
+    const report = user.graph.getFolderReport();
     const img = document.getElementById('treeImagePreview');
     img.src = report;
     document.getElementById('treeModalPreview').classList.remove('hidden');
@@ -204,8 +204,8 @@ document.getElementById('reportFolderBtn').addEventListener('click', () => {
 
 document.getElementById('reportFilesBtn').addEventListener('click', () => {
     const currentUser = getCurrentUser();
-    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
-    let report = user.storage.getFilesReport(getCurrentPath());
+    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
+    let report = user.graph.getFilesReport(getCurrentPath());
     if (report === '') {
         showSnackbar('No hay archivos en esta carpeta', 'warning');
         return;
@@ -222,11 +222,11 @@ document.getElementById('closeModalBtn').addEventListener('click', () => {
 
 export const showFilesInCurrentPath = () => {
     const currentUser = getCurrentUser();
-    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
+    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
 
     const currentPath = getCurrentPath();
-    const folders = user.storage.getFolders(currentPath);
-    const files = user.storage.getFiles(currentPath);
+    const folders = user.graph.getFolders(currentPath);
+    const files = user.graph.getFiles(currentPath);
 
     if (folders.length === 0 && files.length === 0) {
         showSnackbar('No hay contenido en esta carpeta', 'warning');
@@ -241,11 +241,11 @@ export const showFilesInCurrentPath = () => {
         folderContainer.innerHTML = `
         <div class="w-full h-full flex flex-col items-center mt-2 cursor-pointer">
         <img src="./assets/directoryIcon.svg" class="text-gray-500" alt="si">
-        <span>${folder.name}</span>
+        <span>${folder}</span>
     </div>
         `;
         folderContainer.addEventListener('click', () => {
-            const newPath = currentPath === '/' ? currentPath + folder.name : currentPath + '/' + folder.name;
+            const newPath = currentPath === '/' ? currentPath + folder : currentPath + '/' + folder;
             localStorage.setItem('currentPath', newPath);
             document.getElementById('default-search').value = newPath;
             showFilesInCurrentPath();
@@ -271,7 +271,7 @@ export const showFilesInCurrentPath = () => {
 
 document.getElementById('showLogsBtn').addEventListener('click', () => {
     const currentUser = getCurrentUser();
-    const user = AVLTree.searchStudent(currentUser.id, currentUser.password);
+    const user = hashTable.findUserByIdAndPass(currentUser.id, currentUser.password);
     const report = user.logList.convertToGraphviz();
     if (report === '') {
         showSnackbar('No hay logs', 'warning');

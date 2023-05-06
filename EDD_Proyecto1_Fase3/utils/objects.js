@@ -71,6 +71,10 @@ export const setTree = (tree) => {
     localStorage.setItem("treeAVLContainer", JSON.stringify(tree));
 }
 
+export const setHashTableContainer = (hashTable) => {
+    localStorage.setItem("hashTableContainer", JSON.stringify(hashTable));
+}
+
 export const getAdmin = () => {
     return Object.setPrototypeOf(JSON.parse(localStorage.getItem("admin")), Student.prototype);
 }

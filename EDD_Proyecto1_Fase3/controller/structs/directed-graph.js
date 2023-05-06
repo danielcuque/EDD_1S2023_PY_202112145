@@ -34,6 +34,32 @@ export class Graph {
         return arrayToSave;
     }
 
+    findPath(path) {
+        if (path === '/') return this.adjacentMatrix['/'];
+        const pathArray = path.split('/');
+        const lastElement = pathArray[pathArray.length - 1];
+        if (this.adjacentMatrix[lastElement]) {
+            return this.adjacentMatrix[lastElement];
+        }
+        return null;
+    }
+
+    getFiles(path) {
+        const current = this.findPath(path);
+        if (current) {
+            return current.files.getFiles();
+        }
+        return null;
+    }
+
+    getFolders(path) {
+        const current = this.findPath(path);
+        if (current) {
+            return current.children
+        }
+        return [];
+    }
+
 
     toDot() {
         let dot = "graph G { \n rankdir=LR; node [shape=box]; \"/\"; node [shape = ellipse] ; layout=neato;\n";

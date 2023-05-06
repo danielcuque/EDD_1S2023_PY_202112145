@@ -78,10 +78,19 @@
                         </span>
                     </div>
                     <div class="flex flex-col justify-between gap-4">
+                        <button id="sectionMessageBtn"
+                            class="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-blue-600 text-white hover:text-slate-100 hover:bg-blue-500 active:bg-blue-800 active:text-blue-100 focus-visible:outline-blue-600">
+                            Mensajería
+                        </button>
+                        <button id="sharedFilesBtn"
+                            class="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-blue-600 text-white hover:text-slate-100 hover:bg-blue-500 active:bg-blue-800 active:text-blue-100 focus-visible:outline-blue-600">
+                            Archivos compartidos
+                        </button>
                         <button id="createFolderBtn"
                             class="group inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-blue-600 text-white hover:text-slate-100 hover:bg-blue-500 active:bg-blue-800 active:text-blue-100 focus-visible:outline-blue-600">
                             Crear Carpeta
                         </button>
+
                         <!-- Modal para crear una carpeta -->
                         <div id="newPathModal" class="modal hidden fixed z-10 inset-0 overflow-y-auto"
                             aria-labelledby="modal-title" role="dialog" aria-modal="true">
