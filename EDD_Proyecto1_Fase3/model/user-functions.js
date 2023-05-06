@@ -296,7 +296,7 @@ document.getElementById('sharedFilesBtn').addEventListener('click', () => {
     userCredentials.forEach((user) => {
         if (user.userShared == getCurrentUser().id) {
             const fileContainer = document.createElement('div');
-            fileContainer.classList.add('w-full', 'h-full', 'flex', 'flex-col', 'items-center', 'mt-2', 'border-t-2', 'border-gray-500', 'rounded-md', 'p-2');
+            fileContainer.classList.add('w-full', 'h-full', 'flex', 'flex-col', 'items-center', 'mt-2', 'border-t-2', 'border-gray-500', 'p-2');
             fileContainer.innerHTML = `
             <div class="font-bold text-left w-full">${user.filename}</div>
             <div class="text-left w-full text-sm text-gray-600">Compartido por: ${user.owner}</div>
@@ -308,4 +308,9 @@ document.getElementById('sharedFilesBtn').addEventListener('click', () => {
     })
 
     document.getElementById('sharedFilesModal').classList.remove('hidden');
+})
+
+document.getElementById('messagesBtn').addEventListener('click', () => {
+    // Cambiamos de pestaña
+    window.location.href = './chat.html';
 })

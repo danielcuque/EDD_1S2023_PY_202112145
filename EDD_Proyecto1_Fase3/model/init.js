@@ -1,5 +1,5 @@
 import { Student } from '../controller/classes/student.js'
-import { displayUserCredentials, displayUserTable, getCurrentUser, getHashTable, setHashTable } from '../utils/objects.js';
+import { displayUserCredentials, displayUserTable, getCurrentUser, setHashTable } from '../utils/objects.js';
 
 // Vamos a verificar en que ruta estamos
 document.addEventListener("DOMContentLoaded", (e) => {

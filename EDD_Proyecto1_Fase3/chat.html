@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { "50": "#eff6ff", "100": "#dbeafe", "200": "#bfdbfe", "300": "#93c5fd", "400": "#60a5fa", "500": "#3b82f6", "600": "#2563eb", "700": "#1d4ed8", "800": "#1e40af", "900": "#1e3a8a" }
+                    }
+                },
+                fontFamily: {
+                    'body': [
+                        'Inter',
+                        'ui-sans-serif',
+                        'system-ui',
+                        '-apple-system',
+                        'system-ui',
+                        'Segoe UI',
+                        'Roboto',
+                        'Helvetica Neue',
+                        'Arial',
+                        'Noto Sans',
+                        'sans-serif',
+                        'Apple Color Emoji',
+                        'Segoe UI Emoji',
+                        'Segoe UI Symbol',
+                        'Noto Color Emoji'
+                    ],
+                    'sans': [
+                        'Inter',
+                        'ui-sans-serif',
+                        'system-ui',
+                        '-apple-system',
+                        'system-ui',
+                        'Segoe UI',
+                        'Roboto',
+                        'Helvetica Neue',
+                        'Arial',
+                        'Noto Sans',
+                        'sans-serif',
+                        'Apple Color Emoji',
+                        'Segoe UI Emoji',
+                        'Segoe UI Symbol',
+                        'Noto Color Emoji'
+                    ]
+                }
+            }
+        }
+    </script>
+    <title>Chat</title>
+</head>
+
+<body>
+    <nav class="py-4 px-6 fixed top-0 w-full shadow-md">
+        <div class="container flex mx-auto justify-between">
+            <a href="./user-view.html" class="text-lg font-bold">GoDrive</a>
+            <button class="text-sm px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded-lg" id="logoutBtn">
+                Cerrar sesión
+            </button>
+        </div>
+    </nav>
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-1/5 h-screen fixed top-0 left-0 overflow-y-auto mt-[70px] shadow-md">
+            <p class="px-4 py-2 font-medium text-center">Chats</p>
+            <ul class="mt-4">
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 1</li>
+                <!-- <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 2</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 3</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 4</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 5</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 6</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 7</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 8</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 9</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 10</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 1</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 2</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 3</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 4</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 5</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 6</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 7</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 8</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 9</li>
+                <li class="px-4 py-2 hover:bg-gray-300 cursor-pointer">Usuario 10</li> -->
+            </ul>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="w-4/5 ml-auto">
+            <!-- Aquí va el contenido principal -->
+        </div>
+    </div>
+
+</body>
+<script type="module" src="./model/chat.js"></script>
+
+</html>
