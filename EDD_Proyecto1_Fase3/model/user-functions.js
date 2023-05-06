@@ -1,6 +1,6 @@
 import { getTypeOfFile, showSnackbar } from "../utils/fields.js";
 import { validFilesLoad } from "../utils/forms.js";
-import { getCurrentPath, getCurrentUser, getHashTable, setHashTableContainer } from "../utils/objects.js";
+import { getCurrentPath, getCurrentUser, getFileContentConverted, getHashTable, getUsersCredentials, setHashTableContainer } from "../utils/objects.js";
 
 // .txt, .pdf, .jpg, .png, .jpeg
 const hashTable = getHashTable();
@@ -9,6 +9,11 @@ const logoutButton = document.getElementById('logoutBtn');
 const searchPathForm = document.getElementById('searchPathForm');
 const createFolderButton = document.getElementById('createFolderBtn');
 const deleteFolderButton = document.getElementById('deleteFolderBtn');
+
+document.getElementById('closeSharedFilesModal').addEventListener('click', () => {
+    document.getElementById('sharedFilesModal').classList.add('hidden');
+})
+
 
 // HTML elements for the new path form
 const newPathForm = document.getElementById('newPathForm');
@@ -186,7 +191,6 @@ document.getElementById('setPermissionForm').addEventListener('submit', (e) => {
     showSnackbar('Permisos establecidos', 'success');
 })
 
-
 logoutButton.addEventListener('click', () => {
     localStorage.removeItem('currentUser');
     window.location.href = 'index.html';
@@ -280,4 +284,28 @@ document.getElementById('showLogsBtn').addEventListener('click', () => {
     const img = document.getElementById('treeImagePreview');
     img.src = report;
     document.getElementById('treeModalPreview').classList.remove('hidden');
+})
+
+// Shared files
+
+document.getElementById('sharedFilesBtn').addEventListener('click', () => {
+    const sharedFilesContainer = document.getElementById('sharedFilesContainer');
+    sharedFilesContainer.innerHTML = '';
+
+    const userCredentials = getUsersCredentials();
+    userCredentials.forEach((user) => {
+        if (user.userShared == getCurrentUser().id) {
+            const fileContainer = document.createElement('div');
+            fileContainer.classList.add('w-full', 'h-full', 'flex', 'flex-col', 'items-center', 'mt-2', 'rounded-md', 'p-2');
+            fileContainer.innerHTML = `
+            <div class="font-bold text-left w-full">${user.filename}</div>
+            <div class="text-left w-full text-sm">Compartido por: ${user.owner}</div>
+        `;
+            const content = getFileContentConverted(user.filename, user.fileContent);
+            fileContainer.appendChild(content);
+            sharedFilesContainer.appendChild(fileContainer);
+        }
+    })
+
+    document.getElementById('sharedFilesModal').classList.remove('hidden');
 })

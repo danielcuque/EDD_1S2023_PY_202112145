@@ -115,13 +115,45 @@ export const getUsersCredentials = () => {
                         userShared: objCredential.id,
                         path: file.path,
                         filename: objCredential.filename,
-                        credentials: objCredential.credential
+                        credentials: objCredential.credential,
+                        fileContent: file.convertedFiles.find(obj => obj.filename === objCredential.filename).content
                     });
                 })
             })
         }
     });
     return table;
+}
+
+export const getFileContentConverted = (filename, fileContent) => {
+    const extensionFile = filename.split('.')[1];
+    switch (extensionFile) {
+        case 'pdf':
+            const iframe = document.createElement('iframe');
+            iframe.style.width = '100%';
+            iframe.style.height = '100vh';
+            iframe.src = `data:application/pdf;base64,${fileContent}`
+            return iframe;
+        case 'txt':
+            const contentTxt = atob(fileContent);
+            const textarea = document.createElement('textarea');
+            textarea.value = contentTxt;
+            textarea.style.width = '100%';
+            textarea.style.height = '100%';
+            textarea.readOnly = true;
+            return textarea;
+        case 'jpg':
+        case 'png':
+        case 'jpeg':
+
+            const img = document.createElement('img');
+            img.src = `data:image/${extensionFile};base64,${fileContent}`;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            return img;
+        default:
+            return document.createElement('div');
+    }
 }
 
 
