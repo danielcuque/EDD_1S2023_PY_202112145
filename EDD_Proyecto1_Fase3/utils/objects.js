@@ -138,8 +138,8 @@ export const getFileContentConverted = (filename, fileContent) => {
             const contentTxt = atob(fileContent);
             const textarea = document.createElement('textarea');
             textarea.value = contentTxt;
+            textarea.classList.add('border', 'border-gray-100', 'h-[20rem]');
             textarea.style.width = '100%';
-            textarea.style.height = '100%';
             textarea.readOnly = true;
             return textarea;
         case 'jpg':
