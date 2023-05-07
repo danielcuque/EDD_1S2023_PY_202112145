@@ -1,5 +1,4 @@
 import { getTypeOfFile, showSnackbar } from "../utils/fields.js";
-import { validFilesLoad } from "../utils/forms.js";
 import { getCurrentPath, getCurrentUser, getFileContentConverted, getHashTable, getUsersCredentials, setHashTableContainer } from "../utils/objects.js";
 
 // .txt, .pdf, .jpg, .png, .jpeg

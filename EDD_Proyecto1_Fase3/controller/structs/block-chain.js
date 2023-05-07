@@ -94,10 +94,10 @@ export class BlockChain {
         return result
     }
 
-    graphviz() {
+    toDot() {
 
         return `
-        digraph G {
+        https://quickchart.io/graphviz?graph=digraph G {
             rankdir=TB;
             node [shape=record];
             ${this.graphvizNodes()}

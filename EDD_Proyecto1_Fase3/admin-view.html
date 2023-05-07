@@ -69,6 +69,16 @@
                 id="logoutBtn">
                 Cerrar sesión
             </button>
+            <div class="w-full flex justify-between py-4 px-16">
+                <button id="blockChainBtn"
+                    class="text-sm top-5 left-5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg">
+                    Reporte de BlockChain
+                </button>
+                <button id="messageReportBtn"
+                    class="text-sm top-5 left-5 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg">
+                    Reporte de mensajes
+                </button>
+            </div>
 
             <div class="h-[90rem] w-full px-16 pb-6">
                 <div id="mostrarEstudiantes" class="flex flex-col w-full">
@@ -117,6 +127,29 @@
                 </div>
             </div>
         </div>
+
+        </div>
+        <div class="fixed z-50 top-0 left-0 w-full h-full flex justify-center items-center hidden"
+            id="treeModalPreview">
+            <!-- Modal Overlay -->
+            <div class="absolute top-0 left-0 w-full h-full bg-gray-800 opacity-50"></div>
+
+            <!-- Modal Content -->
+            <div class="relative bg-white rounded-lg w-2/3">
+                <!-- Close Button -->
+                <button class="absolute top-0 right-0 m-3 text-gray-500 hover:text-gray-800" id="closeModalBtn">
+                    <svg class="w-6 h-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M5.293 5.293a1 1 0 011.414 0L10 8.586l3.293-3.293a1 1 0 011.414 1.414L11.414 10l3.293 3.293a1 1 0 01-1.414 1.414L10 11.414l-3.293 3.293a1 1 0 01-1.414-1.414L8.586 10 5.293 6.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+
+                <!-- Image Preview -->
+                <div class="flex justify-center p-5">
+                    <img id="treeImagePreview" src="https://quickchart.io/graphviz?graph=digraph{ a -> b }" />
+                </div>
+            </div>
         </div>
 
     </section>
