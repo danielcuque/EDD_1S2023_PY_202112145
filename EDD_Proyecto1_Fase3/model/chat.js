@@ -1,7 +1,12 @@
 import { getBlockChain, getCurrentUser, getElement, getHashTable, setBlockChain } from "../utils/objects.js";
 
 const userList = getElement('userList');
+const chatName = getElement('chatName');
+const messsageContainer = getElement('messageContainer');
+
+const blockChain = getBlockChain();
 const hashTable = getHashTable();
+
 userList.innerHTML = ``;
 
 hashTable.data.forEach(student => {
@@ -41,24 +46,44 @@ getElement('logoutBtn').addEventListener('click', (e) => {
 });
 
 
-// export const displayUserChat = () => {
-//     const chatContainer = getElement('chatContainer');
-//     const userChat = getCurrentUser('userChat');
-//     getElement('chatName').innerHTML = `Chat con ${userChat.id}`;
-// }
+const renderCharWindow = async () => {
+
+    // Get messages from blockChain
+    const currentUser = getCurrentUser('currentUser');
+    const userChat = getCurrentUser('userChat');
+    chatName.innerHTML = `${userChat.id}`
+
+    // Clear chat window
+
+    let aux = blockChain.start;
+    while (aux != null) {
+        console.log(aux.data)
+        if ((aux.data.emiter == currentUser.id && aux.data.receptor == userChat.id)) {
+            const message = document.createElement('p');
+            message.classList.add('w-1/2', 'text-justify', 'break-words', 'mb-2', aux.data.emiter == currentUser.id ? 'self-end' : 'self-start');
+            message.innerText = await aux.decryptMsg();
+            messsageContainer.appendChild(message);
+
+        }
+        aux = aux.next;
+    }
+}
+
 
 
 getElement('messageForm').addEventListener('submit', async (e) => {
     e.preventDefault();
-    console.log('Enviando mensaje');
-    // const message = getElement('messageInput').value;
-    // const currentUser = getCurrentUser('currentUser');
-    // await blockChain.insert(new Date(), currentUser.id, Number(1), message);
+    const message = getElement('messageInput').value;
+    const currentUser = getCurrentUser('currentUser');
+    const userChat = getCurrentUser('userChat');
+    await blockChain.insert(new Date(), currentUser.id, Number(userChat.id), message);
 
-    // console.log(blockChain);
-    // // renderCharWindow(recieverInput.value);
-    // setBlockChain(blockChain);
+    renderCharWindow();
+    setBlockChain(blockChain);
     getElement('messageInput').value = '';
 })
+
+renderCharWindow(localStorage.getItem('userChat').id);
+
 
 
