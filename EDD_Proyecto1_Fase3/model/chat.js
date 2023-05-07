@@ -26,6 +26,7 @@ hashTable.data.forEach(student => {
 
         li.addEventListener('click', (e) => {
             localStorage.setItem('userChat', JSON.stringify(student));
+            displayUserChat();
         })
         userList.appendChild(li);
     }
@@ -46,24 +47,23 @@ getElement('logoutBtn').addEventListener('click', (e) => {
 });
 
 
-const renderCharWindow = async () => {
+const displayUserChat = async () => {
 
     // Get messages from blockChain
     const currentUser = getCurrentUser('currentUser');
     const userChat = getCurrentUser('userChat');
-    chatName.innerHTML = `${userChat.id}`
+    chatName.innerHTML = `Chat con ${userChat.id}`
+    messsageContainer.innerHTML = '';
 
     // Clear chat window
 
     let aux = blockChain.start;
     while (aux != null) {
-        console.log(aux.data)
-        if ((aux.data.emiter == currentUser.id && aux.data.receptor == userChat.id)) {
+        if ((aux.data.emiter == currentUser.id && aux.data.receptor == userChat.id) || (aux.data.emiter == userChat.id && aux.data.receptor == currentUser.id)) {
             const message = document.createElement('p');
             message.classList.add('w-1/2', 'text-justify', 'break-words', 'mb-2', aux.data.emiter == currentUser.id ? 'self-end' : 'self-start');
             message.innerText = await aux.decryptMsg();
             messsageContainer.appendChild(message);
-
         }
         aux = aux.next;
     }
@@ -78,12 +78,12 @@ getElement('messageForm').addEventListener('submit', async (e) => {
     const userChat = getCurrentUser('userChat');
     await blockChain.insert(new Date(), currentUser.id, Number(userChat.id), message);
 
-    renderCharWindow();
+    displayUserChat();
     setBlockChain(blockChain);
     getElement('messageInput').value = '';
 })
 
-renderCharWindow(localStorage.getItem('userChat').id);
+displayUserChat(localStorage.getItem('userChat').id);
 
 
 
