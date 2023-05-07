@@ -25,40 +25,6 @@ export const displayUserTable = async () => {
 
 }
 
-export const displayUserList = () => {
-    const userList = getElement('userList');
-    const hashTable = getHashTable();
-    userList.innerHTML = ``;
-    hashTable.data.forEach(student => {
-        if (student !== null && getCurrentUser('currentUser').id !== student.id) {
-            const li = document.createElement('li');
-            li.classList.add('px-4', 'py-2', 'hover:bg-gray-300', 'border-b', 'border-gray-200', 'cursor-pointer');
-            const container = document.createElement('div');
-            container.classList.add('flex', 'flex-col');
-            const name = document.createElement('div');
-            const userId = document.createElement('div');
-            name.innerHTML = `${student.name}`;
-            userId.innerHTML = `${student.id}`;
-            userId.setAttribute('id', 'userId');
-            container.appendChild(name);
-            container.appendChild(userId);
-            li.appendChild(container);
-
-            li.addEventListener('click', (e) => {
-                localStorage.setItem('userChat', JSON.stringify(student));
-            })
-            userList.appendChild(li);
-        }
-    })
-    // Colocamos como chatUser al primer chat de la lista
-    const userListChildren = userList.children;
-    if (userListChildren.length > 0) {
-        const user = hashTable.data.find(student => student !== null && student.id == userListChildren[0].querySelector('#userId').innerHTML);
-        localStorage.setItem('userChat', JSON.stringify(user));
-    }
-
-}
-
 export const displayUserCredentials = () => {
     const userCredentials = document.getElementById('userCredentialsBody');
     userCredentials.innerHTML = ``;

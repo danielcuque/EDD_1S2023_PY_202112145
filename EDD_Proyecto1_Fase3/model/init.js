@@ -1,7 +1,6 @@
 import { Student } from '../controller/classes/student.js'
 import { BlockChain } from '../controller/structs/block-chain.js';
-import { displayUserCredentials, displayUserList, displayUserTable, getCurrentUser, setBlockChain, setHashTable } from '../utils/objects.js';
-import { displayUserChat } from './chat.js';
+import { displayUserCredentials, displayUserTable, getCurrentUser, setBlockChain, setHashTable } from '../utils/objects.js';
 
 // Vamos a verificar en que ruta estamos
 document.addEventListener("DOMContentLoaded", (e) => {
@@ -18,9 +17,6 @@ document.addEventListener("DOMContentLoaded", (e) => {
             break;
         case 'admin-view.html':
             initAdminView();
-            break;
-        case 'chat.html':
-            initChatView();
             break;
     }
 });
@@ -61,9 +57,4 @@ const initUserView = () => {
 const initAdminView = () => {
     displayUserTable();
     displayUserCredentials();
-}
-
-const initChatView = () => {
-    displayUserList();
-    displayUserChat();
 }
