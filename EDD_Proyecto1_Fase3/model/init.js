@@ -28,7 +28,7 @@ const initBaseApp = async () => {
     if (verifyTree != null) {
         const hashTable = await setHashTable();
         localStorage.setItem("hashTableContainer", JSON.stringify(hashTable));
-        // localStorage.removeItem("treeAVLContainer");
+        localStorage.removeItem("treeAVLContainer");
     }
 
     // Verificar si ya existe un blockchain
